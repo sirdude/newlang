@@ -19,11 +19,19 @@ separator  nonempty Ident "," ;
 separator Exp "," ;
 coercions Exp 4 ;
   
-SDecl.   Stm ::= Decl ";"  ;
-SExp.    Stm ::= Exp ";" ;
-SBlock.  Stm ::= "{" [Stm] "}" ;
-SWhile.  Stm ::= "while" "(" Exp ")" Stm ;
-SReturn. Stm ::= "return" Exp  ";" ;
+-- SInherit Stm ::= "inherit" Str;
+-- SInclude Stm ::= "include" Str;
+
+SDecl.   	Stm ::= Decl ";"  ;
+SExp.    	Stm ::= Exp ";" ;
+SBlock.  	Stm ::= "{" [Stm] "}" ;
+SWhile.  	Stm ::= "while" "(" Exp ")" Stm ;
+SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
+SReturn. 	Stm ::= "return" Exp  ";" ;
+Sif.		Stm ::= "if" "(" Exp ")" Stm ;
+SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
+Sfor.    	Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
+Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
   
 EAss.    Exp  ::= Ident "=" Exp ;
 ELt.     Exp1 ::= Exp2 "<" Exp2 ;
@@ -36,6 +44,10 @@ EStr.    Exp4 ::= String ;
 EInt.    Exp4 ::= Integer ;
 EDouble. Exp4 ::= Double ;
   
-TInt.    Type ::= "int" ;
-TDouble. Type ::= "double" ;
+TInt.     Type ::= "int" ;
+TDouble.  Type ::= "float" ;
+TString.  Type ::= "string" ;
+TObject.  Type ::= "object" ;
+TMapping. Type ::= "mapping" ;
+TMixed.   Type ::= "mixed" ;
 
