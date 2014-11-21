@@ -27,30 +27,30 @@ of my motivations:
 
 =over 8
 
-=item 1. Simple consistant language.
-	don't have mutiple syntaxes for or, if statements, comments
+=item 1. Simple consistent language.
+	don't have multiple syntaxes for or, if statements, comments
 
-=item 2. Avoid sigils for varables.
+=item 2. Avoid sigial for variables.
 
-=item 3. Compiler should have a built in pretty printer.
+=item 3. Compiler should have a built-in pretty printer.
 
 =item 4. You should be able to cut and paste the language and not mess 
 things up.
 
-=item 5. Compiler should have a builtin perlcritic type functionality.
+=item 5. Compiler should have a built-in perlcritic type functionality.
 
 =item 6. Avoid common programming issues.
 
 =item 7. Strongly typed.
 
-=item 8. Should have builtin string type.
+=item 8. Should have built-in string type.
 
 =item 9. Allow object oriented programming, not everything needs to be an
 object though.
 
 =item 10. If you look at comments I would guess that 80-90% of them are
-when you declare a variable or a function.  If we built in
-comments into the syntax of the application we could do cool things
+when you declare a variable or a function.  If we have comments as
+part of the syntax of the actual language we could do cool things
 like hide them in the editor unless you are actually looking at
 that code.
 
@@ -80,7 +80,7 @@ examples		Example code
 
 =item 1. I plan on writing the documentation describing the language.
 
-=item 2. Grecating a bnf of the language.
+=item 2. Creating a bnf of the language.
 
 =item 3. using bnfc to create an interpreter/pretty printer for the
 language.
