@@ -1,0 +1,72 @@
+=HEAD1 New Language (Name Unknown)
+
+=HEAD2 VERSION 0.0
+
+=HEAD2 What is this thing?
+I've used quite a few programming languages over the years.  Some of them
+I like better than others, and they each have advantages and disadvantages.
+If I had to rate my top 5 Languages they currently would look something like
+this:
+	Perl, lpc, c, tcl, lisp
+
+I read an interesting article on the web about adding visual feedback
+to programming, which got me to thinking hey it would be really cool
+to create a new language that builds on languages of the past.
+
+I've formed some strong opinions on things I don't like about languages
+and I want to try and see what I can do with them.  Here are some
+of my motivations:
+
+1. Simple consistant language.
+	don't have mutiple syntaxes for or, if statements, comments
+2. Avoid sigils for varables.
+3. Compiler should have a built in pretty printer.
+4. You should be able to cut and paste the language and not mess things up.
+5. Compiler should have a builtin perlcritic type functionality.
+6. Avoid common programming issues.
+7. Strongly typed.
+8. Should have builtin string type.
+9. Allow object oriented programming, not everything needs to be an
+	object though.
+10. If you look at comments I would guess that 80-90% of them are
+	when you declare a variable or a function.  If we built in
+	comments into the syntax of the application we could do cool things
+	like hide them in the editor unless you are actually looking at
+	that code.
+11. Worry less about whitespace, at the same time code must be readable in a 
+	standard terminal.
+
+=HEAD2 What's here?
+
+So far not a lot.  I'm starting with working on the syntax.  This involves
+writing the documentation for the language and starting to come up with
+a grammar.  Along with that I'd like to justify why the language is doing
+what it is doing.  I'm starting with LPC as a base because I think its the
+closest to what I envision the final language looking like at this point.
+
+syntax.pod  		A Document covering the syntax of our new language
+notes.txt		Things I've been thinking about
+src			Current source code for bnfc starting with trying
+			to build an lpc grammar and then will modify that
+			so for now this doesn't line up with the docs.
+examples		Example code
+
+=HEAD2 What are the plans?
+
+1. I plan on writing the documentation describing the language.
+2. Grecating a bnf of the language.
+3. using bnfc to create an interpreter/pretty printer for the
+	language.
+
+=HEAD2 License
+
+This code is currently under the CC license, you can do whatever you
+want to with it.  This may change the future to something like
+the GPL depending on how things go.
+
+=HEAD2 Want to get involved?
+Shoot me an email, ask me questions, give me some patches or just shoot
+the breeze.
+
+			Kent Mein
+			mein@umn.edu

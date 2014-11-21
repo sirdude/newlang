@@ -1,0 +1,73 @@
+Check out tcl, pike, lua, c, lpc, perl6
+Try to take out # statments from pike
+Try to add comments as optional strings to the language
+        Make comments part of the language for descriptions of things
+        Also still need a way to disable blocks of code...
+
+tcl is like scheme...  Need to figure out other common commands even
+        if they are redefineable...
+        Perl is similar in some ways?
+
+TCL bnf:
+        program ::= {statement}+
+        statement ::= command {arg}*
+
+look at vim folding...
+
+I'm thinking editor needs to parse code to do things like hide/fold comments
+why muck with reindenting code all the time, better to make editor
+do this job, and a pretty printer of a certain width...  In code though
+save it as one specific pretty print.
+Compiler should pretty print code, how do you deal with comments that
+        are table like?  Comments must respect whitespace (\n,\t,space)
+
+
+tcl builtin commands:
+        control structures: if, for foreach, switch
+        string manipulation functions regex, strlen, etc...
+        IO (disk, network, devices):
+                File management: file names, reading writing, copying,
+                        deleteing, mkdir
+        Lists
+        Arrays
+        time and date manipulation
+        events....
+
+        Also look at:
+        http://docs.activestate.com/activetcl/8.4/tcl/tcl_2_contents.htm
+
+
+New lpc
+Look at:
+http://mud.stack.nl/manuals/lpc_toc.html
+and 
+http://rigaux.org/language-study/syntax-across-languages.html
+
+remove preprocessor stuff...
+        #include becomes include '';
+no optional {}'s  they are required.
+No assignment during declarations.
+if () {} else if {} else {}    # And or simpler versions...
+for (;;) {} becomes for (,,) {}   # ,'s are used to seperate args
+while () {}                       # No do while.... 
+foreach i () { }     
+Comments #  or strings when declaring vars or functions...
+        Note no // or /* */ supported...
+
+switch (var) {			# Use { } for blocks just like everywhere else.
+   case thing { }
+   case thing2 { }
+   [else { }]			# Already have else so don't introduce default.
+}
+
+varable def:
+   int x;
+   int x "The value";
+   int *x "An array of the values we are " +
+      "going to use";
+
+types: void int, float, string, object, mapping, mixed;
+
+function defintion:
+returntype name "Description" (vartype varname "Description" [,...]) { }
+
