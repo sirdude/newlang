@@ -1,0 +1,34 @@
+Check for mix of whitespace (tabs/spaces)
+
+Check for vars that do not have comments.
+Check for functions that do not have comments.
+
+Check for definition using a keyword.
+Check for var masking, function masking.  Have a way to 
+	flag it as ok via code. (type modifier redefineable?)
+
+Check for while where condition is modified in the statement.
+Check for complex for loops as well.
+Check for complex if statements also.
+Check for vars defined after code in a block.
+Check for functions over a given length.
+Check for comment blocks over a given length.
+	If so suggest making that a function so that
+	your only commenting out 1 line.
+
+check for ignoring return values
+check for void type functions
+
+check for inheritable cloning, or inheriting non inheritable?
+Check inherit exists, also test enheritable : would need to create
+	a visited list, exand this so you can check a dir and only
+	check files once.
+
+check to make sure objects are not orphaned? (destroy them when your done)
+
+Have a way to printout varname, scope where it is defined and current value.
+Builtin test function for a function?  If so warn if no test function defined.
+	Also check for blah.test that doesn't have a function defined.
+	tests should cover all return statements & return values.
+	tests should also cover important edge cases.
+
