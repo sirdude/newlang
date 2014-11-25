@@ -15,7 +15,7 @@ use warnings;
 # Create our stuff with bnfc
 system("bnfc -m -c LPC.cf");
 system("make");
-system("./testLPC jjj.c");
+system("./TestLPC jjj.c");
 
 # Copy our defaults to new programs
 system("cp Skeleton.c Interpreter.c");
@@ -43,7 +43,7 @@ system("testlpc jjj.c");
 
 # Clean things up, make distclean do extra stuff
 system("perl -pi -e 's/distclean: clean\n/" .
-        "extraclean:\n\trm -rf Interpreter* lpc.c lpc.h lpc *.bak\n\n" .
+        "extraclean:\n\trm -rf Interpreter* lpc.c lpc.h lpc *.bak testlpc\n\n" .
         "distclean: clean extraclean\n/g' Makefile");
 system("perl -pi -e 's/.PHONY: clean distclean\n/" .
         ".PHONY: clean distclean extraclean\n/g' Makefile");
