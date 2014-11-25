@@ -12,44 +12,50 @@
 use strict;
 use warnings;
 
-# Create our stuff with bnfc
-system("bnfc -m -c LPC.cf");
-system("make");
-system("./TestLPC jjj.c");
+sub fix_makefile {
 
-# Copy our defaults to new programs
-system("cp Skeleton.c Interpreter.c");
-system("cp Skeleton.h Interpreter.h");
-system("cp Test.c lpc.c");
+	# Clean things up, make distclean do extra stuff
+	system("perl -pi -e 's/LPC.pdf TestLPC/LPC.pdf TestLPC lpc/g' " .
+		"Makefile");
+	system("perl -pi -e 's/distclean: clean\n/" .
+	        "extraclean:\n\trm -rf Interpreter* lpc.c lpc.h lpc " .
+		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' Makefile");
+	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
+		".PHONY: clean distclean extraclean\n/g' Makefile");
+	system("perl -pi -e 's/all: TestLPC LPC.pdf/all: TestLPC LPC.pdf " .
+		"lpc/g' Makefile");
 
-system("perl -pi -e 's/Skeleton.h/Interpreter.h/g' Interpreter.c");
-# Need to modify Interpreter.c
+	open(my $fh, ">>", "Makefile") or die "Unable to open Makefile\n";
+	print $fh "Interpreter.o: Interpreter.h\n\t\${CC} \${CCFLAGS} -c " .
+		"Interpreter.c\n";
+	print $fh "\nlpc.o:\n\t\${CC} \${CCFLAGS} -c " .
+		"lpc.c\n";
+	print $fh "\nLPCLIBS=Absyn.o Lexer.o Parser.o Interpreter.o " .
+		"Printer.o lpc.o\n";
+	print $fh "\nlpc: \${LPCLIBS}\n";
+	print $fh "\t\@echo \"Linking lpc...\"\n";
+	print $fh "\t\${CC} \${CCFLAGS} \${LPCLIBS} -olpc\n";
+	close($fh);
+}
+
+sub create_newfiles {
+	# Copy our defaults to new programs
+	system("cp Skeleton.c Interpreter.c");
+	system("cp Skeleton.h Interpreter.h");
+	system("cp Test.c lpc.c");
+
+	system("perl -pi -e 's/Skeleton.h/Interpreter.h/g' Interpreter.c");
+
+	# Need to modify Interpreter.c
+
         # Hack to get rid of warnings adding extra headers stdlib.h and stdio.h
         system("perl -pi -e 's/#include \"Interpreter.h\"\n/" .
                 "#include \"Interpreter.h\"\n#include <stdlib.h>\n" .
                 "#include <stdio.h>\n/g' Interpreter.c");
 
+	# Need to modify lpc.c
+}
 
-# Need to modify lpc.c
-
-# Compile our interpreter
-system("gcc -Wall -g -c Interpreter.c");
-system("gcc -Wall -g -c lpc.c");
-system("gcc -Wall -g -otestlpc Absyn.o Lexer.o Parser.o " .
-        "Interpreter.o Printer.o lpc.o");
-
-# Test our code
-system("testlpc jjj.c");
-
-# Clean things up, make distclean do extra stuff
-system("perl -pi -e 's/distclean: clean\n/" .
-        "extraclean:\n\trm -rf Interpreter* lpc.c lpc.h lpc *.bak testlpc\n\n" .
-        "distclean: clean extraclean\n/g' Makefile");
-system("perl -pi -e 's/.PHONY: clean distclean\n/" .
-        ".PHONY: clean distclean extraclean\n/g' Makefile");
-
-
-# Mods to printing
 #   #define SPACE 3
 #   renderC and friends change to this:
 #           _n_ = _n_ + SPACE;
@@ -57,4 +63,28 @@ system("perl -pi -e 's/.PHONY: clean distclean\n/" .
 #       /*     bufAppendC('\n'); */
 #   for }
 #       need to add an extra backup();
+sub fix_printer {
+	# Mods to Pretty Printer:
+	system("perl -pi -e 's/int _n_;/#define SPACE 3\n\nint _n_;/g' " .
+		"Printer.c");
 
+	# This if broken XXX
+	system("perl -pi -e 's/ \+ 2/ \+ SPACE/g' Printer.c");
+
+	system("perl -pi -e 's/- 2;/- SPACE;\n     backup();/g' Printer.c");
+	# Need to do this also... XXX
+# 	system("perl -pi -e 's/\'{\')\n  {\n    bufAppendC(\'\n\');" .
+#		/\'{\')\n  {\n/g' Printer.c");
+}
+
+# Create our stuff with bnfc
+system("bnfc -m -c LPC.cf");
+fix_makefile();
+fix_printer();
+create_newfiles();
+
+system("make");
+
+# Test our code
+system("./TestLPC ../examp/ugly.c");
+system("./lpc ../examp/ugly.c");

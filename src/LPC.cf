@@ -2,7 +2,7 @@
 -- run the following command to create our compiler template:
 -- bnfc -m -c LPC.cf
 --
---  This is currently the c- syntax need to replace it. XXX
+--  This was a copy of the c- syntax need to finish converting it to LPC.
 --
 
 comment "//" ;
