@@ -66,7 +66,7 @@ variable def:
    int *x "An array of the values we are " +
       "going to use";
 
-types: void int, float, string, object, mapping, mixed;
+types: void, int, float, string, object, mapping, mixed;
 
 function definition:
 returntype name "Description" (vartype varname "Description" [,...]) { }

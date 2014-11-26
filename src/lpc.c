@@ -13,12 +13,15 @@
 #include "Printer.h"
 #include "Absyn.h"
 
+#define VERSION "0.0"
+
 int print = -1;
 int help = -1;
 int critic = -1;
 int libdir = -1;
 int incdir = -1;
 int outfile = -1;
+int version = -1;
 int opt = 0;
 
 
@@ -29,8 +32,20 @@ static struct option long_options[] = {
 	{"include",	required_argument,	NULL,	'I' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
+	{"version",	no_argument,		NULL,	'v' },
 	{0,		0,			0,	0 }
 };
+
+void print_version(char *name) {
+	printf("%s Version: %s\n", name, VERSION);
+/*
+	printf("%s_config_path: %s\n", name, config_path);
+	printf("%s_config_file: %s\n", name, config_file);
+	printf("%s_include_path: %s\n", name, include_path);
+	printf("%s_lib_path: %S\n", name, lib_path);
+	printf("%s_critic_path: %s\n", name, critic_path);
+*/
+}
 
 void print_usage(char *name) {
 	printf("Usage: %s [OPTIONS] [INFILE]\n", name);
@@ -47,6 +62,7 @@ void print_usage(char *name) {
 	printf("inheritables.\n");
 	printf("\t-o --output=FILE\n\t\tSpecify a filename to compile ");
 	printf("the code to.\n");
+	printf("\t-v --version\n\t\tPrint Version information.\n");
 }
 
 int main(int argc, char ** argv) {
@@ -54,7 +70,7 @@ int main(int argc, char ** argv) {
    Program parse_tree;
    int long_index = 0;
 
-   while ((opt = getopt_long(argc, argv, "oLIChp", long_options,
+   while ((opt = getopt_long(argc, argv, "hopvL:I:C:", long_options,
       &long_index)) != -1) {
       switch (opt) {
          case 'C':
@@ -66,6 +82,10 @@ int main(int argc, char ** argv) {
          case 'o':
             break;
          case 'p':
+            break;
+         case 'v':
+            print_version(argv[0]);
+            return 0;
             break;
          default:
             print_usage(argv[0]);
