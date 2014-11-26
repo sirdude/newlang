@@ -18,7 +18,7 @@ sub fix_makefile {
 	system("perl -pi -e 's/LPC.pdf TestLPC/LPC.pdf TestLPC lpc/g' " .
 		"Makefile");
 	system("perl -pi -e 's/distclean: clean\n/" .
-	        "extraclean:\n\trm -rf Interpreter* lpc.c lpc.h lpc " .
+	        "extraclean:\n\trm -rf Interpreter* lpc " .
 		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' Makefile");
 	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
 		".PHONY: clean distclean extraclean\n/g' Makefile");
@@ -42,7 +42,6 @@ sub create_newfiles {
 	# Copy our defaults to new programs
 	system("cp Skeleton.c Interpreter.c");
 	system("cp Skeleton.h Interpreter.h");
-	system("cp Test.c lpc.c");
 
 	system("perl -pi -e 's/Skeleton.h/Interpreter.h/g' Interpreter.c");
 
@@ -52,8 +51,6 @@ sub create_newfiles {
         system("perl -pi -e 's/#include \"Interpreter.h\"\n/" .
                 "#include \"Interpreter.h\"\n#include <stdlib.h>\n" .
                 "#include <stdio.h>\n/g' Interpreter.c");
-
-	# Need to modify lpc.c
 }
 
 #   #define SPACE 3
