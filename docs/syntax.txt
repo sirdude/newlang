@@ -17,3 +17,31 @@ choosing to only support single line comments with a #
 So on a given line anything after a '#' and before a newline is considered
 a comment.
 
+=head1 Types
+Types are used for variables and functions.  In the case of variables, they 
+are used by the language to reserve space for a variable, and define how the
+language works with that variable.  In general a string takes up
+more space than an intiger.  If I have a statement x + y;  It will more than
+likely behave differently if our variables are strings or intigers.
+
+For functions types are used to define what the return value(s) of a 
+function will look like.
+
+=head2 Basic Types
+Our programming language supports the following basic types:
+=item void
+=item int
+=item float
+=item string
+=item object
+=item mapping
+=item mixed
+
+=head2 Arrays
+In addition to basic types you can also create an array out of any of the
+basic types.  To define an array prepend the variable name with a *.
+	int x;
+Becomes:
+	int *x;
+
+=head2 Type Modifiers

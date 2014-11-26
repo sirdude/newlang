@@ -41,9 +41,12 @@ void print_version(char *name) {
 /*
 	printf("%s_config_path: %s\n", name, config_path);
 	printf("%s_config_file: %s\n", name, config_file);
+	printf("%s_critic_path: %s\n", name, critic_path);
 	printf("%s_include_path: %s\n", name, include_path);
 	printf("%s_lib_path: %S\n", name, lib_path);
-	printf("%s_critic_path: %s\n", name, critic_path);
+
+	printf("Found inheritables:\n");
+	XXX
 */
 }
 
