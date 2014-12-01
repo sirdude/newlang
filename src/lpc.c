@@ -68,14 +68,37 @@ void print_usage(char *name) {
 	printf("\t-v --version\n\t\tPrint Version information.\n");
 }
 
-int main(int argc, char ** argv) {
-   FILE *input;
-   Program parse_tree;
-   int long_index = 0;
+int do_critic(char *outfile, Program parse_tree) {
+}
 
-   while ((opt = getopt_long(argc, argv, "hopvL:I:C:", long_options,
-      &long_index)) != -1) {
-      switch (opt) {
+int print_file(char *outfile, Program parse_tree) {
+
+	if (outfile) {
+		ofile = open(outfile,"w");
+		if (!ofile) {
+			return 0;
+		}
+
+		fprintf(ofile,"[Linearized Tree]\n");
+		fprintf(ofile,"%s\n\n", printProgram(parse_tree));
+
+		close(ofile);
+	} else {
+		printf("[Linearized Tree]\n");
+		printf("%s\n\n", printProgram(parse_tree));
+	}
+	return 1;
+}
+
+int main(int argc, char ** argv) {
+	FILE *input;
+	char *outfile;
+	Program parse_tree;
+	int long_index = 0;
+
+	while ((opt = getopt_long(argc, argv, "hopvL:I:C:", long_options,
+		&long_index)) != -1) {
+		switch (opt) {
          case 'C':
             break;
          case 'L':
@@ -83,8 +106,10 @@ int main(int argc, char ** argv) {
          case 'I':
             break;
          case 'o':
+            outfile = "";
             break;
          case 'p':
+            print = 1;
             break;
          case 'v':
             print_version(argv[0]);
@@ -96,27 +121,34 @@ int main(int argc, char ** argv) {
       }
    }
 
-   if (argc > 1) {
-      input = fopen(argv[1], "r");
-      if (!input) {
-         fprintf(stderr, "Error opening input file.\n");
-         exit(1);
-      }
-   } else {
-      input = stdin;
-   }
+	if (argc > 1) {
+		input = fopen(argv[1], "r");
 
-   /* The default entry point is used. For other options see Parser.h */
-   parse_tree = pProgram(input);
-   if (parse_tree) {
-      printf("\nParse Succesful!\n");
-      printf("\n[Abstract Syntax]\n");
-      printf("%s\n\n", showProgram(parse_tree));
-      printf("[Linearized Tree]\n");
-      printf("%s\n\n", printProgram(parse_tree));
-      return 0;
-   }
+		if (!input) {
+			fprintf(stderr, "Error opening input file.\n");
+			exit(1);
+		}
+	} else {
+		input = stdin;
+	}
 
-   return 1;
+	/* The default entry point is used. For other options see Parser.h */
+	parse_tree = pProgram(input);
+
+	if (parse_tree) {
+		printf("\nParse Succesful!\n");
+		printf("\n[Abstract Syntax]\n");
+		printf("%s\n\n", showProgram(parse_tree));
+
+		if (print) {
+			return print_file(outfile,parse_tree);
+		} else if (critic) {
+			return do_critic(outfile,parse_tree);
+		}
+
+		return 0;
+	}
+
+	return 1;
 }
 
