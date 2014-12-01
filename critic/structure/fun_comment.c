@@ -3,10 +3,10 @@
 struct critmod;
 
 int init() {
-	critmod.name = "var_comment";
+	critmod.name = "fun_comment";
 	critmod.criticality = 3;
 	critmod.package = "structure";
-	critmod.info = "Variables should have a comment: Examples:\n\tGood: int x "Our counter";\n\tBad: int x;";
+	critmod.info = "Functions should have a comment: Examples:\n\tGood: int do_stuff "Really cool function" () { return 1; } ";\n\tBad: int do_stuff () { return 1; }";
 }
 
 int has_comment(struct *node) {
@@ -14,7 +14,7 @@ int has_comment(struct *node) {
 }
 
 int violates (struct *node, struct *wholefile) {
-	if (node.type != var) {
+	if (node.type != function) {
 		return 0;
 	}
 

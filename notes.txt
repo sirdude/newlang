@@ -71,5 +71,4 @@ types: void, int, float, string, object, mapping, mixed;
 function definition:
 returntype name "Description" (vartype varname "Description" [,...]) { }
 
-Always return a value can chose to ignore it but return something...
 
