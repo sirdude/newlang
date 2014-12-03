@@ -3,7 +3,7 @@
 Comments in a programming language are use for a number of reasons.
 Many times they are used to explain a hairy piece of code, or to document
 hidden features of a function, or to provide a summary of how a function works
-in a higher level.  They are ualso used to disable certain blocks of code.
+in a higher level.  They are also used to disable certain blocks of code.
 
 Many programs today support two types of comments, commenting out a line
 or the end of a line, or commenting out a block of code.  The idea behind
@@ -21,8 +21,8 @@ a comment.
 Types are used for variables and functions.  In the case of variables, they 
 are used by the language to reserve space for a variable, and define how the
 language works with that variable.  In general a string takes up
-more space than an intiger.  If I have a statement x + y;  It will more than
-likely behave differently if our variables are strings or intigers.
+more space than an integer.  If I have a statement x + y;  It will more than
+likely behave differently if our variables are strings or integers.
 
 For functions types are used to define what the return value(s) of a 
 function will look like.
@@ -54,13 +54,13 @@ Our programming language supports the following type modifiers:
 XXX Need to fill these in.
 
 =head2 Code Structure
-Programing languages have a basic structure.  In C this structure is something
+Programming languages have a basic structure.  In C this structure is something
 along the lines of: Create a bunch of functions, and or define 
 some variables and or structures, then create a main function which is our
 entry point into the language.  In general this structure is defined in a 
 format called ebnf.  You can find the ebnf for our language here:
 src/LPC.cf  We are using this as input to bnfc, if you want to learn more
-about the fileformat do a google search for bnfc.
+about the file format do a google search for bnfc.
 
 The structure for our language is a little more complicated than c, we have
 to deal with objects and inheritance.  Here is a high level summary, as well

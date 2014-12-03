@@ -5,8 +5,8 @@ Check for var masking, function masking.  Have a way to
 Check for vars defined after code in a block.
 
 check for inheritable cloning, or inheriting non inheritable?
-Check inherit exists, also test enheritable : would need to create
-	a visited list, exand this so you can check a dir and only
+Check inherit exists, also test inheritable : would need to create
+	a visited list, expand this so you can check a dir and only
 	check files once.
 
 check to make sure objects are not orphaned? (destroy them when your done)

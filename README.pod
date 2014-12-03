@@ -30,7 +30,7 @@ of my motivations:
 =item 1. Simple consistent language.
 	don't have multiple syntaxes for or, if statements, comments
 
-=item 2. Avoid sigial for variables.
+=item 2. Avoid sigual for variables.
 
 =item 3. Compiler should have a built-in pretty printer.
 
@@ -71,7 +71,7 @@ syntax.pod  		A Document covering the syntax of our new language
 notes.txt		Things I've been thinking about
 src			Current source code for bnfc starting with trying
 			to build an lpc grammar and then will modify that
-			so for now this doesn't line up with the docs.
+			so for now this doesn't line up with the documentation.
 examples		Example code
 
 =head2 What are the plans?
@@ -90,7 +90,7 @@ language.
 =head1 LICENSE
 
 This code is currently under the CC license, you can do whatever you
-want to with it.  This may change the future to something like
+want to with it.  This may change in the future to something like
 the GPL depending on how things go.
 
 =head2 Want to get involved?

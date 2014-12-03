@@ -18,9 +18,9 @@ Policies look something like this:
 
 
 Then what you do is this:
-	Load all policys you want based on criticality and packages.
+	Load all polices you want based on criticality and packages.
 	Check all of the policies that apply to the entire document.
 	create node tree out of the code.
 	foreach node in the tree,
-		Determine what polcies apply to that node, 
+		Determine what policies apply to that node, 
 		if there is a violation, print the location and the violation.
