@@ -44,4 +44,28 @@ basic types.  To define an array prepend the variable name with a *.
 Becomes:
 	int *x;
 
+It's ok to mix regular types and arrays in declarations:
+	int x, *y, z;	# Declares two int''s x,z and an array of ints y
+
 =head2 Type Modifiers
+Our programming language supports the following type modifiers:
+=item nomask
+=item static
+XXX Need to fill these in.
+
+=head2 Code Structure
+Programing languages have a basic structure.  In C this structure is something
+along the lines of: Create a bunch of functions, and or define 
+some variables and or structures, then create a main function which is our
+entry point into the language.  In general this structure is defined in a 
+format called ebnf.  You can find the ebnf for our language here:
+src/LPC.cf  We are using this as input to bnfc, if you want to learn more
+about the fileformat do a google search for bnfc.
+
+The structure for our language is a little more complicated than c, we have
+to deal with objects and inheritance.  Here is a high level summary, as well
+as some basic definitions.
+
+In our language the basic building block of the language is an object.
+
+
