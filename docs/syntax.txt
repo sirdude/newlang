@@ -8,7 +8,7 @@ in a higher level.  They are also used to disable certain blocks of code.
 Many programs today support two types of comments, commenting out a line
 or the end of a line, or commenting out a block of code.  The idea behind
 our language is that comments that add value to a piece of code, a function,
-var, or code block will be a part of the syntax of the language.
+variable, or code block will be a part of the syntax of the language.
 
 This will hopefully eliminate the majority of comments in code.  We will
 still support comments for blocking out code, and or adding comments to

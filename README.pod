@@ -13,7 +13,7 @@ this:
 
 =over 8
 
-=item Perl, lpc, c, tcl, lisp
+=item Perl, lpc, c, tcl, scheme
 
 =back
 
@@ -27,34 +27,36 @@ of my motivations:
 
 =over 8
 
-=item 1. Simple consistent language.
+=item 1. Simple consistent language.  Provide full functionality but keep
+	things clean, and small.  Shoot for lua vs perl.
 	don't have multiple syntaxes for or, if statements, comments
 
-=item 2. Avoid sigual for variables.
+=item 2. Avoid cryptic code: sigils for variables, ? if syntax.
+	Try to make sure code is readable and straight forward.
 
-=item 3. Compiler should have a built-in pretty printer.
+=item 3. Look at common things and reduce the work needed:
+		foreach instead of all the mucking about with a for statment
+		to loop through an array.
+		Builtin string type instead of char *.
 
-=item 4. You should be able to cut and paste the language and not mess 
-things up.
+=item 4. You should be able to cut and paste the language and not mess it up.
 
-=item 5. Compiler should have a built-in perlcritic type functionality.
+=item 5. Compiler should have a built-in pretty printer.
 
-=item 6. Avoid common programming issues.
+=item 6. Compiler should have a built-in Perl critic type functionality.
 
 =item 7. Strongly typed.
 
-=item 8. Should have built-in string type.
-
-=item 9. Allow object oriented programming, not everything needs to be an
+=item 8. Allow object oriented programming, not everything needs to be an
 object though.
 
-=item 10. If you look at comments I would guess that 80-90% of them are
+=item 9. If you look at comments I would guess that 80-90% of them are
 when you declare a variable or a function.  If we have comments as
 part of the syntax of the actual language we could do cool things
 like hide them in the editor unless you are actually looking at
 that code.
 
-=item 11. Worry less about whitespace, at the same time code must be 
+=item 10. Worry less about whitespace, at the same time code must be 
 readable in a standard terminal.
 
 =back
@@ -71,7 +73,7 @@ syntax.pod  		A Document covering the syntax of our new language
 notes.txt		Things I've been thinking about
 src			Current source code for bnfc starting with trying
 			to build an lpc grammar and then will modify that
-			so for now this doesn't line up with the documentation.
+			so for now this doesn't line up with the docs.
 examples		Example code
 
 =head2 What are the plans?
@@ -82,7 +84,7 @@ examples		Example code
 
 =item 2. Creating a bnf of the language.
 
-=item 3. using bnfc to create an interpreter/pretty printer for the
+=item 3. using bnfc to create an interpreter/pretty printer/critic for the
 language.
 
 =back
@@ -90,7 +92,7 @@ language.
 =head1 LICENSE
 
 This code is currently under the CC license, you can do whatever you
-want to with it.  This may change in the future to something like
+want to with it.  This may change the future to something like
 the GPL depending on how things go.
 
 =head2 Want to get involved?
