@@ -22,6 +22,8 @@ int libdir = -1;
 int incdir = -1;
 int outfile = -1;
 int version = -1;
+int test = -1;
+int upgrade = -1;
 int opt = 0;
 
 
@@ -32,7 +34,9 @@ static struct option long_options[] = {
 	{"include",	required_argument,	NULL,	'I' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
+	{"upgrade",	no-argument,		NULL,	'u' },
 	{"version",	no_argument,		NULL,	'v' },
+	{"test",	no_argument,		NULL,	't' },
 	{0,		0,			0,	0 }
 };
 
@@ -50,22 +54,25 @@ void print_version(char *name) {
 */
 }
 
-void print_usage(char *name) {
+int print_usage(char *name) {
 	printf("Usage: %s [OPTIONS] [INFILE]\n", name);
 	printf("\tEvaluate the file INFILE.  If no file is given, read ");
 	printf("from stdin.\n");
 	printf("Available Options:\n");
-	printf("\t-p --print\n\t\tParse the file and then print it in the ");
-	printf("standard format.\n");
-	printf("\t-h --help\n\t\tThis usage information.\n");
 	printf("\t-C --critic\n\t\tPrint feedback on the submitted code.\n");
+	printf("\t-h --help\n\t\tThis usage information.\n");
 	printf("\t-I --include=DIR\n\t\tSpecify a directory to search for ");
 	printf("include files.\n");
 	printf("\t-L --lib=DIR\n\t\tSpecify a directory to search for ");
 	printf("inheritables.\n");
 	printf("\t-o --output=FILE\n\t\tSpecify a filename to compile ");
 	printf("the code to.\n");
+	printf("\t-p --print\n\t\tParse the file and then print it in the ");
+	printf("standard format.\n");
+	printf("\t-t --test\n\t\tRun all of the test_* functions in the code.");
 	printf("\t-v --version\n\t\tPrint Version information.\n");
+
+	return 0;
 }
 
 int do_critic(char *outfile, Program parse_tree) {
@@ -96,30 +103,34 @@ int main(int argc, char ** argv) {
 	Program parse_tree;
 	int long_index = 0;
 
-	while ((opt = getopt_long(argc, argv, "hopvL:I:C:", long_options,
+	while ((opt = getopt_long(argc, argv, "hoptuvL:I:C:", long_options,
 		&long_index)) != -1) {
 		switch (opt) {
-         case 'C':
-            break;
-         case 'L':
-            break;
-         case 'I':
-            break;
-         case 'o':
-            outfile = "";
-            break;
-         case 'p':
-            print = 1;
-            break;
-         case 'v':
-            print_version(argv[0]);
-            return 0;
-            break;
-         default:
-            print_usage(argv[0]);
-            return 0;
-      }
-   }
+			case 'C':
+				critic = 1;
+				break;
+			case 'L':
+				break;
+			case 'I':
+				break;
+			case 'o':
+				break;
+			case 'p':
+				print = 1;
+				break;
+			case 'u':
+				upgrade =1;
+				break;
+			case 'v':
+				return print_version(argv[0]);
+				break;
+			case 't':
+				test = 1;
+				break;
+			default:
+				return print_usage(argv[0]);
+		}
+	}
 
 	if (argc > 1) {
 		input = fopen(argv[1], "r");
@@ -132,8 +143,14 @@ int main(int argc, char ** argv) {
 		input = stdin;
 	}
 
-	/* The default entry point is used. For other options see Parser.h */
-	parse_tree = pProgram(input);
+	if (upgrade) {
+		/* Need to upgrade our code XXX which is more complicated 
+			version of parse_tree */
+		parse_tree = pProgram(input);
+		
+	} else {
+		parse_tree = pProgram(input);
+	}
 
 	if (parse_tree) {
 		printf("\nParse Succesful!\n");

@@ -76,3 +76,18 @@ returntype name "Description" (vartype varname "Description" [,...]) { }
 
 Add support to vim, geany, eclipse, netbeans
 
+Look at go's fixit   make something similar that is --upgrade
+
+Eventually make it so can build our compiler/thing from 
+	both  c or newlang...  Maybe have advanced things like critic newlang
+	only?
+
+Need to support built in unit testing as part of the language.
+optional but warn if not defined.  I'm thinking something like
+if you have a function
+int myfunction() { }
+should have a 
+	int myfunction_test() { }
+	as well, which will test the function.
+	Probably a bit more advanced than that but thats a good place to start.
+
