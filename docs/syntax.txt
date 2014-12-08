@@ -66,6 +66,75 @@ The structure for our language is a little more complicated than c, we have
 to deal with objects and inheritance.  Here is a high level summary, as well
 as some basic definitions.
 
-In our language the basic building block of the language is an object.
+In our language there are 5 types of files, none of them have strict
+	extension requirements but we recommend you use them as noted here
+	below:
+	Include files
+		Extension: .h 
+		These files can be included in other files with a line similar
+		to the following:
+			include "myconfig.h";
+		They in general are used to contain variables and other
+		data structures that you want to share across multiple files.
+		In general you want to avoid putting functions in an include
+		file and instead use inheritables for that.
+		
+		Include files will be searched for in the following order:
+			The default include path, which is defined in our 
+			configuration file, you you can use --include=DIR
+			to add a directory to the search path,  you can also
+			use the INCLUDE_DIR_LPC environment variable, 
+			or specify the full path to the include file.
+	inheritables
+		Extension: .l
+		These are basically meta objects.  They are not meant to be
+		used directly, but are building blocks that other programs can
+		use to simplify coding and create a library of reusable
+		functions.  You inherit them with a line like this:
+		inherit "/std/lib/object.l";
+
+		Inheritable files will be searched for in the following order:
+			The default Library path, which is defined in our 
+			configuration file, you you can use --lib=DIR
+			to add a directory to the search path,  you can also
+			use the LIB_DIR_LPC environment variable, 
+			or specify the full path to the inheritable file.
+	source code
+		Extension: .lpm???
+
+		Source code builds on includes and inheritables and allows
+		you to bind them togeather to make useful objects.  If you
+		want to convert a source file to compiled code, you use the
+		--output=FILENAME option to create a machine code executable.
+
+		When you execute a source file, you can use the standard
+		UNIX shell convention #!PATHTOINTERPRETER to execute the file.
+		EXAMPLE: #!/usr/local/bin/lpc
+
+		When source code is executed it automatically calls the main()
+		function if it exists.
+
+		If you want to reference other objects within this object,
+		you will need to clone it and then keep a reference to it, when
+		you are done with a clone, you should destroy it to free up
+		memory.
+
+	compiled code	XXX Need to look at how dgd seperates this and data 
+			files
+		Extension: none or .o   depending on usage.
+		This is source code that has been run through are compiler and
+		converted to machine code.  If they are standalone executables
+		they have no extension, if they are only part of a program they
+		have a .o extension.
+
+	data files
+		Extension: .dat ???
+		Files that contain configuration information for a 
+		cloned object, or provide other data for an object.
 
 
+=head2 Functions
+
+=head2 A Basic object
+
+=head2 Flow control
