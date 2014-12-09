@@ -20,7 +20,7 @@ int help = -1;
 int critic = -1;
 int libdir = -1;
 int incdir = -1;
-int outfile = -1;
+int output = -1;
 int version = -1;
 int test = -1;
 int upgrade = -1;
@@ -30,17 +30,17 @@ int opt = 0;
 static struct option long_options[] = {
 	{"print",	no_argument,		0,	'p' },
 	{"help",	no_argument,		0,	'h' },
-	{"critic",	no_argument,		0,	'C' },
+	{"critic",	no_argument,		0,	'c' },
 	{"include",	required_argument,	NULL,	'I' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
-	{"upgrade",	no-argument,		NULL,	'u' },
+	{"upgrade",	no_argument,		NULL,	'u' },
 	{"version",	no_argument,		NULL,	'v' },
 	{"test",	no_argument,		NULL,	't' },
 	{0,		0,			0,	0 }
 };
 
-void print_version(char *name) {
+int print_version(char *name) {
 	printf("%s Version: %s\n", name, VERSION);
 /*
 	printf("%s_config_path: %s\n", name, config_path);
@@ -52,6 +52,7 @@ void print_version(char *name) {
 	printf("Found inheritables:\n");
 	XXX
 */
+	return 1;
 }
 
 int print_usage(char *name) {
@@ -59,7 +60,7 @@ int print_usage(char *name) {
 	printf("\tEvaluate the file INFILE.  If no file is given, read ");
 	printf("from stdin.\n");
 	printf("Available Options:\n");
-	printf("\t-C --critic\n\t\tPrint feedback on the submitted code.\n");
+	printf("\t-c --critic\n\t\tPrint feedback on the submitted code.\n");
 	printf("\t-h --help\n\t\tThis usage information.\n");
 	printf("\t-I --include=DIR\n\t\tSpecify a directory to search for ");
 	printf("include files.\n");
@@ -76,12 +77,18 @@ int print_usage(char *name) {
 }
 
 int do_critic(char *outfile, Program parse_tree) {
+	return 0;
+}
+
+int run_tests(char *outfile, Program parse_tree) {
+	return 0;
 }
 
 int print_file(char *outfile, Program parse_tree) {
+	FILE *ofile;
 
-	if (outfile) {
-		ofile = open(outfile,"w");
+	if (output) {
+		ofile = fopen(outfile,"w");
 		if (!ofile) {
 			return 0;
 		}
@@ -89,7 +96,7 @@ int print_file(char *outfile, Program parse_tree) {
 		fprintf(ofile,"[Linearized Tree]\n");
 		fprintf(ofile,"%s\n\n", printProgram(parse_tree));
 
-		close(ofile);
+		fclose(ofile);
 	} else {
 		printf("[Linearized Tree]\n");
 		printf("%s\n\n", printProgram(parse_tree));
@@ -103,10 +110,10 @@ int main(int argc, char ** argv) {
 	Program parse_tree;
 	int long_index = 0;
 
-	while ((opt = getopt_long(argc, argv, "hoptuvL:I:C:", long_options,
+	while ((opt = getopt_long(argc, argv, "chptuvL:I:o:", long_options,
 		&long_index)) != -1) {
 		switch (opt) {
-			case 'C':
+			case 'c':
 				critic = 1;
 				break;
 			case 'L':
@@ -114,6 +121,7 @@ int main(int argc, char ** argv) {
 			case 'I':
 				break;
 			case 'o':
+				output = 1;
 				break;
 			case 'p':
 				print = 1;
@@ -122,7 +130,7 @@ int main(int argc, char ** argv) {
 				upgrade =1;
 				break;
 			case 'v':
-				return print_version(argv[0]);
+				version =1;
 				break;
 			case 't':
 				test = 1;
@@ -143,6 +151,10 @@ int main(int argc, char ** argv) {
 		input = stdin;
 	}
 
+	if (version) {
+		return print_version(argv[0]);
+	}
+
 	if (upgrade) {
 		/* Need to upgrade our code XXX which is more complicated 
 			version of parse_tree */
@@ -158,9 +170,12 @@ int main(int argc, char ** argv) {
 		printf("%s\n\n", showProgram(parse_tree));
 
 		if (print) {
-			return print_file(outfile,parse_tree);
+			return print_file(outfile, parse_tree);
 		} else if (critic) {
-			return do_critic(outfile,parse_tree);
+			return do_critic(outfile, parse_tree);
+		} else if (test) {
+			run_tests(outfile, parse_tree);
+		} else {
 		}
 
 		return 0;
