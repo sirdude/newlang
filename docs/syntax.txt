@@ -18,28 +18,36 @@ So on a given line anything after a '#' and before a newline is considered
 a comment.
 
 =head1 Types
-Types are used for variables and functions.  In the case of variables, they 
-are used by the language to reserve space for a variable, and define how the
-language works with that variable.  In general a string takes up
-more space than an integer.  If I have a statement x + y;  It will more than
+Types are used by a computer language to aid the computer in reading and
+validating code.  We use them to define variables, functions and other more
+complex data structures.  If your new to computer languages, we'll talk
+about variables and types later.
+
+In the case of variables, types are used by the language to reserve 
+space for a variable, and define how the language works with that variable.  
+In general a string takes up more space than an integer.  If I call
+a function to add two variables togeather, it will more than
 likely behave differently if our variables are strings or integers.
+So we need to tell the computer what type of thing it is working with.
 
 For functions types are used to define what the return value(s) of a 
-function will look like.
+function will look like, as well as what types of things we will pass
+into that function.
 
 =head2 Basic Types
 Our programming language supports the following basic types:
 =item void
-=item int
-=item float
-=item string
+=item int	default value 0
+=item float	default value 0.0
+=item string	default value ""
 =item object
 =item mapping
 =item mixed
 
 =head2 Arrays
 In addition to basic types you can also create an array out of any of the
-basic types.  To define an array prepend the variable name with a *.
+basic types.  An array is just a list of variables with the same type.
+To define an array prepend the variable name with a *.
 	int x;
 Becomes:
 	int *x;
@@ -47,9 +55,23 @@ Becomes:
 It's ok to mix regular types and arrays in declarations:
 	int x, *y, z;	# Declares two int''s x,z and an array of ints y
 
+Once we have defined an array, we can lookup values with an index number.
+Index numbers start with 0 and go up.
+x[0]   is the first element in the array x. x[1] is the second.
+Index numbers must be >= 0.  If a value has not been set, it will return
+the default value for the specified types.  If the specified type has no
+default value it will return nil;
+
 =head2 Type Modifiers
-Our programming language supports the following type modifiers:
+Type modifiers are used to alter the behaviour of our program functions
+and or data stuctures.  Our programming language supports the following 
+type modifiers:
+
 =item nomask
+
+The nomask modifier insures that a user cannot overwrite the specified
+function and or data.
+
 =item static
 XXX Need to fill these in.
 
@@ -132,8 +154,55 @@ In our language there are 5 types of files, none of them have strict
 		Files that contain configuration information for a 
 		cloned object, or provide other data for an object.
 
+=head2 Variables
+The basic building block of any programming language is a variable.
+In our language a variable must be declared at the top of a code block,
+before other code is defined, it should have a type, a description and it
+is initalized to the default value.  We do not allow you to set the value
+of a variable when you are declaring it.  A declaration of a variable has
+the following format [TYPE MODIFIERS] TYPE NAME DESCRIPTION;
+NAME must start with a letter, _ or - and can only include:
+ letters numbers _  -
+The DESCRIPTION is a string that describes what the variable will be used for.
+Here are some simple examples of variable declarations:
+int x "Our Counter";
+private float value "The value of our product";
+
+=head2 Statments
+Once we have defined or declared various data structures like variables,
+or arrays we need to start using them to do useful things.  We do this
+with statements.  Statements are basically an instruction to the computer
+to do something.  There are lots of different types of statements.  Some
+deal with math, others provide feedback to the user, and others allow the
+computer to make decisions.  We'll talk about the various statments later.
+Here are some example statements:
+	x = x + 5; # Look up the current value of the variable x and add 5 to it
+	x = do_something(); # Call the function do_something and set x to
+			    # the results of our function call
+	write("Hello");     # Print the word Hello
 
 =head2 Functions
+Functions allow us to create a bunch of instructions to to the computer
+and give it a name.  Once we have defined a function, we can use that
+function and the computer will preform that function every time we call it.
+Defining a function has the following syntax:
+[TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
+	STATEMENTS
+}
+The FUNTION NAME is similar to a variable NAME, it must start with a letter,
+- or _ and can only include: letters numbers _ -
+The DESCRIPTION is a string that describes the function.
+INPUT_VARIABLES is a comma seperated list of variable definitions.
+Here are 2 example function definitions:
+int set_name "Set the players name" (string tmpname "The name we want to set") {
+	name = tmpname;
+
+	return 1;
+}
+
+string query_name "Get the players name" (void) {
+	return name;
+}
 
 =head2 A Basic object
 
