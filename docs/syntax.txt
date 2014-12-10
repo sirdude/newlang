@@ -26,7 +26,7 @@ about variables and types later.
 In the case of variables, types are used by the language to reserve 
 space for a variable, and define how the language works with that variable.  
 In general a string takes up more space than an integer.  If I call
-a function to add two variables togeather, it will more than
+a function to add two variables together, it will more than
 likely behave differently if our variables are strings or integers.
 So we need to tell the computer what type of thing it is working with.
 
@@ -63,8 +63,8 @@ the default value for the specified types.  If the specified type has no
 default value it will return nil;
 
 =head2 Type Modifiers
-Type modifiers are used to alter the behaviour of our program functions
-and or data stuctures.  Our programming language supports the following 
+Type modifiers are used to alter the behavior of our program functions
+and or data structures.  Our programming language supports the following 
 type modifiers:
 
 =item nomask
@@ -125,7 +125,7 @@ In our language there are 5 types of files, none of them have strict
 		Extension: .sw
 
 		Source code builds on includes and inheritables and allows
-		you to bind them togeather to make useful objects.  If you
+		you to bind them together to make useful objects.  If you
 		want to convert a source file to compiled code, you use the
 		--output=FILENAME option to create a machine code executable.
 
@@ -141,11 +141,11 @@ In our language there are 5 types of files, none of them have strict
 		you are done with a clone, you should destroy it to free up
 		memory.
 
-	compiled code	XXX Need to look at how dgd seperates this and data 
+	compiled code	XXX Need to look at how dgd separates this and data 
 			files
 		Extension: none or .swo   depending on usage.
 		This is source code that has been run through are compiler and
-		converted to machine code.  If they are standalone executables
+		converted to machine code.  If they are stand alone executables
 		they have no extension, if they are only part of a program they
 		have a .o extension.
 
@@ -158,7 +158,7 @@ In our language there are 5 types of files, none of them have strict
 The basic building block of any programming language is a variable.
 In our language a variable must be declared at the top of a code block,
 before other code is defined, it should have a type, a description and it
-is initalized to the default value.  We do not allow you to set the value
+is initialized to the default value.  We do not allow you to set the value
 of a variable when you are declaring it.  A declaration of a variable has
 the following format [TYPE MODIFIERS] TYPE NAME DESCRIPTION;
 NAME must start with a letter, _ or - and can only include:
@@ -168,13 +168,13 @@ Here are some simple examples of variable declarations:
 int x "Our Counter";
 private float value "The value of our product";
 
-=head2 Statments
+=head2 Statements
 Once we have defined or declared various data structures like variables,
 or arrays we need to start using them to do useful things.  We do this
 with statements.  Statements are basically an instruction to the computer
 to do something.  There are lots of different types of statements.  Some
 deal with math, others provide feedback to the user, and others allow the
-computer to make decisions.  We'll talk about the various statments later.
+computer to make decisions.  We'll talk about the various statements later.
 Here are some example statements:
 	x = x + 5; # Look up the current value of the variable x and add 5 to it
 	x = do_something(); # Call the function do_something and set x to
@@ -184,15 +184,15 @@ Here are some example statements:
 =head2 Functions
 Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
-function and the computer will preform that function every time we call it.
+function and the computer will perform that function every time we call it.
 Defining a function has the following syntax:
 [TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
 	STATEMENTS
 }
-The FUNTION NAME is similar to a variable NAME, it must start with a letter,
+The FUNCTION NAME is similar to a variable NAME, it must start with a letter,
 - or _ and can only include: letters numbers _ -
 The DESCRIPTION is a string that describes the function.
-INPUT_VARIABLES is a comma seperated list of variable definitions.
+INPUT_VARIABLES is a comma separated list of variable definitions.
 Here are 2 example function definitions:
 int set_name "Set the players name" (string tmpname "The name we want to set") {
 	name = tmpname;
