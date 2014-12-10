@@ -86,7 +86,7 @@ In our language there are 5 types of files, none of them have strict
 			use the INCLUDE_DIR_LPC environment variable, 
 			or specify the full path to the include file.
 	inheritables
-		Extension: .l
+		Extension: .swl
 		These are basically meta objects.  They are not meant to be
 		used directly, but are building blocks that other programs can
 		use to simplify coding and create a library of reusable
@@ -100,7 +100,7 @@ In our language there are 5 types of files, none of them have strict
 			use the LIB_DIR_LPC environment variable, 
 			or specify the full path to the inheritable file.
 	source code
-		Extension: .lpm???
+		Extension: .sw
 
 		Source code builds on includes and inheritables and allows
 		you to bind them togeather to make useful objects.  If you
@@ -121,14 +121,14 @@ In our language there are 5 types of files, none of them have strict
 
 	compiled code	XXX Need to look at how dgd seperates this and data 
 			files
-		Extension: none or .o   depending on usage.
+		Extension: none or .swo   depending on usage.
 		This is source code that has been run through are compiler and
 		converted to machine code.  If they are standalone executables
 		they have no extension, if they are only part of a program they
 		have a .o extension.
 
 	data files
-		Extension: .dat ???
+		Extension: .dat
 		Files that contain configuration information for a 
 		cloned object, or provide other data for an object.
 

@@ -79,15 +79,30 @@ Add support to vim, geany, eclipse, netbeans
 Look at go's fixit   make something similar that is --upgrade
 
 Eventually make it so can build our compiler/thing from 
-	both  c or newlang...  Maybe have advanced things like critic newlang
-	only?
+	both c or newlang...
+	Maybe have advanced things like critic newlang only?
 
 Need to support built in unit testing as part of the language.
 optional but warn if not defined.  I'm thinking something like
 if you have a function
 int myfunction() { }
 should have a 
-	int myfunction_test() { }
+	int test_myfunction() { }
 	as well, which will test the function.
 	Probably a bit more advanced than that but thats a good place to start.
+
+
+config file is one of our objects.
+have the following search path for our config file:
+	CURRENTWORKING DIR/.(language)rc (Maybe allow disabling this)
+	USERS HOMEDIR/.(language)rc (Again maybe allow disabling this)
+	INSTALLDIR/etc/.(language)rc
+
+Have the notion of working directory.  Set it to . by default but
+can be specified on commandline or through config.  The idea being that
+you can't reference files outside of the working dir.  (Note: you'll
+still be able to inherit installed inheritables and include installed
+include files)
+
+entry function for our objects is create(); (Not main);
 

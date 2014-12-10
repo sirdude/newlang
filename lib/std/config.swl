@@ -1,0 +1,58 @@
+#!/usr/local/bin/sweet
+
+string *includes "Directories to search for include files";
+
+string *libraries "Directories to search for inheritable files";
+
+string workingdir "Root directory for our programs";
+
+string datadir "Data directory for our programs";
+
+int criticlevel; "Default critic level, the levels range from 0-5\n" +
+        "0 = no checks\n" +
+        "1 = absolute minimal checks\n" +
+        "2 = few checks\n" +
+        "3 = standard checks\n" +
+        "4 = Lets be parinoid\n" +
+        "5 = Warn me about silly things because I like it\n";
+
+int add_include(string dir) {
+	includes += dir;
+}
+
+int add_lib(string dir) {
+	libraries += dir;
+}
+
+string *query_include {
+	return includes;
+}
+
+string *query_lib {
+	return libraries;
+}
+
+string query_workingdir {
+	return workingdir;
+}
+
+int set_workingdir (string data) {
+	workingdir = data;
+}
+
+string query_datadir {
+	return datadir;
+}
+
+int set_datadir (string data) {
+	datadir = data;
+}
+
+int query_criticlevel {
+	return criticlevel;
+}
+
+int set_criticlevel (int x) {
+	criticlevel = x;
+}
+

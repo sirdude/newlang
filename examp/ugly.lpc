@@ -1,0 +1,5 @@
+/* Our main function...
+int main () { 
+int x;/*A Variable*/ x       =                 5;return                           x;
+}
+

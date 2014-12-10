@@ -1,3 +1,5 @@
+#!/usr/local/bin/sweet
+
 int mx "Return the Maximum value" () {
 	return 5000000;
 }
