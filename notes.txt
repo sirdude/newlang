@@ -112,3 +112,10 @@ this were already made for each builtin type.
 
 Try to reduce other common things in code...
 
+inline comments in the code look ugly in standard code lets look at options to
+try and clean it up so its nice looking in regular text as well.
+
+Look at doxigen for other languages and see if we can add support for what
+we are doing.  Can we leverage perl pod?  Should we?  Try it and see...
+
+
