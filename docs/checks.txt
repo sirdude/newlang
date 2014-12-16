@@ -12,6 +12,11 @@ Check inherit exists, also test inheritable : would need to create
 check to make sure objects are not orphaned? (destroy them when your done)
 check that open things like files are closed when done.
 
+Warn if variables share the name of a var at a higher scope.
+
+Warn if while statements check have no way of modifying their contents.
+Warn if switch/if statements have unreachable code.
+
 Have a way to printout varname, scope where it is defined and current value.
 Builtin test function for a function?  If so warn if no test function defined.
 	Also check for blah.test that doesn't have a function defined.
