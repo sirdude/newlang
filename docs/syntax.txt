@@ -286,6 +286,25 @@ If LIST is a mapping itterate over the keys in the mapping, if it's an array,
 itterate over the items in the array.
 
 
-=head2 A Basic object and working with it.
+=head2 A Basic object
+Each file in our programming language is an object.  Here is a simple
+object person.sw
+	#!/usr/local/bin/sweet
 
-XXX
+	string firstname, lastname;
+
+	int set_firstname(string name) {
+		firstname = name;
+		return 1;
+	}
+
+	int set_lastname(string name) {
+		lastname = name;
+		return 1;
+	}
+
+	string query_lastname(void) {
+		return lastname;
+	}
+
+As you can see from our example, ...

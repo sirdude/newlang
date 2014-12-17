@@ -1,0 +1,38 @@
+#!/usr/local/bin/sweet
+
+int set "This is a generic function to set a variable defined inside of " +
+	"an object.  It looks for a function set_(varname) and calls it " +
+	"if it exists."
+	(string var "The variable we are trying to set.",
+	mixed value "The value we are setting var to.) {
+	string type;
+
+	if (this_object()->has_var(var)) {
+		type = this_object()->get_type(var);
+		if (get_type(value) != type) {
+			/* Some kind of error here */
+			return 0;
+		}
+
+		if (this_object()->has_function("set_" + var)) {
+			return call_other(this_object(), "set_" + var);
+		}
+		this_object()->var = value;
+		return 1;
+	}
+	return 0;
+}
+
+mixed query "This is a generic function to look up the value " +
+	"of the specified variable."
+	(mixed var "The variable we are looking up.") {
+	if (this_object()->has_var(var)) {
+		if (this_object()->has_function("query_" + var)) {
+			return call_other(this_object(), "query_" + var);
+		}
+		return this_object()->var; /* ???? */
+	}
+
+	return nil;
+}
+
