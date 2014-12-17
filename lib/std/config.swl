@@ -1,4 +1,9 @@
 #!/usr/local/bin/sweet
+#
+# This file is used to define configurable options for our language system.
+# To actually set values,
+# Copy ../../etc/.sweetrc.examp  to ../../etc/.sweetrc or ~/.sweetrc
+# Then make your changes.
 
 string *includes "Directories to search for include files";
 
@@ -17,7 +22,8 @@ int criticlevel; "Default critic level, the levels range from 0-5\n" +
         "5 = Warn me about silly things because I like it\n";
 
 int add_include(string dir) {
-	includes += dir;
+	includes += dir; # XXX lpc has includes += ([ dir ]);
+			 # Do we want that syntax???
 }
 
 int add_lib(string dir) {
@@ -55,4 +61,3 @@ int query_criticlevel {
 int set_criticlevel (int x) {
 	criticlevel = x;
 }
-

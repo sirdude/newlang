@@ -109,6 +109,7 @@ Need to avoid the Must create a creator/destructor for every class.
 In lpc this is we need to not have to create a
 query_XXXX();  set_XXXX(VAR); for everything... would be nice if
 this were already made for each builtin type.
+	see lib/std/object.sw
 
 Try to reduce other common things in code...
 
@@ -118,4 +119,11 @@ try and clean it up so its nice looking in regular text as well.
 Look at doxigen for other languages and see if we can add support for what
 we are doing.  Can we leverage perl pod?  Should we?  Try it and see...
 
+Need to figure out how to do varargs....
+
+have a way to set workingdir...
+	maybe have sensable defaults like:
+		workingdir/lib
+		workingdir/include
+		workingdir/data
 

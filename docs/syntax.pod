@@ -18,6 +18,7 @@ So on a given line anything after a '#' and before a newline is considered
 a comment.
 
 =head1 Types
+
 Types are used by a computer language to aid the computer in reading and
 validating code.  We use them to define variables, functions and other more
 complex data structures.  If your new to computer languages, we'll talk
@@ -35,21 +36,38 @@ function will look like, as well as what types of things we will pass
 into that function.
 
 =head2 Basic Types
+
 Our programming language supports the following basic types:
+
+=over 8
+
 =item int	default value 0
+
 	int is short for intiger, it's a whole number possitive or negative.
+
 =item float	default value 0.0
+
 	A float is a decimal number.
+
 =item string	default value ""
+
 =item object	set to nil when not defined.
+
 =item mapping	set to ({ });  (an empty mapping) when undefined.
+
 =item void
+
 	The void type is a keyword for things that have no type.
+
 =item mixed
+
 	The mixed type is used when something takes mutiple types as input/
 	output and basically disables type checking.
 
+=back
+
 =head2 Arrays
+
 In addition to basic types you can also create an array out of any of the
 basic types.  An array is just a list of variables with the same type.
 To define an array prepend the variable name with a *.
@@ -68,19 +86,50 @@ the default value for the specified types.  If the specified type has no
 default value it will return nil;
 
 =head2 Type Modifiers
+
 Type modifiers are used to alter the behavior of our program functions
 and or data structures.  Our programming language supports the following 
-type modifiers:
+type modifiers: atomic, nomask, private, static
+
+=over 8
+
+=item atomic
+
+The atomic type modifier is only valid for functions.  It makes it so that
+if an error occurs during the function call, things will roll back to
+before the function was called.  It is a saftey net of sorts.  If it is
+modifying an object and has a problem half way through, the object will
+get reset to it's known good state before the function call.  Atomic functions
+have a few drawbacks.  They are forbidden from working with files in
+any way(renaming, writing, reading, etc...).  They are also more expensive
+to call compaired to non atomic functions.
 
 =item nomask
 
 The nomask modifier insures that a user cannot overwrite the specified
-function and or data.
+function.  It makes it so you are unable to redefine a function (or mask it).
+
+=item private
+
+When a fariable of function is marked as private, it becomes only accessable
+by the object in which it is defined.  Not even hild objects that inherit this
+object will be able to access them.  You can use this to protect internal code
+that you do not want others to have access to.
 
 =item static
-XXX Need to fill these in.
+
+The static type modifier behaves differently for variables and functions.
+
+For variables, the variable will be defined globally for that object
+and it will not be saved when save_object is called.
+
+For functions that are declared as static, the function will only be available
+to the object and it's children.
+
+=back
 
 =head2 Code Structure
+
 Programming languages have a basic structure.  In C this structure is something
 along the lines of: Create a bunch of functions, and or define 
 some variables and or structures, then create a main function which is our
@@ -105,7 +154,7 @@ In our language there are 5 types of files, none of them have strict
 		data structures that you want to share across multiple files.
 		In general you want to avoid putting functions in an include
 		file and instead use inheritables for that.
-		
+
 		Include files will be searched for in the following order:
 			The default include path, which is defined in our 
 			configuration file, you you can use --include=DIR
@@ -160,12 +209,15 @@ In our language there are 5 types of files, none of them have strict
 		cloned object, or provide other data for an object.
 
 =head2 Variables
+
 The basic building block of any programming language is a variable.
 In our language a variable must be declared at the top of a code block,
 before other code is defined, it should have a type, a description and it
 is initialized to the default value.  We do not allow you to set the value
-of a variable when you are declaring it.  A declaration of a variable has
-the following format [TYPE MODIFIERS] TYPE NAME DESCRIPTION;
+of a variable when you are declaring it.  Many languages allow you to do
+this, but we have choosen to not allow this to make code cleaner and simpler.
+A declaration of a variable has the following format
+	[TYPE MODIFIERS] TYPE NAME DESCRIPTION;
 NAME must start with a letter, _ or - and can only include:
  letters numbers _  -
 The DESCRIPTION is a string that describes what the variable will be used for.
@@ -174,6 +226,7 @@ int x "Our Counter";
 private float value "The value of our product";
 
 =head2 Statements
+
 Once we have defined or declared various data structures like variables,
 or arrays we need to start using them to do useful things.  We do this
 with statements.  Statements are basically an instruction to the computer
@@ -187,6 +240,7 @@ Here are some example statements:
 	write("Hello");     # Print the word Hello
 
 =head2 Functions
+
 Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
@@ -210,10 +264,12 @@ string query_name "Get the players name" (void) {
 }
 
 =head2 Flow control
+
 Our programming language supports the following flow control statements:
 if, while, foreach, switch
 
 =head3 Statements: if (elseif, else)
+
 An if statement has the following syntax: 
 if (EXPRESSION) {
 	STATEMENTS;
@@ -237,6 +293,7 @@ if (EXPRESSION) {
 }
 
 =head3 Statements: switch
+
 Switch statements are a cleaner syntax for more complicated if statements.
 They look like this:
 	switch (VARIABLE) {
@@ -257,6 +314,7 @@ In general though you will want at least one case statement and should have
 an else.
 
 =head3 Statements: while
+
 While statements are similar to simple if statements without the extensions,
 that get evaluated until the EXPRESSION is true.  They have the following
 syntax:
@@ -274,6 +332,7 @@ you do a few things:
 
 
 =head3 Statements: foreach
+
 Foreach statements are similar to while statements but they work with a list
 of items.  They require a variable which is defined before the foreach
 statement, and it works on an array or mapping.  They have the following
@@ -285,8 +344,8 @@ foreach VAR LIST {
 If LIST is a mapping itterate over the keys in the mapping, if it's an array,
 itterate over the items in the array.
 
-
 =head2 A Basic object
+
 Each file in our programming language is an object.  Here is a simple
 object person.sw
 	#!/usr/local/bin/sweet
