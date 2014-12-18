@@ -127,3 +127,6 @@ have a way to set workingdir...
 		workingdir/include
 		workingdir/data
 
+check out rubyspec
+	Very good idea, test system for your language that evolves with
+	the language.
