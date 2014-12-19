@@ -1,6 +1,5 @@
 Check out tcl, pike, lua, c, lpc, perl6, ruby, python
 
-Try to take out # statements from lpc
 Try to add comments as optional strings to the language
         Make comments part of the language for descriptions of things
         Also still need a way to disable blocks of code...
@@ -49,8 +48,7 @@ remove preprocessor stuff...
 no optional {}'s  they are required.
 No assignment during declarations.
 if () {} else if {} else {}    # And or simpler versions...
-for (;;) {} becomes for (,,) {}   # ,'s are used to separate args
-while () {}                       # No do while.... 
+while () {}                       # No do while, or for 
 foreach i () { }     
 Comments #  or strings when declaring vars or functions...
         Note no // or /* */ supported...
@@ -81,6 +79,7 @@ Look at go's fixit   make something similar that is --upgrade
 Eventually make it so can build our compiler/thing from 
 	both c or newlang...
 	Maybe have advanced things like critic newlang only?
+	c version builds compiler and then compiler is used to do other stuff.
 
 Need to support built in unit testing as part of the language.
 optional but warn if not defined.  I'm thinking something like
@@ -111,7 +110,8 @@ query_XXXX();  set_XXXX(VAR); for everything... would be nice if
 this were already made for each builtin type.
 	see lib/std/object.sw
 
-Try to reduce other common things in code...
+Try to reduce other common things in code, make it easy for users to do
+	what they want in a clean quick way.  Sensable defaults.
 
 inline comments in the code look ugly in standard code lets look at options to
 try and clean it up so its nice looking in regular text as well.
