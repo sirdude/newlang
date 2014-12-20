@@ -43,7 +43,7 @@ Our programming language supports the following basic types:
 
 =item int	default value 0
 
-	int is short for intiger, it's a whole number possitive or negative.
+	int is short for integer, it's a whole number positive or negative.
 
 =item float	default value 0.0
 
@@ -61,7 +61,7 @@ Our programming language supports the following basic types:
 
 =item mixed
 
-	The mixed type is used when something takes mutiple types as input/
+	The mixed type is used when something takes multiple types as input/
 	output and basically disables type checking.
 
 =back
@@ -97,12 +97,12 @@ type modifiers: atomic, nomask, private, static
 
 The atomic type modifier is only valid for functions.  It makes it so that
 if an error occurs during the function call, things will roll back to
-before the function was called.  It is a saftey net of sorts.  If it is
+before the function was called.  It is a safety net of sorts.  If it is
 modifying an object and has a problem half way through, the object will
 get reset to it's known good state before the function call.  Atomic functions
 have a few drawbacks.  They are forbidden from working with files in
 any way(renaming, writing, reading, etc...).  They are also more expensive
-to call compaired to non atomic functions.
+to call compared to non atomic functions.
 
 =item nomask
 
@@ -111,10 +111,10 @@ function.  It makes it so you are unable to redefine a function (or mask it).
 
 =item private
 
-When a fariable of function is marked as private, it becomes only accessable
-by the object in which it is defined.  Not even hild objects that inherit this
-object will be able to access them.  You can use this to protect internal code
-that you do not want others to have access to.
+When a variable or function is marked as private, they become only accessible
+by the object in which they are defined.  Not even child objects that 
+inherit this object will be able to access them.  You can use this to protect
+internal code that you do not want others to have access to.
 
 =item static
 
@@ -215,7 +215,7 @@ In our language a variable must be declared at the top of a code block,
 before other code is defined, it should have a type, a description and it
 is initialized to the default value.  We do not allow you to set the value
 of a variable when you are declaring it.  Many languages allow you to do
-this, but we have choosen to not allow this to make code cleaner and simpler.
+this, but we have chosen to not allow this to make code cleaner and simpler.
 A declaration of a variable has the following format
 	[TYPE MODIFIERS] TYPE NAME DESCRIPTION;
 NAME must start with a letter, _ or - and can only include:
@@ -338,11 +338,11 @@ of items.  They require a variable which is defined before the foreach
 statement, and it works on an array or mapping.  They have the following
 syntax:
 foreach VAR LIST {
-	STATMENTS
+	STATEMENTS
 }
 
-If LIST is a mapping itterate over the keys in the mapping, if it's an array,
-itterate over the items in the array.
+If LIST is a mapping iterate over the keys in the mapping, if it's an array,
+iterate over the items in the array.
 
 =head2 A Basic object
 
@@ -350,7 +350,7 @@ Each file in our programming language is an object.  Here is a simple
 object person.sw
 	#!/usr/local/bin/sweet
 
-	string firstname, lastname;
+	private string firstname, lastname;
 
 	int set_firstname(string name) {
 		firstname = name;
@@ -366,4 +366,24 @@ object person.sw
 		return lastname;
 	}
 
-As you can see from our example, ...
+	string query_name(void) {
+		return firstname + " " + lastname;
+	}
+
+	void create(void) {
+		set_firstname("Tom");
+		set_lastname("Jones");
+	}
+
+XXX Need to step through our first object in detail...
+
+
+XXX Then talk about /std/object
+
+
+=head2 Working with objects
+Once you have a number of objects defined, you need to know how
+our language combines objects.  There are a number of functions that
+operate on objects: 
+	clone_object, compile_object, compile_library, find_object
+
