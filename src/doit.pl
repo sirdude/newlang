@@ -15,15 +15,15 @@ use warnings;
 sub fix_makefile {
 
 	# Clean things up, make distclean do extra stuff
-	system("perl -pi -e 's/LPC.pdf TestLPC/LPC.pdf TestLPC lpc/g' " .
+	system("perl -pi -e 's/LPC.pdf testLPC/LPC.pdf testLPC lpc/g' " .
 		"Makefile");
 	system("perl -pi -e 's/distclean: clean\n/" .
 	        "extraclean:\n\trm -rf Interpreter* lpc " .
 		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' Makefile");
 	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
 		".PHONY: clean distclean extraclean\n/g' Makefile");
-	system("perl -pi -e 's/all: TestLPC LPC.pdf/all: TestLPC LPC.pdf " .
-		"lpc/g' Makefile");
+	system("perl -pi -e 's/all: testLPC/all: testLPC lpc/g' " .
+		" Makefile");
 
 	open(my $fh, ">>", "Makefile") or die "Unable to open Makefile\n";
 	print $fh "Interpreter.o: Interpreter.h\n\t\${CC} \${CCFLAGS} -c " .
@@ -83,5 +83,5 @@ create_newfiles();
 system("make");
 
 # Test our code
-system("./TestLPC ../examp/ugly.c");
+system("./testLPC ../examp/ugly.c");
 system("./lpc ../examp/ugly.c");
