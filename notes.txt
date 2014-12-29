@@ -134,3 +134,16 @@ check out rubyspec
 for critic do something like: perlcritic --statistics-only
 	so it works on files and or directories.
 	also write a check that looks at McCabe score of subroutines
+	Have a way to disable checks for specific bits of code
+	# skip check NAME  or something before scope?
+
+	has the variable name 'k' (Uncommunicative Name)
+	Calls function blah multiple times (Duplication)
+	Long parameter list....
+	nested Iterators
+	some of these pulled from reek, a ruby tester?
+
+Allow /* */ and // comments but complain and or auto convert them to
+better stuff.  Similar with other types of common code constructs.
+Seems odd but get the computer to do what the user wants or they think they
+want don't complain to complain, fix it.
