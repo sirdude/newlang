@@ -130,3 +130,7 @@ have a way to set workingdir...
 check out rubyspec
 	Very good idea, test system for your language that evolves with
 	the language.
+
+for critic do something like: perlcritic --statistics-only
+	so it works on files and or directories.
+	also write a check that looks at McCabe score of subroutines
