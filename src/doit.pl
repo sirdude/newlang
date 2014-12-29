@@ -12,9 +12,8 @@
 use strict;
 use warnings;
 
+# Clean things up, make distclean do extra stuff
 sub fix_makefile {
-
-	# Clean things up, make distclean do extra stuff
 	system("perl -pi -e 's/LPC.pdf testLPC/LPC.pdf testLPC lpc/g' " .
 		"Makefile");
 	system("perl -pi -e 's/distclean: clean\n/" .
@@ -38,6 +37,7 @@ sub fix_makefile {
 	close($fh);
 }
 
+# Copy over our templates to useful files, and then fix them up a bit.
 sub create_newfiles {
 	# Copy our defaults to new programs
 	system("cp Skeleton.c Interpreter.c");
@@ -60,12 +60,15 @@ sub create_newfiles {
 #       /*     bufAppendC('\n'); */
 #   for }
 #       need to add an extra backup();
+
+# Mods to Pretty Printer:
 sub fix_printer {
-	# Mods to Pretty Printer:
+	# use a define for our spacing...
 	system("perl -pi -e 's/int _n_;/#define SPACE 3\n\nint _n_;/g' " .
 		"Printer.c");
 
-	# This if broken XXX
+	# Replace the hardcoded 2's with our define.
+	# This is broken XXX
 	system("perl -pi -e 's/ \+ 2/ \+ SPACE/g' Printer.c");
 
 	system("perl -pi -e 's/- 2;/- SPACE;\n     backup();/g' Printer.c");
