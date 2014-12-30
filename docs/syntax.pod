@@ -252,6 +252,20 @@ Here are some example statements:
 			    # the results of our function call
 	write("Hello");     # Print the word Hello
 
+=head2 Expressions
+
+Expressions are generally a part of a statement, since we are explaining
+things though it's important that we still cover them.  They are a
+basically mathematical bits that return a value. Expressions consist of
+explicit values, constants, variables, operators, and functions and return
+a value.  In general they are not statements because on their own they would
+not do anything.  Here are some examples of expressions:
+	x + 5
+	do_something() + 5
+	x < 3
+
+We'll see where we make use of Expressions later.
+
 =head2 Functions
 
 Functions allow us to create a bunch of instructions to to the computer
@@ -392,12 +406,20 @@ object person.sw
 XXX Need to step through our first object in detail...
 
 
-XXX Then talk about /std/object
-
+You'll notice there is a lot of busy work in our example object,
+We have a standard object std/object.swl in our system library path
+that provides a lot of the basic stuff for objects.  For any variable 
+defined in an object it creates simple functions:
+	set_varname, query_varname
+So you do not need to do this.  If you want something more complicated though
+you can create them in your object and it will override the base functions.
+It also has a lot of other functionality built into it, we encourage you to
+take a look at it.
 
 =head2 Working with objects
 Once you have a number of objects defined, you need to know how
 our language combines objects.  There are a number of functions that
 operate on objects: 
-	clone_object, compile_object, compile_library, find_object
+	clone_object, compile_object, compile_library, 
+	destruct_object, file_name, find_object, object_name
 
