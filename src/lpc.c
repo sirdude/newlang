@@ -165,7 +165,7 @@ int main(int argc, char ** argv) {
 	}
 
 	if (parse_tree) {
-		printf("\nParse Succesful!\n");
+		printf("\nParse Successful!\n");
 		printf("\n[Abstract Syntax]\n");
 		printf("%s\n\n", showProgram(parse_tree));
 

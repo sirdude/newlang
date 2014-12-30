@@ -35,9 +35,9 @@ of my motivations:
 	Try to make sure code is readable and straight forward.
 
 =item 3. Look at common things and reduce the work needed:
-		foreach instead of all the mucking about with a for statment
+		foreach instead of all the mucking about with a for statement
 		to loop through an array.
-		Builtin string type instead of char *.
+		Built-in string type instead of char *.
 
 =item 4. You should be able to cut and paste the language and not mess it up.
 

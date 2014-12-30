@@ -67,7 +67,7 @@ sub fix_printer {
 	system("perl -pi -e 's/int _n_;/#define SPACE 3\n\nint _n_;/g' " .
 		"Printer.c");
 
-	# Replace the hardcoded 2's with our define.
+	# Replace the hard-coded 2's with our define.
 	# This is broken XXX
 	system("perl -pi -e 's/ \+ 2/ \+ SPACE/g' Printer.c");
 

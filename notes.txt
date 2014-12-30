@@ -97,7 +97,7 @@ have the following search path for our config file:
 	INSTALLDIR/etc/.(language)rc
 
 Have the notion of working directory.  Set it to . by default but
-can be specified on commandline or through config.  The idea being that
+can be specified on command line or through config.  The idea being that
 you can't reference files outside of the working dir.  (Note: you'll
 still be able to inherit installed inheritables and include installed
 include files)
@@ -107,11 +107,11 @@ entry function for our objects is create(); (Not main);
 Need to avoid the Must create a creator/destructor for every class.
 In lpc this is we need to not have to create a
 query_XXXX();  set_XXXX(VAR); for everything... would be nice if
-this were already made for each builtin type.
+this were already made for each built-in type.
 	see lib/std/object.sw
 
 Try to reduce other common things in code, make it easy for users to do
-	what they want in a clean quick way.  Sensable defaults.
+	what they want in a clean quick way.  Sensible defaults.
 
 inline comments in the code look ugly in standard code lets look at options to
 try and clean it up so its nice looking in regular text as well.
@@ -122,7 +122,7 @@ we are doing.  Can we leverage perl pod?  Should we?  Try it and see...
 Need to figure out how to do varargs....
 
 have a way to set workingdir...
-	maybe have sensable defaults like:
+	maybe have sensible defaults like:
 		workingdir/lib
 		workingdir/include
 		workingdir/data

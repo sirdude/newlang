@@ -75,7 +75,7 @@ To define an array prepend the variable name with a *.
 Becomes:
 	int *x;
 
-It's ok to mix regular types and arrays in declarations:
+It's Okay to mix regular types and arrays in declarations:
 	int x, *y, z;	# Declares two int''s x,z and an array of ints y
 
 Once we have defined an array, we can lookup values with an index number.
@@ -143,70 +143,81 @@ to deal with objects and inheritance.  Here is a high level summary, as well
 as some basic definitions.
 
 In our language there are 5 types of files, none of them have strict
-	extension requirements but we recommend you use them as noted here
-	below:
-	Include files
-		Extension: .h 
-		These files can be included in other files with a line similar
-		to the following:
-			include "myconfig.h";
-		They in general are used to contain variables and other
-		data structures that you want to share across multiple files.
-		In general you want to avoid putting functions in an include
-		file and instead use inheritables for that.
+extension requirements but we recommend you use them as noted here below:
 
-		Include files will be searched for in the following order:
-			The default include path, which is defined in our 
-			configuration file, you you can use --include=DIR
-			to add a directory to the search path,  you can also
-			use the INCLUDE_DIR_LPC environment variable, 
-			or specify the full path to the include file.
-	inheritables
-		Extension: .swl
-		These are basically meta objects.  They are not meant to be
-		used directly, but are building blocks that other programs can
-		use to simplify coding and create a library of reusable
-		functions.  You inherit them with a line like this:
-		inherit "/std/lib/object.l";
+=over 8
 
-		Inheritable files will be searched for in the following order:
-			The default Library path, which is defined in our 
-			configuration file, you you can use --lib=DIR
-			to add a directory to the search path,  you can also
-			use the LIB_DIR_LPC environment variable, 
-			or specify the full path to the inheritable file.
-	source code
-		Extension: .sw
+=item Include files
 
-		Source code builds on includes and inheritables and allows
-		you to bind them together to make useful objects.  If you
-		want to convert a source file to compiled code, you use the
-		--output=FILENAME option to create a machine code executable.
+	Extension: .h 
+	These files can be included in other files with a line similar
+	to the following:
+		include "myconfig.h";
+	They in general are used to contain variables and other
+	data structures that you want to share across multiple files.
+	In general you want to avoid putting functions in an include
+	file and instead use inheritables for that.
 
-		When you execute a source file, you can use the standard
-		UNIX shell convention #!PATHTOINTERPRETER to execute the file.
-		EXAMPLE: #!/usr/local/bin/lpc
+	Include files will be searched for in the following order:
+=over 8
+	The default include path, which is defined in our 
+	configuration file, you you can use --include=DIR
+	to add a directory to the search path,  you can also
+	use the INCLUDE_DIR_LPC environment variable, 
+	or specify the full path to the include file.
+=back
 
-		When source code is executed it automatically calls the main()
-		function if it exists.
+=item Inheritables
+	Extension: .swl
+	These are basically meta objects.  They are not meant to be
+	used directly, but are building blocks that other programs can
+	use to simplify coding and create a library of reusable
+	functions.  You inherit them with a line like this:
+	inherit "/std/lib/object.l";
 
-		If you want to reference other objects within this object,
-		you will need to clone it and then keep a reference to it, when
-		you are done with a clone, you should destroy it to free up
-		memory.
+	Inheritable files will be searched for in the following order:
+=over 8
+	The default Library path, which is defined in our 
+	configuration file, you you can use --lib=DIR
+	to add a directory to the search path,  you can also
+	use the LIB_DIR_LPC environment variable, 
+	or specify the full path to the inheritable file.
+=back
 
-	compiled code	XXX Need to look at how dgd separates this and data 
-			files
-		Extension: none or .swo   depending on usage.
-		This is source code that has been run through are compiler and
-		converted to machine code.  If they are stand alone executables
-		they have no extension, if they are only part of a program they
-		have a .o extension.
+=item = source code
 
-	data files
-		Extension: .dat
-		Files that contain configuration information for a 
-		cloned object, or provide other data for an object.
+	Extension: .sw
+
+	Source code builds on includes and inheritables and allows
+	you to bind them together to make useful objects.  If you
+	want to convert a source file to compiled code, you use the
+	--output=FILENAME option to create a machine code executable.
+
+	When you execute a source file, you can use the standard
+	UNIX shell convention #!PATHTOINTERPRETER to execute the file.
+	EXAMPLE: #!/usr/local/bin/lpc
+
+	When source code is executed it automatically calls the main()
+	function if it exists.
+
+	If you want to reference other objects within this object,
+	you will need to clone it and then keep a reference to it, when
+	you are done with a clone, you should destroy it to free up
+	memory.
+
+=item Compiled code	XXX Need to look at how dgd separates this and data 
+		files
+	Extension: none or .swo   depending on usage.
+	This is source code that has been run through are compiler and
+	converted to machine code.  If they are stand alone executables
+	they have no extension, if they are only part of a program they
+	have a .o extension.
+
+=item Data files
+	Extension: .dat
+	Files that contain configuration information for a 
+	cloned object, or provide other data for an object.
+=back
 
 =head2 Variables
 
@@ -216,14 +227,16 @@ before other code is defined, it should have a type, a description and it
 is initialized to the default value.  We do not allow you to set the value
 of a variable when you are declaring it.  Many languages allow you to do
 this, but we have chosen to not allow this to make code cleaner and simpler.
-A declaration of a variable has the following format
+A declaration of a variable has the following format:
 	[TYPE MODIFIERS] TYPE NAME DESCRIPTION;
+
 NAME must start with a letter, _ or - and can only include:
  letters numbers _  -
+
 The DESCRIPTION is a string that describes what the variable will be used for.
 Here are some simple examples of variable declarations:
-int x "Our Counter";
-private float value "The value of our product";
+	int x "Our Counter";
+	private float value "The value of our product";
 
 =head2 Statements
 
@@ -245,23 +258,24 @@ Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
 Defining a function has the following syntax:
-[TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
-	STATEMENTS
-}
+	[TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
+		STATEMENTS
+	}
 The FUNCTION NAME is similar to a variable NAME, it must start with a letter,
 - or _ and can only include: letters numbers _ -
 The DESCRIPTION is a string that describes the function.
 INPUT_VARIABLES is a comma separated list of variable definitions.
 Here are 2 example function definitions:
-int set_name "Set the players name" (string tmpname "The name we want to set") {
-	name = tmpname;
+	int set_name "Set the players name"
+		(string tmpname "The name we want to set") {
+		name = tmpname;
 
-	return 1;
-}
+		return 1;
+	}
 
-string query_name "Get the players name" (void) {
-	return name;
-}
+	string query_name "Get the players name" (void) {
+		return name;
+	}
 
 =head2 Flow control
 
@@ -271,9 +285,9 @@ if, while, foreach, switch
 =head3 Statements: if (elseif, else)
 
 An if statement has the following syntax: 
-if (EXPRESSION) {
-	STATEMENTS;
-}
+	if (EXPRESSION) {
+		STATEMENTS;
+	}
 
 EXPRESSION must evaluate to a number value.  if the result of 
 EXPRESSION is not equal to 0, STATEMENTS will be evaluated.
@@ -282,15 +296,15 @@ Optionally it can be extended with elseif and else extensions.
 There can be any number of elseif extensions, there can only be one
 else extension at the very end,  Here is an example with 2 elseif's and
 and else:
-if (EXPRESSION) {
-	STATEMENTS;
-} elseif (EXPRESSION) {
-	STATEMENTS;
-} elseif (EXPRESSION) {
-	STATEMENTS;
-} else {
-	STATEMENTS;
-}
+	if (EXPRESSION) {
+		STATEMENTS;
+	} elseif (EXPRESSION) {
+		STATEMENTS;
+	} elseif (EXPRESSION) {
+		STATEMENTS;
+	} else {
+		STATEMENTS;
+	}
 
 =head3 Statements: switch
 
@@ -318,9 +332,9 @@ an else.
 While statements are similar to simple if statements without the extensions,
 that get evaluated until the EXPRESSION is true.  They have the following
 syntax:
-while (EXPRESSION) {
-	STATEMENTS;
-}
+	while (EXPRESSION) {
+		STATEMENTS;
+	}
 
 When coding with while statements you need to be extra careful and make sure
 you do a few things:
@@ -337,9 +351,9 @@ Foreach statements are similar to while statements but they work with a list
 of items.  They require a variable which is defined before the foreach
 statement, and it works on an array or mapping.  They have the following
 syntax:
-foreach VAR LIST {
-	STATEMENTS
-}
+	foreach VAR LIST {
+		STATEMENTS
+	}
 
 If LIST is a mapping iterate over the keys in the mapping, if it's an array,
 iterate over the items in the array.

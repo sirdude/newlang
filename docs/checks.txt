@@ -21,7 +21,7 @@ Have a way to printout varname, scope where it is defined and current value.
 Have a way to given an object, print the variables defined in it with current
 	values, as well as functions defined in that object.
 
-Builtin test function for a function?  If so warn if no test function defined.
+Built-in test function for a function?  If so warn if no test function defined.
 	Also check for blah.test that doesn't have a function defined.
 	tests should cover all return statements & return values.
 	tests should also cover important edge cases.
