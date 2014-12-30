@@ -128,7 +128,7 @@ to the object and it's children.
 
 =back
 
-=head2 Code Structure
+=head1 Code Structure
 
 Programming languages have a basic structure.  In C this structure is something
 along the lines of: Create a bunch of functions, and or define 
@@ -159,15 +159,15 @@ extension requirements but we recommend you use them as noted here below:
 	file and instead use inheritables for that.
 
 	Include files will be searched for in the following order:
-=over 8
-	The default include path, which is defined in our 
-	configuration file, you you can use --include=DIR
-	to add a directory to the search path,  you can also
-	use the INCLUDE_DIR_LPC environment variable, 
-	or specify the full path to the include file.
-=back
+
+		The default include path, which is defined in our 
+		configuration file, you you can use --include=DIR
+		to add a directory to the search path,  you can also
+		use the INCLUDE_DIR_LPC environment variable, 
+		or specify the full path to the include file.
 
 =item Inheritables
+
 	Extension: .swl
 	These are basically meta objects.  They are not meant to be
 	used directly, but are building blocks that other programs can
@@ -176,13 +176,11 @@ extension requirements but we recommend you use them as noted here below:
 	inherit "/std/lib/object.l";
 
 	Inheritable files will be searched for in the following order:
-=over 8
-	The default Library path, which is defined in our 
-	configuration file, you you can use --lib=DIR
-	to add a directory to the search path,  you can also
-	use the LIB_DIR_LPC environment variable, 
-	or specify the full path to the inheritable file.
-=back
+		The default Library path, which is defined in our 
+		configuration file, you you can use --lib=DIR
+		to add a directory to the search path,  you can also
+		use the LIB_DIR_LPC environment variable, 
+		or specify the full path to the inheritable file.
 
 =item = source code
 
@@ -205,8 +203,8 @@ extension requirements but we recommend you use them as noted here below:
 	you are done with a clone, you should destroy it to free up
 	memory.
 
-=item Compiled code	XXX Need to look at how dgd separates this and data 
-		files
+=item Compiled code XXX Need to look at how dgd separates this and data files
+
 	Extension: none or .swo   depending on usage.
 	This is source code that has been run through are compiler and
 	converted to machine code.  If they are stand alone executables
@@ -214,9 +212,11 @@ extension requirements but we recommend you use them as noted here below:
 	have a .o extension.
 
 =item Data files
+
 	Extension: .dat
 	Files that contain configuration information for a 
 	cloned object, or provide other data for an object.
+
 =back
 
 =head2 Variables
@@ -291,12 +291,12 @@ Here are 2 example function definitions:
 		return name;
 	}
 
-=head2 Flow control
+=head1 Flow control
 
 Our programming language supports the following flow control statements:
 if, while, foreach, switch
 
-=head3 Statements: if (elseif, else)
+=head2 Statements: if (elseif, else)
 
 An if statement has the following syntax: 
 	if (EXPRESSION) {
@@ -320,7 +320,7 @@ and else:
 		STATEMENTS;
 	}
 
-=head3 Statements: switch
+=head2 Statements: switch
 
 Switch statements are a cleaner syntax for more complicated if statements.
 They look like this:
@@ -341,7 +341,7 @@ You can have any number of case statements, and the else is optional.
 In general though you will want at least one case statement and should have
 an else.
 
-=head3 Statements: while
+=head2 Statements: while
 
 While statements are similar to simple if statements without the extensions,
 that get evaluated until the EXPRESSION is true.  They have the following
@@ -359,7 +359,7 @@ you do a few things:
 		readable.
 
 
-=head3 Statements: foreach
+=head2 Statements: foreach
 
 Foreach statements are similar to while statements but they work with a list
 of items.  They require a variable which is defined before the foreach
@@ -372,7 +372,7 @@ syntax:
 If LIST is a mapping iterate over the keys in the mapping, if it's an array,
 iterate over the items in the array.
 
-=head2 A Basic object
+=head1 A Basic object
 
 Each file in our programming language is an object.  Here is a simple
 object person.sw
@@ -420,6 +420,51 @@ take a look at it.
 Once you have a number of objects defined, you need to know how
 our language combines objects.  There are a number of functions that
 operate on objects: 
-	clone_object, compile_object, compile_library, 
-	destruct_object, file_name, find_object, object_name
+	clone_object, compile_object, destruct_object, file_name,
+	find_object, object_name, this_object
 
+=over 8
+
+=item Compile_object (Not implementing compile_library this is the same)
+
+This function is used to initally load an object from file into memory.
+
+=item Destruct_object
+
+This function is called on an object to clean it up once we are done with
+it.  Example:
+
+=item Clone_object
+
+This function is used to create a copy of an object.
+Example:
+
+=item File_name
+
+This function return's the file that was used to create this object.
+Example:
+
+=item Find_object
+
+This function searches the loaded objects looking for specified object.
+Example:
+	object obj;
+	string str;
+
+	str = "sirdude";
+	obj = find_object(str);
+	if (!obj) {
+		write("Unable to find " + str + "\n");
+	}
+
+=item Object_name
+
+This function returns the name of the given object.
+Example:
+
+=item This_object
+
+This function returns the current object.
+Example:
+
+=back
