@@ -147,3 +147,7 @@ Allow /* */ and // comments but complain and or auto convert them to
 better stuff.  Similar with other types of common code constructs.
 Seems odd but get the computer to do what the user wants or they think they
 want don't complain to complain, fix it.
+
+	if find strlen or length() ask if should be sizeof()?
+
+
