@@ -185,7 +185,6 @@ extension requirements but we recommend you use them as noted here below:
 =item = source code
 
 	Extension: .sw
-
 	Source code builds on includes and inheritables and allows
 	you to bind them together to make useful objects.  If you
 	want to convert a source file to compiled code, you use the
@@ -270,25 +269,93 @@ not do anything.  Here are some examples of expressions:
 
 =item ()
 
+Used to group expressions and change the precedence. For more information
+on Precedence, see the table below this section.
+(3 * 5) + 4 is not the same as 3 * (5 + 4), to make code clear, you should
+not depend on precedence when writing expressions and should use ()'s to
+clarify what you want.
+
 =item []
+
+Used to reference an element in an array. x[3] gives you the 4th address
+in the array x.
 
 =item ->
 
+Used to reference a variable or a function inside of an object.  X->get_name();
+Calls the function get_name from inside of object X.
+
 =item {}
+
+Used to reference an element in a mapping. x{3} gives you the value
+assocated with the key 3 in the mapping x. XXX should this really be
+distinct from Arrays?  Maybe we just don't use arrays at all, have mappings
+only?
 
 =item !
 
-=item ++
-
-=item --
+Logical negation (Not). !X  if X is 0 evaluate to 1, otherwise evaluate to 0.
 
 =item *
 
-=item &
+Multiplication. 5 * 4; Evaluates to 20.
+
+=item /
+
+Division.  20 / 5; Evaluates to 4.
+
+=item %
+
+Modulo (integer remainder).  5 % 2; Evaluates to 1.  (There is one remainder
+when you divide 5 by 2.)  XXX I think this should be mod not %...  Just
+Like sin and cos etc....
 
 =item +
 
+Addition. 5 + 4;  Evaluates to 9.
+
 =item -
+
+Subtraction. 5 - 4; Evaluates to 1.
+
+=item ==
+
+Test for equality.  X == 5; If x is 5 evaluate to 1, otherwise evaluate to 0.
+
+=item !=
+
+Test for inequality.  X != 5; If x is not 5 evaluate to 1, otherwise
+evaluate to 0.
+
+=item &&
+
+Logical And.  X && Y; Evaluates to 1 if X and Y both are not 0.  If not,
+evaluate to 0.
+
+=item ||
+
+Logical Or. X || Y; Evaluates to 1 if X or Y are not 0.  If not, 
+evaluate to 0.
+
+=item =
+
+Assignment. x = 5; Sets the variable x to 5.
+
+=item +=
+
+Assignment and additon. x += 5; Sets the variable x to the current value of
+x plus 5.
+
+=item -=
+
+Assignment and subtraction. x -= 5; Sets the variable x to the current value of
+x minus 5.
+
+XXX Make the rest of these functions if we still need them?
+Maybe make the first two operators...  I really don't like the
+confustion of || vs | for new coders.
+& vs && and unary - vs -  Make it clear and easy to rember
+even if it makes it a little more work for the user?
 
 =item <<
 
@@ -298,21 +365,8 @@ not do anything.  Here are some examples of expressions:
 
 =item >>=
 
-=item ==
-
-=item !=
-
-=item ^
-
-=item &
-
-=item &&
-
-=item |
-
-=item ||
-
-=item =
+=item ^	
+=item & 
 
 =back
 
@@ -334,9 +388,6 @@ precidence and symbols at the same level are evaluated left to right.
 	||
 	= += ==
 	,
-
-XXX Need to remove & vs && and unary - vs -  Make it clear and easy to rember
-even if it makes it a little more work for the user?
 
 So if we have an Expression that says 5 + 4 == 3 * 2
 	3 * 2 is evaluated first, then 5 + 4 and finally 
@@ -482,6 +533,7 @@ object person.sw
 		set_lastname("Jones");
 	}
 
+
 XXX Need to step through our first object in detail...
 
 
@@ -547,6 +599,8 @@ This function returns the current object.
 Example:
 
 =back
+
+XXX Add more stuff here...  This last section should be at the very end.
 
 =head1 Full specification
 
