@@ -370,6 +370,47 @@ Here are 2 example function definitions:
 		return name;
 	}
 
+=head3 Scope
+Variables and functions are defined in specific locations, where a variable or
+function is defined is sometimes refered to as the scope of the function or
+variable.  Where the variable is defined determines where you can use it.
+If I have the following code:
+	int do_stuff(void) {
+		int x;
+	
+		x = 5;
+	}
+	x = 6;
+
+The first assignment of x = 5; makes sense, however the second assignment,
+x = 6; does not, at that point x is unknown because x is only defined inside of
+the function do_stuff.
+
+You can redefine variables or functions unless they are defined with the
+nomask type modifer.  You can also use :: to look up the value of a function or
+variable at a higher level.  If I have the following code:
+	int x;
+
+	int do_stuff(void) {
+		int x;
+
+		x = 6;
+		write("x = " + x + "\n");
+
+		write("x = " + ::x + "\n");
+	}
+
+	x = 5;
+	do_stuff();
+
+I will get the following output:
+	x = 6
+	x = 5;
+
+However if I change the first line from int x;
+to: nomask int x;
+I will get an error when I have the second int x definition.
+
 =head1 Flow control
 
 Our programming language supports the following flow control statements:
