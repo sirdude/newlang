@@ -246,24 +246,28 @@ to do something.  There are lots of different types of statements.  Some
 deal with math, others provide feedback to the user, and others allow the
 computer to make decisions.  We'll talk about the various statements later.
 Here are some example statements:
-	x = x + 5; # Look up the current value of the variable x and add 5 to it
+	x = x + 5; 	    # Look up the current value of the variable x 
+                            #      and add 5 to it
 	x = do_something(); # Call the function do_something and set x to
-			    # the results of our function call
+			    #      the results of our function call
 	write("Hello");     # Print the word Hello
 
 =head2 Expressions
 
 Expressions are generally a part of a statement, since we are explaining
 things though it's important that we still cover them.  They are a
-basically mathematical bits that return a value. Expressions consist of
-explicit values, constants, variables, operators, and functions and return
-a value.  In general they are not statements because on their own they would
-not do anything.  Here are some examples of expressions:
+basically mathematical bits that evaluate to a value. Expressions consist of
+explicit values, constants, variables, operators, and functions and result
+in a numerical value.  In general they are not statements because on their 
+own they would not do anything.  Here are some examples of expressions:
 	x + 5
 	do_something() + 5
 	x < 3
 
 =head3 Operators
+There are a number of operators in our language, you have seen quite a few
+of them in this document already.  Here is a summary of the operators and
+what they do/mean.
 
 =over 8
 
@@ -283,7 +287,8 @@ in the array x.
 =item ->
 
 Used to reference a variable or a function inside of an object.  X->get_name();
-Calls the function get_name from inside of object X.
+Calls the function get_name from inside of object X.  XXX Should talk about
+call_other and whats the difference, is there a difference?
 
 =item {}
 
@@ -303,12 +308,6 @@ Multiplication. 5 * 4; Evaluates to 20.
 =item /
 
 Division.  20 / 5; Evaluates to 4.
-
-=item %
-
-Modulo (integer remainder).  5 % 2; Evaluates to 1.  (There is one remainder
-when you divide 5 by 2.)  XXX I think this should be mod not %...  Just
-Like sin and cos etc....
 
 =item +
 
@@ -351,8 +350,8 @@ x plus 5.
 Assignment and subtraction. x -= 5; Sets the variable x to the current value of
 x minus 5.
 
-XXX Make the rest of these functions if we still need them?
-Maybe make the first two operators...  I really don't like the
+XXX Maybe make the rest of these functions if we still need them?  Similar to 
+mod vs % (Maybe make the first two operators).  I really don't like the
 confustion of || vs | for new coders.
 & vs && and unary - vs -  Make it clear and easy to rember
 even if it makes it a little more work for the user?
@@ -366,6 +365,7 @@ even if it makes it a little more work for the user?
 =item >>=
 
 =item ^	
+
 =item & 
 
 =back
@@ -374,38 +374,47 @@ even if it makes it a little more work for the user?
 
 Expressions use the following Piority levels, Higher levels are given higher
 precidence and symbols at the same level are evaluated left to right.
-	() [] -> {}
-	! + ++ -- - (type) * &
-	* / %
-	+ -
-	<< >>
-	<<= >>=
-	== !=
-	&
-	^
-	|
-	&&
-	||
-	= += ==
-	,
+
+XXX Need to remove things were aren't using...
+
+1  () [] {} -> . ::	Function call, scope, array/member access
+2  ! ~ - + * & sizeof type cast ++x --x (most) unary operations, sizeof and type casts
+3  * / % mod		Multiplication, division, modulo
+4  + -			Addition and subtraction
+5  << >>		Bitwise shift left and right
+6  < <= > >=		Comparisons: less-than, ...
+7  == !=		Comparisons: equal and not equal
+8  &			Bitwise AND
+9  ^			Bitwise exclusive OR (XOR)
+10 |			Bitwise inclusive (normal) OR
+11 &&			Logical AND
+12 ||			Logical OR
+13 ?: = += -= *= /= %= &= |= ^= <<= >>=	Conditional expression (ternary) and assignment operators
+14 ,			Comma Operator
+
 
 So if we have an Expression that says 5 + 4 == 3 * 2
 	3 * 2 is evaluated first, then 5 + 4 and finally 
 	9 == 6   which would return: 0
 	because it's not true.
 
-We'll see where we make use of Expressions later.
+We'll see more about where we make use of Expressions later.
 
 =head2 Functions
 
 Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
+Functions allow us to break a program down in to smaller pieces of code
+and allows us to reuse code to simpilfy repeditive tacks.
+
 Defining a function has the following syntax:
-	[TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
+	RETURNTYPE FUNCTIONNAME DESCRIPTION (INPUT_VARIABLES) {
 		STATEMENTS
 	}
-The FUNCTION NAME is similar to a variable NAME, it must start with a letter,
+The RETURNTYPE defines what we will receive back from a call to our function.
+It can be one of the basic TYPES, optionally with TYPE MODIFIERS.
+The FUNCTIONNAME is similar to a variable NAME, it must start with a letter,
 - or _ and can only include: letters numbers _ -
 The DESCRIPTION is a string that describes the function.
 INPUT_VARIABLES is a comma separated list of variable definitions.
@@ -420,6 +429,8 @@ Here are 2 example function definitions:
 	string query_name "Get the players name" (void) {
 		return name;
 	}
+
+XXX add more info about our examples.
 
 =head1 Flow control
 

@@ -151,3 +151,12 @@ want don't complain to complain, fix it.
 	if find strlen or length() ask if should be sizeof()?
 
 
+Should we remove precidence and force people to use ()'s to get what
+they want?  Less learning for new people and simpler, at the same time
+doesn't follow what people consider normal for math...???
+	APL and smalltalk strickly left to right...
+
+add .. and ... operators?
+
+Simplify operators, reducing them unless standard math?
+
