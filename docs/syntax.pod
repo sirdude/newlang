@@ -293,7 +293,7 @@ call_other and whats the difference, is there a difference?
 =item {}
 
 Used to reference an element in a mapping. x{3} gives you the value
-assocated with the key 3 in the mapping x. XXX should this really be
+associated with the key 3 in the mapping x. XXX should this really be
 distinct from Arrays?  Maybe we just don't use arrays at all, have mappings
 only?
 
@@ -342,7 +342,7 @@ Assignment. x = 5; Sets the variable x to 5.
 
 =item +=
 
-Assignment and additon. x += 5; Sets the variable x to the current value of
+Assignment and addition. x += 5; Sets the variable x to the current value of
 x plus 5.
 
 =item -=
@@ -352,8 +352,8 @@ x minus 5.
 
 XXX Maybe make the rest of these functions if we still need them?  Similar to 
 mod vs % (Maybe make the first two operators).  I really don't like the
-confustion of || vs | for new coders.
-& vs && and unary - vs -  Make it clear and easy to rember
+confusion of || vs | for new coders.
+& vs && and unary - vs -  Make it clear and easy to remember
 even if it makes it a little more work for the user?
 
 =item <<
@@ -372,8 +372,8 @@ even if it makes it a little more work for the user?
 
 =head3 Operator Precedence
 
-Expressions use the following Piority levels, Higher levels are given higher
-precidence and symbols at the same level are evaluated left to right.
+Expressions use the following Priority levels, Higher levels are given higher
+precedence and symbols at the same level are evaluated left to right.
 
 XXX Need to remove things were aren't using...
 
@@ -406,7 +406,7 @@ Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
 Functions allow us to break a program down in to smaller pieces of code
-and allows us to reuse code to simpilfy repeditive tacks.
+and allows us to reuse code to simplify repetitive tasks.
 
 Defining a function has the following syntax:
 	RETURNTYPE FUNCTIONNAME DESCRIPTION (INPUT_VARIABLES) {
@@ -433,6 +433,12 @@ Here are 2 example function definitions:
 XXX add more info about our examples.
 
 =head1 Flow control
+
+If you think of a programming language as a bunch of instructions for a
+computer, basic programs are like a recipe.  Once you start making more
+complicated programs you need to start looking at branching.  Calling
+different sections of code based on results of asking a question.
+There are numerous names for this, branching, conditionals, flow control.
 
 Our programming language supports the following flow control statements:
 if, while, foreach, switch
@@ -478,6 +484,7 @@ They look like this:
 
 Notice the EXPRESSION from the if statements has become a VARIABLE, this
 is mandatory so that we can do type checking in a reasonable way.
+(XXX Is this really needed? We'll see)
 You can have any number of case statements, and the else is optional.
 In general though you will want at least one case statement and should have
 an else.
@@ -493,12 +500,14 @@ syntax:
 
 When coding with while statements you need to be extra careful and make sure
 you do a few things:
-	You need to initialize any variables you use in EXPRESSION.
+	You need to initialize any variables you use in EXPRESSION to
+		reasonable values.  Our language initializes variables when
+		they are defined but you want to make sure variables are
+		what you think they should be.
 	You need to make sure that somewhere inside of STATEMENTS you have code
 		that modifies your EXPRESSION so it will eventually be true.
 	You need to keep your test EXPRESSION simple so that the code is
 		readable.
-
 
 =head2 Statements: foreach
 
@@ -569,7 +578,7 @@ operate on objects:
 
 =item Compile_object (Not implementing compile_library this is the same)
 
-This function is used to initally load an object from file into memory.
+This function is used to initially load an object from file into memory.
 
 =item Destruct_object
 
@@ -583,7 +592,7 @@ Example:
 
 =item File_name
 
-This function return's the file that was used to create this object.
+This function returns the file that was used to create this object.
 Example:
 
 =item Find_object
