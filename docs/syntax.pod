@@ -264,6 +264,85 @@ not do anything.  Here are some examples of expressions:
 	do_something() + 5
 	x < 3
 
+=head3 Operators
+
+=over 8
+
+=item ()
+
+=item []
+
+=item ->
+
+=item {}
+
+=item !
+
+=item ++
+
+=item --
+
+=item *
+
+=item &
+
+=item +
+
+=item -
+
+=item <<
+
+=item >>
+
+=item <<=
+
+=item >>=
+
+=item ==
+
+=item !=
+
+=item ^
+
+=item &
+
+=item &&
+
+=item |
+
+=item ||
+
+=item =
+
+=back
+
+=head3 Operator Precedence
+
+Expressions use the following Piority levels, Higher levels are given higher
+precidence and symbols at the same level are evaluated left to right.
+	() [] -> {}
+	! + ++ -- - (type) * &
+	* / %
+	+ -
+	<< >>
+	<<= >>=
+	== !=
+	&
+	^
+	|
+	&&
+	||
+	= += ==
+	,
+
+XXX Need to remove & vs && and unary - vs -  Make it clear and easy to rember
+even if it makes it a little more work for the user?
+
+So if we have an Expression that says 5 + 4 == 3 * 2
+	3 * 2 is evaluated first, then 5 + 4 and finally 
+	9 == 6   which would return: 0
+	because it's not true.
+
 We'll see where we make use of Expressions later.
 
 =head2 Functions
@@ -468,3 +547,11 @@ This function returns the current object.
 Example:
 
 =back
+
+=head1 Full specification
+
+One of the best ways to look at the language specification is to look at
+the test suite, it's organized into sections and each test is setup to
+test a specific thing.  If you truly want to know all of the language look
+at the specs. Example: tests/string/strcmp.sw tests the strcmp function,
+and should explain exactly what it does.
