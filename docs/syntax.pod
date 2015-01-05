@@ -185,7 +185,6 @@ extension requirements but we recommend you use them as noted here below:
 =item = source code
 
 	Extension: .sw
-
 	Source code builds on includes and inheritables and allows
 	you to bind them together to make useful objects.  If you
 	want to convert a source file to compiled code, you use the
@@ -247,48 +246,115 @@ to do something.  There are lots of different types of statements.  Some
 deal with math, others provide feedback to the user, and others allow the
 computer to make decisions.  We'll talk about the various statements later.
 Here are some example statements:
-	x = x + 5; # Look up the current value of the variable x and add 5 to it
+	x = x + 5; 	    # Look up the current value of the variable x 
+                            #      and add 5 to it
 	x = do_something(); # Call the function do_something and set x to
-			    # the results of our function call
+			    #      the results of our function call
 	write("Hello");     # Print the word Hello
 
 =head2 Expressions
 
 Expressions are generally a part of a statement, since we are explaining
 things though it's important that we still cover them.  They are a
-basically mathematical bits that return a value. Expressions consist of
-explicit values, constants, variables, operators, and functions and return
-a value.  In general they are not statements because on their own they would
-not do anything.  Here are some examples of expressions:
+basically mathematical bits that evaluate to a value. Expressions consist of
+explicit values, constants, variables, operators, and functions and result
+in a numerical value.  In general they are not statements because on their 
+own they would not do anything.  Here are some examples of expressions:
 	x + 5
 	do_something() + 5
 	x < 3
 
 =head3 Operators
+There are a number of operators in our language, you have seen quite a few
+of them in this document already.  Here is a summary of the operators and
+what they do/mean.
 
 =over 8
 
 =item ()
 
+Used to group expressions and change the precedence. For more information
+on Precedence, see the table below this section.
+(3 * 5) + 4 is not the same as 3 * (5 + 4), to make code clear, you should
+not depend on precedence when writing expressions and should use ()'s to
+clarify what you want.
+
 =item []
+
+Used to reference an element in an array. x[3] gives you the 4th address
+in the array x.
 
 =item ->
 
+Used to reference a variable or a function inside of an object.  X->get_name();
+Calls the function get_name from inside of object X.  XXX Should talk about
+call_other and whats the difference, is there a difference?
+
 =item {}
+
+Used to reference an element in a mapping. x{3} gives you the value
+associated with the key 3 in the mapping x. XXX should this really be
+distinct from Arrays?  Maybe we just don't use arrays at all, have mappings
+only?
 
 =item !
 
-=item ++
-
-=item --
+Logical negation (Not). !X  if X is 0 evaluate to 1, otherwise evaluate to 0.
 
 =item *
 
-=item &
+Multiplication. 5 * 4; Evaluates to 20.
+
+=item /
+
+Division.  20 / 5; Evaluates to 4.
 
 =item +
 
+Addition. 5 + 4;  Evaluates to 9.
+
 =item -
+
+Subtraction. 5 - 4; Evaluates to 1.
+
+=item ==
+
+Test for equality.  X == 5; If x is 5 evaluate to 1, otherwise evaluate to 0.
+
+=item !=
+
+Test for inequality.  X != 5; If x is not 5 evaluate to 1, otherwise
+evaluate to 0.
+
+=item &&
+
+Logical And.  X && Y; Evaluates to 1 if X and Y both are not 0.  If not,
+evaluate to 0.
+
+=item ||
+
+Logical Or. X || Y; Evaluates to 1 if X or Y are not 0.  If not, 
+evaluate to 0.
+
+=item =
+
+Assignment. x = 5; Sets the variable x to 5.
+
+=item +=
+
+Assignment and addition. x += 5; Sets the variable x to the current value of
+x plus 5.
+
+=item -=
+
+Assignment and subtraction. x -= 5; Sets the variable x to the current value of
+x minus 5.
+
+XXX Maybe make the rest of these functions if we still need them?  Similar to 
+mod vs % (Maybe make the first two operators).  I really don't like the
+confusion of || vs | for new coders.
+& vs && and unary - vs -  Make it clear and easy to remember
+even if it makes it a little more work for the user?
 
 =item <<
 
@@ -298,63 +364,57 @@ not do anything.  Here are some examples of expressions:
 
 =item >>=
 
-=item ==
+=item ^	
 
-=item !=
-
-=item ^
-
-=item &
-
-=item &&
-
-=item |
-
-=item ||
-
-=item =
+=item & 
 
 =back
 
 =head3 Operator Precedence
 
-Expressions use the following Piority levels, Higher levels are given higher
-precidence and symbols at the same level are evaluated left to right.
-	() [] -> {}
-	! + ++ -- - (type) * &
-	* / %
-	+ -
-	<< >>
-	<<= >>=
-	== !=
-	&
-	^
-	|
-	&&
-	||
-	= += ==
-	,
+Expressions use the following Priority levels, Higher levels are given higher
+precedence and symbols at the same level are evaluated left to right.
 
-XXX Need to remove & vs && and unary - vs -  Make it clear and easy to rember
-even if it makes it a little more work for the user?
+XXX Need to remove things were aren't using...
+
+1  () [] {} -> . ::	Function call, scope, array/member access
+2  ! ~ - + * & sizeof type cast ++x --x (most) unary operations, sizeof and type casts
+3  * / % mod		Multiplication, division, modulo
+4  + -			Addition and subtraction
+5  << >>		Bitwise shift left and right
+6  < <= > >=		Comparisons: less-than, ...
+7  == !=		Comparisons: equal and not equal
+8  &			Bitwise AND
+9  ^			Bitwise exclusive OR (XOR)
+10 |			Bitwise inclusive (normal) OR
+11 &&			Logical AND
+12 ||			Logical OR
+13 ?: = += -= *= /= %= &= |= ^= <<= >>=	Conditional expression (ternary) and assignment operators
+14 ,			Comma Operator
+
 
 So if we have an Expression that says 5 + 4 == 3 * 2
 	3 * 2 is evaluated first, then 5 + 4 and finally 
 	9 == 6   which would return: 0
 	because it's not true.
 
-We'll see where we make use of Expressions later.
+We'll see more about where we make use of Expressions later.
 
 =head2 Functions
 
 Functions allow us to create a bunch of instructions to to the computer
 and give it a name.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
+Functions allow us to break a program down in to smaller pieces of code
+and allows us to reuse code to simplify repetitive tasks.
+
 Defining a function has the following syntax:
-	[TYPE MODIFIERS] TYPE NAME DESCRIPTION (INPUT_VARIABLES) {
+	RETURNTYPE FUNCTIONNAME DESCRIPTION (INPUT_VARIABLES) {
 		STATEMENTS
 	}
-The FUNCTION NAME is similar to a variable NAME, it must start with a letter,
+The RETURNTYPE defines what we will receive back from a call to our function.
+It can be one of the basic TYPES, optionally with TYPE MODIFIERS.
+The FUNCTIONNAME is similar to a variable NAME, it must start with a letter,
 - or _ and can only include: letters numbers _ -
 The DESCRIPTION is a string that describes the function.
 INPUT_VARIABLES is a comma separated list of variable definitions.
@@ -371,6 +431,7 @@ Here are 2 example function definitions:
 	}
 
 =head3 Scope
+
 Variables and functions are defined in specific locations, where a variable or
 function is defined is sometimes refered to as the scope of the function or
 variable.  Where the variable is defined determines where you can use it.
@@ -411,7 +472,15 @@ However if I change the first line from int x;
 to: nomask int x;
 I will get an error when I have the second int x definition.
 
+XXX add more info about our examples.
+
 =head1 Flow control
+
+If you think of a programming language as a bunch of instructions for a
+computer, basic programs are like a recipe.  Once you start making more
+complicated programs you need to start looking at branching.  Calling
+different sections of code based on results of asking a question.
+There are numerous names for this, branching, conditionals, flow control.
 
 Our programming language supports the following flow control statements:
 if, while, foreach, switch
@@ -457,6 +526,7 @@ They look like this:
 
 Notice the EXPRESSION from the if statements has become a VARIABLE, this
 is mandatory so that we can do type checking in a reasonable way.
+(XXX Is this really needed? We'll see)
 You can have any number of case statements, and the else is optional.
 In general though you will want at least one case statement and should have
 an else.
@@ -472,12 +542,14 @@ syntax:
 
 When coding with while statements you need to be extra careful and make sure
 you do a few things:
-	You need to initialize any variables you use in EXPRESSION.
+	You need to initialize any variables you use in EXPRESSION to
+		reasonable values.  Our language initializes variables when
+		they are defined but you want to make sure variables are
+		what you think they should be.
 	You need to make sure that somewhere inside of STATEMENTS you have code
 		that modifies your EXPRESSION so it will eventually be true.
 	You need to keep your test EXPRESSION simple so that the code is
 		readable.
-
 
 =head2 Statements: foreach
 
@@ -523,6 +595,7 @@ object person.sw
 		set_lastname("Jones");
 	}
 
+
 XXX Need to step through our first object in detail...
 
 
@@ -547,7 +620,7 @@ operate on objects:
 
 =item Compile_object (Not implementing compile_library this is the same)
 
-This function is used to initally load an object from file into memory.
+This function is used to initially load an object from file into memory.
 
 =item Destruct_object
 
@@ -561,7 +634,7 @@ Example:
 
 =item File_name
 
-This function return's the file that was used to create this object.
+This function returns the file that was used to create this object.
 Example:
 
 =item Find_object
@@ -588,6 +661,8 @@ This function returns the current object.
 Example:
 
 =back
+
+XXX Add more stuff here...  This last section should be at the very end.
 
 =head1 Full specification
 

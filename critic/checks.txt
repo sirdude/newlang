@@ -26,3 +26,5 @@ Built-in test function for a function?  If so warn if no test function defined.
 	tests should cover all return statements & return values.
 	tests should also cover important edge cases.
 
+check for assignment in conditional:
+	if (X = 5) {
