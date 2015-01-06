@@ -288,7 +288,7 @@ in the array x.
 
 Used to reference a variable or a function inside of an object.  X->get_name();
 Calls the function get_name from inside of object X.  XXX Should talk about
-call_other and whats the difference, is there a difference?
+call_other and what is the difference, is there a difference?
 
 =item {}
 
@@ -433,7 +433,7 @@ Here are 2 example function definitions:
 =head3 Scope
 
 Variables and functions are defined in specific locations, where a variable or
-function is defined is sometimes refered to as the scope of the function or
+function is defined is sometimes referred to as the scope of the function or
 variable.  Where the variable is defined determines where you can use it.
 If I have the following code:
 	int do_stuff(void) {
@@ -448,7 +448,7 @@ x = 6; does not, at that point x is unknown because x is only defined inside of
 the function do_stuff.
 
 You can redefine variables or functions unless they are defined with the
-nomask type modifer.  You can also use :: to look up the value of a function or
+nomask type modifier.  You can also use :: to look up the value of a function or
 variable at a higher level.  If I have the following code:
 	int x;
 
@@ -497,8 +497,8 @@ EXPRESSION is not equal to 0, STATEMENTS will be evaluated.
 
 Optionally it can be extended with elseif and else extensions.
 There can be any number of elseif extensions, there can only be one
-else extension at the very end,  Here is an example with 2 elseif's and
-and else:
+else extension at the very end,  Here is an example if statement with 2 
+elseif statements and and else:
 	if (EXPRESSION) {
 		STATEMENTS;
 	} elseif (EXPRESSION) {
