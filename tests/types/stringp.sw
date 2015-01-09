@@ -8,7 +8,6 @@ create() {
 	float a, *arra;
 	mixed b, *arrb;
 
-	# Test simple if
 	command = "stringp(nil)";
 	expected_result = "0";
 	do_test(command,expected_result);
