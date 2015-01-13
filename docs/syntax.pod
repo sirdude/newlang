@@ -220,7 +220,6 @@ extension requirements but we recommend you use them as noted here below:
 
 =head2 Variables
 
-The basic building block of any programming language is a variable.
 In our language a variable must be declared at the top of a code block,
 before other code is defined, it should have a type, a description and it
 is initialized to the default value.  We do not allow you to set the value
@@ -241,22 +240,21 @@ Here are some simple examples of variable declarations:
 
 Once we have defined or declared various data structures like variables,
 or arrays we need to start using them to do useful things.  We do this
-with statements.  Statements are basically an instruction to the computer
+with statements.  Statements are basically instructions to the computer
 to do something.  There are lots of different types of statements.  Some
-deal with math, others provide feedback to the user, and others allow the
+deal with math, others provide feedback to the user and others allow the
 computer to make decisions.  We'll talk about the various statements later.
 Here are some example statements:
 	x = x + 5; 	    # Look up the current value of the variable x 
-                            #      and add 5 to it
+                            #      add 5 to it and set x to the new value
 	x = do_something(); # Call the function do_something and set x to
-			    #      the results of our function call
+			    #      whatever is returned from our function call
 	write("Hello");     # Print the word Hello
 
 =head2 Expressions
 
-Expressions are generally a part of a statement, since we are explaining
-things though it's important that we still cover them.  They are a
-basically mathematical bits that evaluate to a value. Expressions consist of
+Expressions are generally parts of a statement.  They are basically
+mathematical bits that evaluate to a value. Expressions consist of
 explicit values, constants, variables, operators, and functions and result
 in a numerical value.  In general they are not statements because on their 
 own they would not do anything.  Here are some examples of expressions:
@@ -273,11 +271,12 @@ what they do/mean.
 
 =item ()
 
-Used to group expressions and change the precedence. For more information
-on Precedence, see the table below this section.
+() are used to group expressions and change the precedence. For more 
+information on precedence, see the table below this section.
 (3 * 5) + 4 is not the same as 3 * (5 + 4), to make code clear, you should
 not depend on precedence when writing expressions and should use ()'s to
-clarify what you want.
+clarify what you want.  If you do not do this, our language will warn you
+that you have potential problems.
 
 =item []
 
@@ -296,6 +295,11 @@ Used to reference an element in a mapping. x{3} gives you the value
 associated with the key 3 in the mapping x. XXX should this really be
 distinct from Arrays?  Maybe we just don't use arrays at all, have mappings
 only?
+
+=item ::
+Used to look for a variable or a function at a higher scope.  If your not sure
+what variable or function scope is at this point continue reading and it will
+become clear.  We have examples of :: usage when we talk about scope.
 
 =item !
 
@@ -323,18 +327,18 @@ Test for equality.  X == 5; If x is 5 evaluate to 1, otherwise evaluate to 0.
 
 =item !=
 
-Test for inequality.  X != 5; If x is not 5 evaluate to 1, otherwise
-evaluate to 0.
+Test for inequality.  X != 5; If x is not 5 evaluates to 1, otherwise
+evaluates to 0.
 
 =item &&
 
-Logical And.  X && Y; Evaluates to 1 if X and Y both are not 0.  If not,
-evaluate to 0.
+Logical And.  X && Y; Evaluates to 1 if X and Y both are not 0, otherwise
+evaluates to 0.
 
 =item ||
 
-Logical Or. X || Y; Evaluates to 1 if X or Y are not 0.  If not, 
-evaluate to 0.
+Logical Or. X || Y; Evaluates to 1 if X or Y are not 0, otherwise 
+evaluates to 0.
 
 =item =
 
@@ -350,25 +354,14 @@ x plus 5.
 Assignment and subtraction. x -= 5; Sets the variable x to the current value of
 x minus 5.
 
-XXX Maybe make the rest of these functions if we still need them?  Similar to 
-mod vs % (Maybe make the first two operators).  I really don't like the
-confusion of || vs | for new coders.
-& vs && and unary - vs -  Make it clear and easy to remember
-even if it makes it a little more work for the user?
-
-=item <<
-
-=item >>
-
-=item <<=
-
-=item >>=
-
-=item ^	
-
-=item & 
-
 =back
+
+Note: we are explicitly not including the following operators, if need be
+they can be implemented later via functions:
+	<<, >>, <<=, >>=, ^, &
+
+We are choosing not to implement them to reduce confusion and improve code
+readability.
 
 =head3 Operator Precedence
 
@@ -396,14 +389,16 @@ XXX Need to remove things were aren't using...
 So if we have an Expression that says 5 + 4 == 3 * 2
 	3 * 2 is evaluated first, then 5 + 4 and finally 
 	9 == 6   which would return: 0
-	because it's not true.
+	because it's not true.  In our language you will also get
+	a warning because it wants you to use ()'s so the computer is not
+	using precedence to guess at what you want to do.
 
 We'll see more about where we make use of Expressions later.
 
 =head2 Functions
 
-Functions allow us to create a bunch of instructions to to the computer
-and give it a name.  Once we have defined a function, we can use that
+Functions allow us to create a bunch of instructions for the computer
+and assign a name to them.  Once we have defined a function, we can use that
 function and the computer will perform that function every time we call it.
 Functions allow us to break a program down in to smaller pieces of code
 and allows us to reuse code to simplify repetitive tasks.
