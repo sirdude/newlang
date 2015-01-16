@@ -77,19 +77,23 @@ int print_usage(char *name) {
 }
 
 int do_critic(char *outfile, Program parse_tree) {
+	printf("Inside do_critic: XXX Needs to be implemented.\n");
 	return 0;
 }
 
 int run_tests(char *outfile, Program parse_tree) {
+	printf("Inside run_tests: XXX Needs to be implemented.\n");
 	return 0;
 }
 
 int print_file(char *outfile, Program parse_tree) {
 	FILE *ofile;
 
-	if (output) {
+	if (output == 1) {
 		ofile = fopen(outfile,"w");
 		if (!ofile) {
+			fprintf(stderr,"Unable to write to file: %s\n",
+				outfile);
 			return 0;
 		}
 
@@ -102,6 +106,11 @@ int print_file(char *outfile, Program parse_tree) {
 		printf("%s\n\n", printProgram(parse_tree));
 	}
 	return 1;
+}
+
+int run_code(char *outfile, Program parse_tree) {
+	printf("Inside run_code: XXX Needs to be implemented.\n");
+	return 0;
 }
 
 int main(int argc, char ** argv) {
@@ -140,22 +149,23 @@ int main(int argc, char ** argv) {
 		}
 	}
 
-	if (argc > 1) {
-		input = fopen(argv[1], "r");
+	if (optind < argc) {
+		input = fopen(argv[optind], "r");
 
 		if (!input) {
-			fprintf(stderr, "Error opening input file.\n");
+			fprintf(stderr, "Error opening input file: %s\n",
+				argv[optind]);
 			exit(1);
 		}
 	} else {
 		input = stdin;
 	}
 
-	if (version) {
+	if (version == 1) {
 		return print_version(argv[0]);
 	}
 
-	if (upgrade) {
+	if (upgrade == 1) {
 		/* Need to upgrade our code XXX which is more complicated 
 			version of parse_tree */
 		parse_tree = pProgram(input);
@@ -169,13 +179,14 @@ int main(int argc, char ** argv) {
 		printf("\n[Abstract Syntax]\n");
 		printf("%s\n\n", showProgram(parse_tree));
 
-		if (print) {
+		if (print == 1) {
 			return print_file(outfile, parse_tree);
-		} else if (critic) {
+		} else if (critic == 1) {
 			return do_critic(outfile, parse_tree);
-		} else if (test) {
+		} else if (test == 1) {
 			run_tests(outfile, parse_tree);
 		} else {
+			run_code(outfile, parse_tree);
 		}
 
 		return 0;
