@@ -1,0 +1,20 @@
+head,tail, init,last
+length
+null (check if null)
+reverse
+take x (list)	returns x number of things from a libs.
+drop x (list)  drops x number of things from a list.
+max
+min
+sum
+product
+elem x list   (tell us if x is in list)
+[1..20]   create a list 1 - 20
+[2,4..20] gives us all even umbers from 2 - 20
+can also do [0.1, 0.3 .. 1] but unpredictable...
+
+take 10 (cycle [1,2,3])   cycle 1,2,3 over and over then take the first 10 
+	results...
+take 10 (repeat 5)  repeate 5 over and over take, take the first 10 results...
+
+
