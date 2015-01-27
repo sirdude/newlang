@@ -1,0 +1,20 @@
+/* This function trys to run cmd on the current object,
+   and compares it to result.
+   It will return the following values depending on what happens:
+   1  = cmd == result
+   0  = cmd != result
+   -1 = error with cmd
+ */
+int do_test(string cmd, mixed result) {
+
+   catch {
+      /* May need to do more complicated check depending on type */
+      if (result == this_object()->call_other(cmd)) {
+         return 1;
+      } 
+   } : {
+      return -1;
+   }
+
+   return 0;
+}
