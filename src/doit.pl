@@ -53,28 +53,20 @@ sub create_newfiles {
                 "#include <stdio.h>\n/g' Interpreter.c");
 }
 
-#   #define SPACE 3
-#   renderC and friends change to this:
-#           _n_ = _n_ + SPACE;
-#   for { comment out this line:
+# Things still todo for printer XXX
+#   for c== '{' comment out this line:
 #       /*     bufAppendC('\n'); */
-#   for }
-#       need to add an extra backup();
+#       mv      indent(); down after bufAppendC(c);
+#  before c == '('  don't add space if right before identifier
+# 
+# before 'else' don't have a '\n' 
 
 # Mods to Pretty Printer:
 sub fix_printer {
 	# use a define for our spacing...
-	system("perl -pi -e 's/int _n_;/#define SPACE 3\n\nint _n_;/g' " .
-		"Printer.c");
+	system("perl -pi -e 's/#define INDENT_WIDTH 2/" .
+		"#define INDENT_WIDTH 3/g' Printer.c");
 
-	# Replace the hard-coded 2's with our define.
-	# This is broken XXX
-	system("perl -pi -e 's/ \+ 2/ \+ SPACE/g' Printer.c");
-
-	system("perl -pi -e 's/- 2;/- SPACE;\n     backup();/g' Printer.c");
-	# Need to do this also... XXX
-# 	system("perl -pi -e 's/\'{\')\n  {\n    bufAppendC(\'\n\');" .
-#		/\'{\')\n  {\n/g' Printer.c");
 }
 
 # Create our stuff with bnfc
