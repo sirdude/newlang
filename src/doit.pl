@@ -14,43 +14,64 @@ use warnings;
 
 # Clean things up, make distclean do extra stuff
 sub fix_makefile {
-	system("perl -pi -e 's/LPC.pdf testLPC/LPC.pdf testLPC lpc/g' " .
-		"Makefile");
-	system("perl -pi -e 's/distclean: clean\n/" .
-	        "extraclean:\n\trm -rf Interpreter* lpc " .
-		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' Makefile");
-	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
-		".PHONY: clean distclean extraclean\n/g' Makefile");
-	system("perl -pi -e 's/all: testLPC/all: testLPC lpc/g' " .
-		" Makefile");
+	my ($dir) = @_;
+	my $binary;
 
-	open(my $fh, ">>", "Makefile") or die "Unable to open Makefile\n";
+	if ($dir eq "./lpc") {
+		$binary = "lpc";
+	} else {
+		$binary = "sweet";
+	}
+	system("perl -pi -e 's/rm -f \*.o/rm -f \*.o $binary/g' " .
+		"$dir/Makefile");
+	system("perl -pi -e 's/distclean: clean\n/" .
+	        "extraclean:\n\trm -rf Interpreter* $binary " .
+		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' " .
+		"$dir/Makefile");
+	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
+		".PHONY: clean distclean extraclean\n/g' $dir/Makefile");
+
+	system("perl -pi -e 's/Wall/Wall -I./g' $dir/Makefile");
+
+	if ($dir eq "./lpc") {
+		system("perl -pi -e 's/all:/all: lpc /g'" .
+			" $dir/Makefile");
+        } else {
+		system("perl -pi -e 's/all:/all: sweet /g'" .
+			" $dir/Makefile");
+	}
+
+	open(my $fh, ">>", "$dir/Makefile") or 
+		die "Unable to open $dir/Makefile\n";
 	print $fh "Interpreter.o: Interpreter.h\n\t\${CC} \${CCFLAGS} -c " .
 		"Interpreter.c\n";
-	print $fh "\nlpc.o:\n\t\${CC} \${CCFLAGS} -c " .
-		"lpc.c\n";
-	print $fh "\nLPCLIBS=Absyn.o Lexer.o Parser.o Interpreter.o " .
-		"Printer.o lpc.o\n";
-	print $fh "\nlpc: \${LPCLIBS}\n";
-	print $fh "\t\@echo \"Linking lpc...\"\n";
-	print $fh "\t\${CC} \${CCFLAGS} \${LPCLIBS} -olpc\n";
+	print $fh "\nmain.o:\n\t\${CC} \${CCFLAGS} -c " .
+		"../main.c\n";
+
+	print $fh "\nOBJS=Absyn.o Lexer.o Parser.o Interpreter.o " .
+		"Printer.o\n";
+	print $fh "\n$binary: \${OBJS} main.o\n";
+	print $fh "\t\@echo \"Linking $binary...\"\n";
+	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o -o$binary\n";
 	close($fh);
 }
 
 # Copy over our templates to useful files, and then fix them up a bit.
 sub create_newfiles {
-	# Copy our defaults to new programs
-	system("cp Skeleton.c Interpreter.c");
-	system("cp Skeleton.h Interpreter.h");
+	my ($dir) = @_;
 
-	system("perl -pi -e 's/Skeleton.h/Interpreter.h/g' Interpreter.c");
+	# Copy our defaults to new programs
+	system("cp $dir/Skeleton.c $dir/Interpreter.c");
+	system("cp $dir/Skeleton.h $dir/Interpreter.h");
+
+	system("perl -pi -e 's/Skeleton.h/Interpreter.h/g' $dir/Interpreter.c");
 
 	# Need to modify Interpreter.c
 
         # Hack to get rid of warnings adding extra headers stdlib.h and stdio.h
         system("perl -pi -e 's/#include \"Interpreter.h\"\n/" .
                 "#include \"Interpreter.h\"\n#include <stdlib.h>\n" .
-                "#include <stdio.h>\n/g' Interpreter.c");
+                "#include <stdio.h>\n/g' $dir/Interpreter.c");
 }
 
 # Things still todo for printer XXX
@@ -63,20 +84,25 @@ sub create_newfiles {
 
 # Mods to Pretty Printer:
 sub fix_printer {
+	my ($dir) = @_;
 	# use a define for our spacing...
 	system("perl -pi -e 's/#define INDENT_WIDTH 2/" .
-		"#define INDENT_WIDTH 3/g' Printer.c");
-
+		"#define INDENT_WIDTH 3/g' $dir/Printer.c");
 }
 
 # Create our stuff with bnfc
-system("bnfc -m -c LPC.cf");
-fix_makefile();
-fix_printer();
-create_newfiles();
+system("cd lpc; bnfc -m -c LPC.cf");
+system("cd sweet; bnfc -m -c SWEET.cf");
 
-system("make");
+foreach my $i ("./lpc", "./sweet") {
+	fix_makefile($i);
+	fix_printer($i);
+	create_newfiles($i);
+}
+
+system("cd lpc; make");
+system("cd sweet; make");
 
 # Test our code
-system("./testLPC ../examp/ugly.c");
-system("./lpc ../examp/ugly.c");
+# system(".lpc/testLPC ../examp/ugly.c");
+system("./lpc/lpc -p ../examp/ugly.c");
