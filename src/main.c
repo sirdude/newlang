@@ -71,7 +71,10 @@ int print_usage(char *name) {
 	printf("\t-p --print\n\t\tParse the file and then print it in the ");
 	printf("standard format.\n");
 	printf("\t-t --test\n\t\tRun all of the test_* functions in the code.");
-	printf("\t-v --version\n\t\tPrint Version information.\n");
+	printf("\t-u --upgrade\n\t);
+	printf("\tUpgrade the specified file to the current syntax.");
+	printf("\t-v --version\n\t);
+	printf("\tPrint Version and configuration information.\n");
 
 	return 0;
 }
