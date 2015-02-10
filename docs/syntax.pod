@@ -43,11 +43,11 @@ Our programming language supports the following basic types:
 
 =item int	default value 0
 
-	int is short for integer, it's a whole number positive or negative.
+int is short for integer, it's a whole number positive or negative.
 
 =item float	default value 0.0
 
-	A float is a decimal number.
+A float is a decimal number.
 
 =item string	default value ""
 
@@ -57,12 +57,12 @@ Our programming language supports the following basic types:
 
 =item void
 
-	The void type is a keyword for things that have no type.
+The void type is a keyword for things that have no type.
 
 =item mixed
 
-	The mixed type is used when something takes multiple types as input/
-	output and basically disables type checking.
+The mixed type is used when something takes multiple types as input/
+output and basically disables type checking.
 
 =back
 
@@ -149,72 +149,71 @@ extension requirements but we recommend you use them as noted here below:
 
 =item Include files
 
-	Extension: .h 
-	These files can be included in other files with a line similar
-	to the following:
-		include "myconfig.h";
-	They in general are used to contain variables and other
-	data structures that you want to share across multiple files.
-	In general you want to avoid putting functions in an include
-	file and instead use inheritables for that.
+Extension: .h 
+These files can be included in other files with a line similar
+to the following:
+	include "myconfig.h";
+They in general are used to contain variables and other
+data structures that you want to share across multiple files.
+In general you want to avoid putting functions in an include
+file and instead use inheritables for that.
 
-	Include files will be searched for in the following order:
-
-		The default include path, which is defined in our 
-		configuration file, you you can use --include=DIR
-		to add a directory to the search path,  you can also
-		use the INCLUDE_DIR_LPC environment variable, 
-		or specify the full path to the include file.
+Include files will be searched for in the following order:
+	The default include path, which is defined in our 
+	configuration file, you you can use --include=DIR
+	to add a directory to the search path,  you can also
+	use the INCLUDE_DIR_LPC environment variable, 
+	or specify the full path to the include file.
 
 =item Inheritables
 
-	Extension: .swl
-	These are basically meta objects.  They are not meant to be
-	used directly, but are building blocks that other programs can
-	use to simplify coding and create a library of reusable
-	functions.  You inherit them with a line like this:
-	inherit "/std/lib/object.l";
+Extension: .swl
+These are basically meta objects.  They are not meant to be
+used directly, but are building blocks that other programs can
+use to simplify coding and create a library of reusable
+functions.  You inherit them with a line like this:
+inherit "/std/lib/object.l";
 
-	Inheritable files will be searched for in the following order:
-		The default Library path, which is defined in our 
-		configuration file, you you can use --lib=DIR
-		to add a directory to the search path,  you can also
-		use the LIB_DIR_LPC environment variable, 
-		or specify the full path to the inheritable file.
+Inheritable files will be searched for in the following order:
+	The default Library path, which is defined in our 
+	configuration file, you you can use --lib=DIR
+	to add a directory to the search path,  you can also
+	use the LIB_DIR_LPC environment variable, 
+	or specify the full path to the inheritable file.
 
-=item = source code
+=item source code
 
-	Extension: .sw
-	Source code builds on includes and inheritables and allows
-	you to bind them together to make useful objects.  If you
-	want to convert a source file to compiled code, you use the
-	--output=FILENAME option to create a machine code executable.
+Extension: .sw
+Source code builds on includes and inheritables and allows
+you to bind them together to make useful objects.  If you
+want to convert a source file to compiled code, you use the
+--output=FILENAME option to create a machine code executable.
 
-	When you execute a source file, you can use the standard
-	UNIX shell convention #!PATHTOINTERPRETER to execute the file.
-	EXAMPLE: #!/usr/local/bin/lpc
+When you execute a source file, you can use the standard
+UNIX shell convention #!PATHTOINTERPRETER to execute the file.
+EXAMPLE: #!/usr/local/bin/lpc
 
-	When source code is executed it automatically calls the main()
-	function if it exists.
+When source code is executed it automatically calls the main()
+function if it exists.
 
-	If you want to reference other objects within this object,
-	you will need to clone it and then keep a reference to it, when
-	you are done with a clone, you should destroy it to free up
-	memory.
+If you want to reference other objects within this object,
+you will need to clone it and then keep a reference to it, when
+you are done with a clone, you should destroy it to free up
+memory.
 
 =item Compiled code XXX Need to look at how dgd separates this and data files
 
-	Extension: none or .swo   depending on usage.
-	This is source code that has been run through are compiler and
-	converted to machine code.  If they are stand alone executables
-	they have no extension, if they are only part of a program they
-	have a .o extension.
+Extension: none or .swo   depending on usage.
+This is source code that has been run through are compiler and
+converted to machine code.  If they are stand alone executables
+they have no extension, if they are only part of a program they
+have a .o extension.
 
 =item Data files
 
-	Extension: .dat
-	Files that contain configuration information for a 
-	cloned object, or provide other data for an object.
+Extension: .dat
+Files that contain configuration information for a 
+cloned object, or provide other data for an object.
 
 =back
 
@@ -297,6 +296,7 @@ distinct from Arrays?  Maybe we just don't use arrays at all, have mappings
 only?
 
 =item ::
+
 Used to look for a variable or a function at a higher scope.  If your not sure
 what variable or function scope is at this point continue reading and it will
 become clear.  We have examples of :: usage when we talk about scope.
