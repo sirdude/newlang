@@ -456,11 +456,12 @@ x = 6; does not, at that point x is unknown because x is only defined inside of
 the function do_stuff.
 
 You can redefine variables or functions unless they are defined with the
-nomask type modifier.  You can also use :: to look up the value of a function or
-variable at a higher level.  If I have the following code:
+nomask type modifier.  You can also use :: to look up the value of a function
+or variable at a higher level.  If I have the following code:
 
 	int x;
 
+	x = 5;
 	int do_stuff(void) {
 		int x;
 
@@ -470,19 +471,18 @@ variable at a higher level.  If I have the following code:
 		write("x = " + ::x + "\n");
 	}
 
-	x = 5;
+	write("x = " + x + "\n");
 	do_stuff();
 
 I will get the following output:
 
 	x = 6
 	x = 5;
+	x = 5;
 
 However if I change the first line from int x;
 to: nomask int x;
 I will get an error when I have the second int x definition.
-
-XXX add more info about our examples.
 
 =head1 Flow control
 
@@ -646,6 +646,11 @@ This function is used to initially load an object from file into memory.
 This function is called on an object to clean it up once we are done with
 it.  Example:
 
+	object obj;
+
+	obj = find_object("sirdude");
+	destruct_object(obj);
+
 =item Clone_object
 
 This function is used to create a copy of an object.
@@ -681,9 +686,19 @@ Example:
 This function returns the current object.
 Example:
 
+	string str;
+
+	str = this_object()->query_name();
+
+	write("str = " + str + "\n");
+
 =back
 
+
+
 XXX Add more stuff here...  This last section should be at the very end.
+
+
 
 =head1 Full specification
 

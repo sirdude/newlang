@@ -75,9 +75,9 @@ closest to what I envision the final language looking like at this point.
 
 =item notes.txt		Things I've been thinking about
 
-=item src		Current source code for BNFC starting with trying
-			to build an lpc grammar and then will modify that
-			so for now this doesn't line up with the docs.
+=item src			Current source code for BNFC starting with
+			trying to build an lpc grammar and then will modify
+			that so for now this doesn't line up with the docs.
 
 =item examples		Example code
 
@@ -105,6 +105,7 @@ the GPL depending on how things go.
 =head2 Want to get involved?
 Shoot me an email, ask me questions, give me some patches or just shoot
 the breeze.
+
 
 			Kent Mein
 			mein@umn.edu
