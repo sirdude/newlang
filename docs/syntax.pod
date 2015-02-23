@@ -70,12 +70,16 @@ output and basically disables type checking.
 
 In addition to basic types you can also create an array out of any of the
 basic types.  An array is just a list of variables with the same type.
-To define an array prepend the variable name with a *.
+To define an array prepend the variable name with a *.  Example:
+
 	int x;
+
 Becomes:
+
 	int *x;
 
 It's Okay to mix regular types and arrays in declarations:
+
 	int x, *y, z;	# Declares two int''s x,z and an array of ints y
 
 Once we have defined an array, we can lookup values with an index number.
@@ -225,13 +229,16 @@ is initialized to the default value.  We do not allow you to set the value
 of a variable when you are declaring it.  Many languages allow you to do
 this, but we have chosen to not allow this to make code cleaner and simpler.
 A declaration of a variable has the following format:
+
 	[TYPE MODIFIERS] TYPE NAME DESCRIPTION;
 
 NAME must start with a letter, _ or - and can only include:
- letters numbers _  -
+
+	letters numbers _  -
 
 The DESCRIPTION is a string that describes what the variable will be used for.
 Here are some simple examples of variable declarations:
+
 	int x "Our Counter";
 	private float value "The value of our product";
 
@@ -244,6 +251,7 @@ to do something.  There are lots of different types of statements.  Some
 deal with math, others provide feedback to the user and others allow the
 computer to make decisions.  We'll talk about the various statements later.
 Here are some example statements:
+
 	x = x + 5; 	    # Look up the current value of the variable x 
                             #      add 5 to it and set x to the new value
 	x = do_something(); # Call the function do_something and set x to
@@ -257,6 +265,7 @@ mathematical bits that evaluate to a value. Expressions consist of
 explicit values, constants, variables, operators, and functions and result
 in a numerical value.  In general they are not statements because on their 
 own they would not do anything.  Here are some examples of expressions:
+
 	x + 5
 	do_something() + 5
 	x < 3
@@ -404,9 +413,11 @@ Functions allow us to break a program down in to smaller pieces of code
 and allows us to reuse code to simplify repetitive tasks.
 
 Defining a function has the following syntax:
+
 	RETURNTYPE FUNCTIONNAME DESCRIPTION (INPUT_VARIABLES) {
 		STATEMENTS
 	}
+
 The RETURNTYPE defines what we will receive back from a call to our function.
 It can be one of the basic TYPES, optionally with TYPE MODIFIERS.
 The FUNCTIONNAME is similar to a variable NAME, it must start with a letter,
@@ -414,6 +425,7 @@ The FUNCTIONNAME is similar to a variable NAME, it must start with a letter,
 The DESCRIPTION is a string that describes the function.
 INPUT_VARIABLES is a comma separated list of variable definitions.
 Here are 2 example function definitions:
+
 	int set_name "Set the players name"
 		(string tmpname "The name we want to set") {
 		name = tmpname;
@@ -431,9 +443,10 @@ Variables and functions are defined in specific locations, where a variable or
 function is defined is sometimes referred to as the scope of the function or
 variable.  Where the variable is defined determines where you can use it.
 If I have the following code:
+
 	int do_stuff(void) {
 		int x;
-	
+
 		x = 5;
 	}
 	x = 6;
@@ -445,6 +458,7 @@ the function do_stuff.
 You can redefine variables or functions unless they are defined with the
 nomask type modifier.  You can also use :: to look up the value of a function or
 variable at a higher level.  If I have the following code:
+
 	int x;
 
 	int do_stuff(void) {
@@ -460,6 +474,7 @@ variable at a higher level.  If I have the following code:
 	do_stuff();
 
 I will get the following output:
+
 	x = 6
 	x = 5;
 
@@ -483,6 +498,7 @@ if, while, foreach, switch
 =head2 Statements: if (elseif, else)
 
 An if statement has the following syntax: 
+
 	if (EXPRESSION) {
 		STATEMENTS;
 	}
@@ -494,6 +510,7 @@ Optionally it can be extended with elseif and else extensions.
 There can be any number of elseif extensions, there can only be one
 else extension at the very end,  Here is an example if statement with 2 
 elseif statements and and else:
+
 	if (EXPRESSION) {
 		STATEMENTS;
 	} elseif (EXPRESSION) {
@@ -508,6 +525,7 @@ elseif statements and and else:
 
 Switch statements are a cleaner syntax for more complicated if statements.
 They look like this:
+
 	switch (VARIABLE) {
 		case VALUE { 
 			STATEMENTS;
@@ -516,6 +534,7 @@ They look like this:
 		} case VALUE {
 			STATEMENTS;
 		} else {
+			STATEMENTS;
 		}
 	}
 
@@ -531,6 +550,7 @@ an else.
 While statements are similar to simple if statements without the extensions,
 that get evaluated until the EXPRESSION is true.  They have the following
 syntax:
+
 	while (EXPRESSION) {
 		STATEMENTS;
 	}
@@ -552,6 +572,7 @@ Foreach statements are similar to while statements but they work with a list
 of items.  They require a variable which is defined before the foreach
 statement, and it works on an array or mapping.  They have the following
 syntax:
+
 	foreach VAR LIST {
 		STATEMENTS
 	}
@@ -562,7 +583,8 @@ iterate over the items in the array.
 =head1 A Basic object
 
 Each file in our programming language is an object.  Here is a simple
-object person.sw
+object, person.sw:
+
 	#!/usr/local/bin/sweet
 
 	private string firstname, lastname;
@@ -590,7 +612,6 @@ object person.sw
 		set_lastname("Jones");
 	}
 
-
 XXX Need to step through our first object in detail...
 
 
@@ -598,7 +619,9 @@ You'll notice there is a lot of busy work in our example object,
 We have a standard object std/object.swl in our system library path
 that provides a lot of the basic stuff for objects.  For any variable 
 defined in an object it creates simple functions:
+
 	set_varname, query_varname
+
 So you do not need to do this.  If you want something more complicated though
 you can create them in your object and it will override the base functions.
 It also has a lot of other functionality built into it, we encourage you to
@@ -608,6 +631,7 @@ take a look at it.
 Once you have a number of objects defined, you need to know how
 our language combines objects.  There are a number of functions that
 operate on objects: 
+
 	clone_object, compile_object, destruct_object, file_name,
 	find_object, object_name, this_object
 
@@ -636,6 +660,7 @@ Example:
 
 This function searches the loaded objects looking for specified object.
 Example:
+
 	object obj;
 	string str;
 
@@ -644,6 +669,7 @@ Example:
 	if (!obj) {
 		write("Unable to find " + str + "\n");
 	}
+
 
 =item Object_name
 

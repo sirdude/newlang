@@ -69,12 +69,19 @@ a grammar.  Along with that I'd like to justify why the language is doing
 what it is doing.  I'm starting with LPC as a base because I think its the
 closest to what I envision the final language looking like at this point.
 
-syntax.pod  		A Document covering the syntax of our new language
-notes.txt		Things I've been thinking about
-src			Current source code for bnfc starting with trying
+=over 8
+
+=item syntax.pod  	A Document covering the syntax of our new language
+
+=item notes.txt		Things I've been thinking about
+
+=item src		Current source code for BNFC starting with trying
 			to build an lpc grammar and then will modify that
 			so for now this doesn't line up with the docs.
-examples		Example code
+
+=item examples		Example code
+
+=back
 
 =head2 What are the plans?
 
@@ -82,9 +89,9 @@ examples		Example code
 
 =item 1. I plan on writing the documentation describing the language.
 
-=item 2. Creating a bnf of the language.
+=item 2. Creating a BNF of the language.
 
-=item 3. using bnfc to create an interpreter/pretty printer/critic for the
+=item 3. using BNFC to create an interpreter/pretty printer/critic for the
 language.
 
 =back
@@ -92,7 +99,7 @@ language.
 =head1 LICENSE
 
 This code is currently under the CC license, you can do whatever you
-want to with it.  This may change the future to something like
+want to with it.  This may change in the future to something like
 the GPL depending on how things go.
 
 =head2 Want to get involved?
