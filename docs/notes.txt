@@ -167,3 +167,9 @@ Simplify operators, reducing them unless standard math?
 Need to address regex, do not use something like  =~ operator like in perl,
 make a regex function!
 
+Try resolving/finding conflicts:
+	bnfc -m LPC.cf
+	happy -i ParLPC.y
+	grep "(reduce" ParLPC.info
+	happy -da ParLPC.y
+
