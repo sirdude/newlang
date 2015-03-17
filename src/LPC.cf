@@ -9,9 +9,13 @@ comment "//" ;
 comment "/*" "*/" ;
 comment "#" ;
 
-Prog. Program  ::= [Function] ;
-Fun.  Function ::= [Tm] Type Ident "(" [Decl] ")" "{" [Stm] "}" ;
-Dec.  Decl     ::= [Tm] Type [Ident] ;
+Prog.	Program  ::= [Function] ;
+PDec.	Program  ::= [Decl] ;
+
+Fun.	Function ::= [Tm] Type Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Dec.  	Decl     ::= [Tm] Type [Ident] ;
+DecPtr.	Decl	 ::= [Tm] Type "*" [Ident] ;
+DecArr. Decl     ::= [Tm] Type [Ident] "[" Exp "]";
   
 terminator Function "" ;
 terminator Stm "" ;
@@ -24,6 +28,7 @@ coercions Exp 4 ;
 -- SInherit. Stm ::= "inherit" [Ident] Str;
 -- SInclude. Stm ::= "include" Str;
 
+SEmpty.   	Stm ::= ";"  ;
 SDecl.   	Stm ::= Decl ";"  ;
 SExp.    	Stm ::= Exp ";" ;
 SBlock.  	Stm ::= "{" [Stm] "}" ;
@@ -35,7 +40,11 @@ SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
 Sfor.    	Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
 Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
   
-EAss.		Exp  ::= Ident "=" Exp ;
+EAss.		Exp  ::= Ident "=" Exp;
+EArrAss.	Exp  ::= Ident "[" [Exp] "]" "=" Exp;
+EInc.		Exp  ::= Ident "++";
+EDec.		Exp  ::= Ident "--";
+
 EOr.		Exp1 ::= Exp2 "||" Exp2 ;
 EAnd.		Exp1 ::= Exp2 "&&" Exp2 ;
 ELt.		Exp1 ::= Exp2 "<" Exp2 ;
@@ -51,6 +60,7 @@ ESub.		Exp2 ::= Exp2 "-" Exp3 ;
 EMul.		Exp3 ::= Exp3 "*" Exp4 ;
 EDiv.		Exp3 ::= Exp3 "/" Exp4 ;
 Call.		Exp4 ::= Ident "(" [Exp] ")" ;
+Earr.		Exp4 ::= Ident "[" [Exp] "]" ;
 EVar.		Exp4 ::= Ident ;
 EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
@@ -63,6 +73,9 @@ TString.	Type ::= "string" ;
 TObject.	Type ::= "object" ;
 TMapping.	Type ::= "mapping" ;
 TMixed.		Type ::= "mixed" ;
+
+-- XXX remove here to test c code...
+Tchar.		Type ::= "char" ;
 
 TMAtomic.	Tm ::= "atomic";
 TMNomask.	Tm ::= "nomask";
