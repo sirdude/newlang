@@ -10,14 +10,20 @@ comment "/*" "*/" ;
 comment "#" ;
 
 Prog.	Program  ::= [Function] ;
-PDec.	Program  ::= [Decl] ;
+PDec.	Program  ::= [Var] ;
 
-Fun.	Function ::= [Tm] Type Ident "(" [Decl] ")" "{" [Stm] "}" ;
-Dec.  	Decl     ::= [Tm] Type [Ident] ;
-DecPtr.	Decl	 ::= [Tm] Type "*" [Ident] ;
-DecArr. Decl     ::= [Tm] Type [Ident] "[" Exp "]";
+Fun.	 Function ::= [Tm] Type Ident "(" [Decl] ")" "{" [Stm] "}" ;
+
+VDec.    Var	  ::= [Tm] Type Ident ;
+VDecp.   Var	  ::= [Tm] Type "*" Ident ;
+VDecarr. Var	  ::= [Tm] Type Ident "[" Exp "]" ;
+
+Dec.   	 Decl     ::= [Tm] Type [Ident] ;
+DecPtr.	 Decl	  ::= [Tm] Type "*" [Ident] ;
+DecArr.  Decl     ::= [Tm] Type [Ident] "[" Exp "]";
   
 terminator Function "" ;
+terminator Var "" ;
 terminator Stm "" ;
 terminator Tm "" ;
 separator  Decl "," ;
