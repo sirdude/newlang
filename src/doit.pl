@@ -87,7 +87,7 @@ sub fix_printer {
 
 # Create our stuff with bnfc
 system("bnfc -m -c -o lpc LPC.cf");
-system("bnfc -m -c -o sweet SWEET.cf");
+system("bnfc -m -c -o sweet SWEET_formal.cf");
 
 foreach my $i ("./lpc", "./sweet") {
 	fix_makefile($i);

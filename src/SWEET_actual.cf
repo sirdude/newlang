@@ -2,7 +2,9 @@
 -- run the following command to create our compiler template:
 -- bnfc -m -c SWEET.cf
 --
---  This was a copy of the c- syntax need to finish working on it
+-- For the formal definition of the SWEET language see SWEET_formal
+-- This file accepts other common language things and tries to convert
+-- them to SWEET_formal
 --
 
 comment "//" ;
