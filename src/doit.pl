@@ -11,6 +11,52 @@
 
 use strict;
 use warnings;
+use File::Copy;
+
+sub removelines {
+	my ($start, $end, $file) = @_;
+	my $in = "$file.tmp";
+	my ($fhi, $fho, $c);
+
+	$c = 0;
+	copy($file, $in);
+	open($fhi, "<", $in) or die "Unable to read $in\n";
+	open($fho, ">", $file) or die "Unable to write to $file\n";
+	while(my $line = <$fhi>) {
+		$c = $c + 1;
+
+		if (($c >= $start) && ($c <= $end)) {
+			# Skip it
+		} else {
+			print $fho $line;
+		}
+	}
+	close($fhi);
+	close($fho);
+	unlink($in);
+}
+
+sub insert_code {
+	my ($code, $place, $file) = @_;
+	my $in = "$file.tmp";
+	my ($fhi, $fho, $c);
+
+	$c = 0;
+	copy($file, $in);
+	open($fhi, "<", $in) or die "Unable to read $in\n";
+	open($fho, ">", $file) or die "Unable to write to $file\n";
+	while(my $line = <$fhi>) {
+		$c = $c + 1;
+
+		if ($c == $place) {
+			print $fho $code;
+		}
+		print $fho $line;
+	}
+	close($fhi);
+	close($fho);
+	unlink($in);
+}
 
 # Clean things up, make distclean do extra stuff
 sub fix_makefile {
@@ -81,8 +127,39 @@ sub create_newfiles {
 # Mods to Pretty Printer:
 sub fix_printer {
 	my ($dir) = @_;
+        my ($code, $file);
+	$file = "$dir/Printer.c";
 	system("perl -pi -e 's/#define INDENT_WIDTH 2/" .
-		"#define INDENT_WIDTH 3/g' $dir/Printer.c");
+		"#define INDENT_WIDTH 3/g' $file");
+
+	# Add a function to backup a line.
+	$code = "void backupline(void)\n" .
+		"{\n" .
+		"  if (buf_[cur_ - 1] == '\\n')\n" .
+		"  {\n" .
+		"    buf_[cur_ - 1] = 0;\n" .
+		"    cur_--;\n" .
+		"  }\n" .
+		"}\n";
+
+	insert_code($code, 83, $file);
+
+	# Remove renderS("else");
+	removelines(781, 781, $file);
+
+	# Fix if else so it doesn't skip a line
+	$code = "    int t;\n" .
+		"    for(t=0; t<INDENT_WIDTH; " .
+			"t++) {\n" .
+		"      backup();\n" .
+		"    }\n" .
+		"    backupline();\n" .
+		"    renderS(\" else\");\n";
+	insert_code($code, 781, $file);
+
+	# Delete the newline before {
+	removelines(20, 21, $file);
+
 }
 
 # Create our stuff with bnfc
