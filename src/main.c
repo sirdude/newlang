@@ -13,7 +13,7 @@
 #include "Printer.h"
 #include "Absyn.h"
 
-#define VERSION "0.0"
+extern char *get_version();
 
 int print = -1;
 int help = -1;
@@ -25,7 +25,6 @@ int version = -1;
 int test = -1;
 int upgrade = -1;
 int opt = 0;
-
 
 static struct option long_options[] = {
 	{"print",	no_argument,		0,	'p' },
@@ -41,7 +40,7 @@ static struct option long_options[] = {
 };
 
 int print_version(char *name) {
-	printf("%s Version: %s\n", name, VERSION);
+	printf("%s Version: %s\n", name, get_version());
 /*
 	printf("%s_config_path: %s\n", name, config_path);
 	printf("%s_config_file: %s\n", name, config_file);

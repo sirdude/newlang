@@ -73,7 +73,8 @@ sub fix_makefile {
 		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' " .
 		"$dir/Makefile");
 	system("perl -pi -e 's/.PHONY: clean distclean\n/" .
-		".PHONY: clean distclean extraclean\n/g' $dir/Makefile");
+		".PHONY: clean distclean extraclean version.c\n/g' " .
+		"$dir/Makefile");
 
 	system("perl -pi -e 's/Wall/Wall -I./g' $dir/Makefile");
 
@@ -92,9 +93,15 @@ sub fix_makefile {
 	print $fh "\nmain.o:\n\t\${CC} \${CCFLAGS} -c " .
 		"../main.c\n";
 
-	print $fh "\n$binary: \${OBJS} Interpreter.o main.o\n";
+	print $fh "\n$binary: \${OBJS} Interpreter.o main.o version.o\n";
 	print $fh "\t\@echo \"Linking $binary...\"\n";
-	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o -o$binary\n";
+	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o version.o -o$binary\n";
+
+	print $fh "\nversion.c:\n";
+	print $fh "\t\../get_version.pl ../version.c\n";
+
+	print $fh "\nversion.o: version.c\n";
+	print $fh "\t\${CC} \${CCFLAGS} -c ../version.c\n";
 	close($fh);
 }
 
