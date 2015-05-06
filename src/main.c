@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <string.h>
 
 #include "Parser.h"
 #include "Printer.h"
@@ -120,7 +121,7 @@ int main(int argc, char ** argv) {
 	FILE *input;
 	char *outfile;
 	Program parse_tree;
-	int long_index = 0;
+	int outfilelen, long_index = 0;
 
 	while ((opt = getopt_long(argc, argv, "chptuvL:I:o:", long_options,
 		&long_index)) != -1) {
@@ -134,6 +135,10 @@ int main(int argc, char ** argv) {
 				break;
 			case 'o':
 				output = 1;
+				outfilelen = strlen(optarg) + 1;
+				outfile = malloc(outfilelen * sizeof(char));
+				strncpy(outfile,optarg,outfilelen);
+				outfile = optarg;
 				break;
 			case 'p':
 				print = 1;
