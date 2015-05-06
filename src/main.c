@@ -45,11 +45,11 @@ static struct option long_options[] = {
 
 int print_version(char *name) {
 	printf("%s Version: %s\n", name, get_version());
-	printf("%s_config_path: %s\n", name, conf_path);
+	printf("%s_CONF_PATH: %s\n", name, conf_path);
 //	printf("%s_config_file: %s\n", name, config_file);
-	printf("%s_critic_path: %s\n", name, critic_path);
-	printf("%s_include_path: %s\n", name, inc_path);
-	printf("%s_lib_path: %s\n", name, lib_path);
+	printf("%s_CRITIC_PATH: %s\n", name, critic_path);
+	printf("%s_INC_PATH: %s\n", name, inc_path);
+	printf("%s_LIB_PATH: %s\n", name, lib_path);
 
 	printf("Found inheritables:\n");
 /* XXX */
@@ -85,7 +85,7 @@ int print_usage(char *name) {
 	return 0;
 }
 
-int read_configs() {
+int read_env_configs() {
 	char *value, *tmp;
 	int size;
 
@@ -104,6 +104,55 @@ int read_configs() {
 		strncat(inc_path,value,size);
 	}
 
+	value = getenv("SWEET_LIB_PATH");
+	if (value) {
+		if (lib_path) {
+			tmp = strdup(lib_path);
+			size = strlen(value) + strlen(tmp) + 2;
+			lib_path = malloc(size * sizeof(char));
+			strncat(lib_path,tmp,size);
+			strncat(lib_path,":",size);
+		} else {
+			size = strlen(value) + 1;
+			lib_path = malloc(size * sizeof(char));
+		}
+		strncat(lib_path,value,size);
+	}
+
+	value = getenv("SWEET_CRITIC_PATH");
+	if (value) {
+		if (critic_path) {
+			tmp = strdup(critic_path);
+			size = strlen(value) + strlen(tmp) + 2;
+			critic_path = malloc(size * sizeof(char));
+			strncat(critic_path,tmp,size);
+			strncat(critic_path,":",size);
+		} else {
+			size = strlen(value) + 1;
+			critic_path = malloc(size * sizeof(char));
+		}
+		strncat(critic_path,value,size);
+	}
+
+	value = getenv("SWEET_CONF_PATH");
+	if (value) {
+		if (conf_path) {
+			tmp = strdup(conf_path);
+			size = strlen(value) + strlen(tmp) + 2;
+			conf_path = malloc(size * sizeof(char));
+			strncat(conf_path,tmp,size);
+			strncat(conf_path,":",size);
+		} else {
+			size = strlen(value) + 1;
+			conf_path = malloc(size * sizeof(char));
+		}
+		strncat(conf_path,value,size);
+	}
+
+	return 0;
+}
+
+int read_file_configs() {
 	return 0;
 }
 
@@ -201,7 +250,8 @@ int main(int argc, char ** argv) {
 		}
 	}
 
-	read_configs();
+	read_env_configs();
+	read_file_configs();
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
