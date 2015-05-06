@@ -88,9 +88,9 @@ sub fix_makefile {
 
 	open(my $fh, ">>", "$dir/Makefile") or 
 		die "Unable to open $dir/Makefile\n";
-	print $fh "Interpreter.o: Interpreter.h\n\t\${CC} \${CCFLAGS} -c " .
-		"Interpreter.c\n";
-	print $fh "\nmain.o:\n\t\${CC} \${CCFLAGS} -c " .
+	print $fh "Interpreter.o: Interpreter.h Interpreter.c\n" .
+		"\t\${CC} \${CCFLAGS} -c Interpreter.c\n";
+	print $fh "\nmain.o: ../main.c\n\t\${CC} \${CCFLAGS} -c " .
 		"../main.c\n";
 
 	print $fh "\n$binary: \${OBJS} Interpreter.o main.o version.o\n";

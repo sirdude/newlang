@@ -16,6 +16,8 @@
 
 extern char *get_version();
 
+char *lib_path, *inc_path, *conf_path, *critic_path;
+
 int print = -1;
 int help = -1;
 int critic = -1;
@@ -30,7 +32,8 @@ int opt = 0;
 static struct option long_options[] = {
 	{"print",	no_argument,		0,	'p' },
 	{"help",	no_argument,		0,	'h' },
-	{"critic",	no_argument,		0,	'c' },
+	{"critic",	optional_argument,	0,	'c' },
+	{"config",	required_argument,	NULL,	'C' },
 	{"include",	required_argument,	NULL,	'I' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
@@ -42,16 +45,14 @@ static struct option long_options[] = {
 
 int print_version(char *name) {
 	printf("%s Version: %s\n", name, get_version());
-/*
-	printf("%s_config_path: %s\n", name, config_path);
-	printf("%s_config_file: %s\n", name, config_file);
+	printf("%s_config_path: %s\n", name, conf_path);
+//	printf("%s_config_file: %s\n", name, config_file);
 	printf("%s_critic_path: %s\n", name, critic_path);
-	printf("%s_include_path: %s\n", name, include_path);
-	printf("%s_lib_path: %S\n", name, lib_path);
+	printf("%s_include_path: %s\n", name, inc_path);
+	printf("%s_lib_path: %s\n", name, lib_path);
 
 	printf("Found inheritables:\n");
-	XXX
-*/
+/* XXX */
 	return 1;
 }
 
@@ -60,11 +61,15 @@ int print_usage(char *name) {
 	printf("\tEvaluate the file INFILE.  If no file is given, read ");
 	printf("from stdin.\n");
 	printf("Available Options:\n");
-	printf("\t-c --critic\n\t\tPrint feedback on the submitted code.\n");
+	printf("\t-c --critic[=PATH]\n\t\tPrint feedback on the submitted ");
+	printf("code.  if PATH is specified,\n\t\tadd PATH to the search ");
+	printf("path for critic config files.\n");
+	printf("\t-C --config=PATH\n\t\tSpecify a path to search for ");
+	printf("config files.\n");
 	printf("\t-h --help\n\t\tThis usage information.\n");
-	printf("\t-I --include=DIR\n\t\tSpecify a directory to search for ");
+	printf("\t-I --include=PATH\n\t\tSpecify a path to search for ");
 	printf("include files.\n");
-	printf("\t-L --lib=DIR\n\t\tSpecify a directory to search for ");
+	printf("\t-L --lib=PATH\n\t\tSpecify a path to search for ");
 	printf("inheritables.\n");
 	printf("\t-o --output=FILE\n\t\tSpecify a filename to compile ");
 	printf("the code to.\n");
@@ -76,6 +81,28 @@ int print_usage(char *name) {
 	printf("\tUpgrade the specified file to the current syntax.\n");
 	printf("\t-v --version\n\t");
 	printf("\tPrint Version and configuration information.\n");
+
+	return 0;
+}
+
+int read_configs() {
+	char *value, *tmp;
+	int size;
+
+	value = getenv("SWEET_INC_PATH");
+	if (value) {
+		if (inc_path) {
+			tmp = strdup(inc_path);
+			size = strlen(value) + strlen(tmp) + 2;
+			inc_path = malloc(size * sizeof(char));
+			strncat(inc_path,tmp,size);
+			strncat(inc_path,":",size);
+		} else {
+			size = strlen(value) + 1;
+			inc_path = malloc(size * sizeof(char));
+		}
+		strncat(inc_path,value,size);
+	}
 
 	return 0;
 }
@@ -123,15 +150,32 @@ int main(int argc, char ** argv) {
 	Program parse_tree;
 	int outfilelen, long_index = 0;
 
-	while ((opt = getopt_long(argc, argv, "chptuvL:I:o:", long_options,
+	while ((opt = getopt_long(argc, argv, "hptuvc::C:L:I:o:", long_options,
 		&long_index)) != -1) {
 		switch (opt) {
 			case 'c':
+				if (optarg) {
+					outfilelen = strlen(optarg) + 1;
+					critic_path = malloc(outfilelen * 
+						sizeof(char));
+					strncpy(critic_path,optarg,outfilelen);
+				}
 				critic = 1;
 				break;
+			case 'C':
+				outfilelen = strlen(optarg) + 1;
+				conf_path = malloc(outfilelen * sizeof(char));
+				strncpy(conf_path,optarg,outfilelen);
+				break;
 			case 'L':
+				outfilelen = strlen(optarg) + 1;
+				lib_path = malloc(outfilelen * sizeof(char));
+				strncpy(lib_path,optarg,outfilelen);
 				break;
 			case 'I':
+				outfilelen = strlen(optarg) + 1;
+				inc_path = malloc(outfilelen * sizeof(char));
+				strncpy(inc_path,optarg,outfilelen);
 				break;
 			case 'o':
 				output = 1;
@@ -156,6 +200,8 @@ int main(int argc, char ** argv) {
 				return print_usage(argv[0]);
 		}
 	}
+
+	read_configs();
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
