@@ -85,74 +85,44 @@ int print_usage(char *name) {
 	return 0;
 }
 
-int read_env_configs() {
+char *set_env_configs(char *localpath, char *envvar) {
 	char *value, *tmp;
 	int size;
 
-	value = getenv("SWEET_INC_PATH");
+	value = getenv(envvar);
 	if (value) {
-		if (inc_path) {
-			tmp = strdup(inc_path);
+		if (localpath) {
+			tmp = strdup(localpath);
 			size = strlen(value) + strlen(tmp) + 2;
-			inc_path = malloc(size * sizeof(char));
-			strncat(inc_path,tmp,size);
-			strncat(inc_path,":",size);
+			localpath = malloc(size * sizeof(char));
+			strncat(localpath,tmp,size);
+			strncat(localpath,":",size);
 		} else {
 			size = strlen(value) + 1;
-			inc_path = malloc(size * sizeof(char));
+			localpath = malloc(size * sizeof(char));
 		}
-		strncat(inc_path,value,size);
+		strncat(localpath,value,size);
 	}
 
-	value = getenv("SWEET_LIB_PATH");
-	if (value) {
-		if (lib_path) {
-			tmp = strdup(lib_path);
-			size = strlen(value) + strlen(tmp) + 2;
-			lib_path = malloc(size * sizeof(char));
-			strncat(lib_path,tmp,size);
-			strncat(lib_path,":",size);
-		} else {
-			size = strlen(value) + 1;
-			lib_path = malloc(size * sizeof(char));
-		}
-		strncat(lib_path,value,size);
-	}
-
-	value = getenv("SWEET_CRITIC_PATH");
-	if (value) {
-		if (critic_path) {
-			tmp = strdup(critic_path);
-			size = strlen(value) + strlen(tmp) + 2;
-			critic_path = malloc(size * sizeof(char));
-			strncat(critic_path,tmp,size);
-			strncat(critic_path,":",size);
-		} else {
-			size = strlen(value) + 1;
-			critic_path = malloc(size * sizeof(char));
-		}
-		strncat(critic_path,value,size);
-	}
-
-	value = getenv("SWEET_CONF_PATH");
-	if (value) {
-		if (conf_path) {
-			tmp = strdup(conf_path);
-			size = strlen(value) + strlen(tmp) + 2;
-			conf_path = malloc(size * sizeof(char));
-			strncat(conf_path,tmp,size);
-			strncat(conf_path,":",size);
-		} else {
-			size = strlen(value) + 1;
-			conf_path = malloc(size * sizeof(char));
-		}
-		strncat(conf_path,value,size);
-	}
-
-	return 0;
+	return localpath;
 }
 
-int read_file_configs() {
+int read_env_configs(char *name) {
+   if (strcmp(name,"LPC") == 0) {
+      conf_path = set_env_configs(conf_path, "LPC_CONF_PATH");
+      critic_path = set_env_configs(critic_path, "LPC_CRITIC_PATH");
+      inc_path = set_env_configs(inc_path, "LPC_INC_PATH");
+      lib_path = set_env_configs(lib_path, "LPC_LIB_PATH");
+   } else {
+      conf_path = set_env_configs(conf_path, "SWEET_CONF_PATH");
+      critic_path = set_env_configs(critic_path, "SWEET_CRITIC_PATH");
+      inc_path = set_env_configs(inc_path, "SWEET_INC_PATH");
+      lib_path = set_env_configs(lib_path, "SWEET_LIB_PATH");
+   }
+   return 1;
+}
+
+int read_file_configs(char *name) {
 	return 0;
 }
 
@@ -250,8 +220,13 @@ int main(int argc, char ** argv) {
 		}
 	}
 
-	read_env_configs();
-	read_file_configs();
+	if (strcmp(argv[0],"./LPC") == 0) {
+           read_env_configs("LPC");
+	   read_file_configs("LPC");
+        } else {
+           read_env_configs("SWEET");
+	   read_file_configs("SWEET");
+        }
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
