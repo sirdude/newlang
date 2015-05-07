@@ -95,7 +95,8 @@ sub fix_makefile {
 
 	print $fh "\n$binary: \${OBJS} Interpreter.o main.o version.o\n";
 	print $fh "\t\@echo \"Linking $binary...\"\n";
-	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o version.o -o$binary\n";
+	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o version.o " .
+		"-o$binary -lconfig\n";
 
 	print $fh "\nversion.c:\n";
 	print $fh "\t\../get_version.pl ../version.c\n";

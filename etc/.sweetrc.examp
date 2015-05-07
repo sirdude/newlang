@@ -1,20 +1,11 @@
-#!/usr/local/bin/sweet
+# This is an example config file for sweet, rename it to .sweetrc and
+# Place it in SWEET_CONF_PATH and modify it to fit your environment.
 
-# Look at this file to see detailed information on what you may set
-inherit "/std/config.swl";
+# Set some paths for our application
+SWEET_INC_PATH="./include:/usr/local/include/sweet"
+SWEET_LIB_PATH="./lib:/usr/local/lib/sweet"
+SWEET_CRITIC_PATH="./lib:/usr/local/lib/sweet/critic"
 
-int create() {
-	add_include ("/usr/local/include/sweet");
-	add_include ("./include");
+# Valid values 0 - 5:   0 = no checks 5 = I'm a rule freak
+SWEET_CRITIC_LEVEL = 3;
 
-	add_lib("/usr/local/lib/sweet");
-	add_lib("./lib");
-
-	workingdir = ".";
-	datadir = workingdir + "/data";
-
-	# Valid values 0 - 5:   0 = no checks 5 = I'm a rule freak
-	criticlevel = 3;
-
-	return 1;
-}

@@ -5,6 +5,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <libgen.h>
+#include <libconfig.h>
 
 #include "Parser.h"
 #include "Printer.h"
