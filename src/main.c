@@ -189,7 +189,7 @@ int print_file(char *outfile, Program parse_tree) {
 			return 0;
 		}
 
-		fprintf(ofile,"%s\n\n", printProgram(parse_tree));
+		fprintf(ofile,"%s\n", printProgram(parse_tree));
 
 		fclose(ofile);
 	} else {
@@ -209,11 +209,9 @@ int main(int argc, char ** argv) {
 	char buf[MAX_STR];
 	char *outfile, *basepath, *filename, *fullpath;
 	Program parse_tree;
-	int outfilelen, long_index = 0;
+	int outfilelen, ret, long_index = 0;
 
 	fullpath = realpath(argv[0],buf);
-	basepath = strdup(fullpath);
-	filename = strdup(fullpath);
 	basepath = dirname(fullpath);
 	filename = basename(fullpath);
 
@@ -249,7 +247,6 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				outfile = malloc(outfilelen * sizeof(char));
 				strncpy(outfile,optarg,outfilelen);
-				outfile = optarg;
 				break;
 			case 'p':
 				print = 1;
@@ -264,7 +261,13 @@ int main(int argc, char ** argv) {
 				test = 1;
 				break;
 			default:
-				return print_usage(filename);
+				print_usage(filename);
+
+				if (outfile) {
+					free(outfile);
+				}
+
+				return 0;
 		}
 	}
 
@@ -304,16 +307,19 @@ printf("\n[Abstract Syntax]\n");
 printf("%s\n\n", showProgram(parse_tree));
 
 		if (print == 1) {
-			return print_file(outfile, parse_tree);
+			ret= print_file(outfile, parse_tree);
 		} else if (critic == 1) {
-			return do_critic(outfile, parse_tree);
+			ret = do_critic(outfile, parse_tree);
 		} else if (test == 1) {
-			run_tests(outfile, parse_tree);
+			ret = run_tests(outfile, parse_tree);
 		} else {
-			run_code(outfile, parse_tree);
+			ret = run_code(outfile, parse_tree);
+		}
+		if (outfile) {
+			free(outfile);
 		}
 
-		return 0;
+		return ret;
 	}
 
 	return 1;
