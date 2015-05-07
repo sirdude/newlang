@@ -1,6 +1,6 @@
 =head1 NAME
 
-New Language: SWEET
+New Language: sweet
 
 =head1 DESCRIPTION
 

@@ -2,15 +2,15 @@ To get going with things:
 
 cd newlang/src
 perl ./doit.pl
-	This will generate two different languages src/LPC and sweet/SWEET
+	This will generate two different languages lpc/lpc and sweet/sweet
 
 At this point they are basically the same some slight syntax differences.
 You can't do much other than pretty print a program.
 	(Assuming it is accepted)
 Some things to try:
-	lpc/LPC -h
-	lpc/LPC -p ../examp/fib.lpc
-	lpc/LPC -c ../examp/ugly.lpc 
+	lpc/lpc -h
+	lpc/lpc -p ../examp/fib.lpc
+	lpc/lpc -c ../examp/ugly.lpc 
 
 You'll probably want to look at the following code:
 doit.pl:
