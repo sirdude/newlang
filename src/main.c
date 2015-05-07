@@ -152,7 +152,6 @@ int read_file_configs(char *name, char *dir) {
 	strncat(tmp, "/include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
-printf("Hmmm\n");
 
 	tmp = strdup(dir);
 	strncat(tmp, "/lib/", MAX_STR);
@@ -162,14 +161,10 @@ printf("Hmmm\n");
 	strncat(tmp2, "/critic", MAX_STR);
 	critic_path = add_configs(critic_path, tmp2);
 
-printf("Hmmm\n");
-
 	tmp2 = strdup(tmp);
 	strncat(tmp2, "/lib", MAX_STR);
 	lib_path = add_configs(lib_path, tmp2);
 
-printf("Hmmm\n");
-	
 	return 0;
 }
 
@@ -302,9 +297,11 @@ int main(int argc, char ** argv) {
 	}
 
 	if (parse_tree) {
-		printf("\nParse Successful!\n");
-		printf("\n[Abstract Syntax]\n");
-		printf("%s\n\n", showProgram(parse_tree));
+
+/* Remove this eventually XXX */
+printf("\nParse Successful!\n");
+printf("\n[Abstract Syntax]\n");
+printf("%s\n\n", showProgram(parse_tree));
 
 		if (print == 1) {
 			return print_file(outfile, parse_tree);
