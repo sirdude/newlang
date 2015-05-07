@@ -114,7 +114,7 @@ char *add_configs(char *localpath, char *value) {
 
 	if (value) {
 		if (localpath) {
-			tmp = strdup(localpath);
+			tmp = localpath;
 			size = strlen(value) + strlen(tmp) + 2;
 			localpath = malloc(size * sizeof(char));
 			strncat(localpath, tmp, size);
@@ -160,29 +160,31 @@ int read_file_configs(char *name, char *dir) {
 	tmp = malloc(MAX_STR * sizeof(char));
 	tmp2 = malloc(MAX_STR * sizeof(char));
 
-	tmp = strdup(dir);
+	strncpy(tmp, dir, strlen(dir));
 	strncat(tmp, "/etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
 /* XXX find config file here and read it... */
 
-	tmp = strdup(dir);
+	strncpy(tmp, dir, strlen(dir));
 	strncat(tmp, "/include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
 
-	tmp = strdup(dir);
+	strncpy(tmp, dir, strlen(dir));
 	strncat(tmp, "/lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 
-	tmp2 = strdup(tmp);
+	strncpy(tmp2, tmp, strlen(tmp));
 	strncat(tmp2, "/critic", MAX_STR);
 	critic_path = add_configs(critic_path, tmp2);
 
-	tmp2 = strdup(tmp);
+	strncpy(tmp2, tmp, strlen(tmp));
 	strncat(tmp2, "/lib", MAX_STR);
 	lib_path = add_configs(lib_path, tmp2);
 
+	free(tmp);
+	free(tmp2);
 	return 0;
 }
 
@@ -295,7 +297,7 @@ int main(int argc, char ** argv) {
 	}
 
 	read_env_configs(filename);
-//	read_file_configs(filename, basepath);
+	read_file_configs(filename, basepath);
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
