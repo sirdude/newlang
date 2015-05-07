@@ -12,10 +12,12 @@
 #include "Absyn.h"
 
 #define MAX_STR 2048
+#define DEFAULT_CRITIC_LEVEL 3
 
 extern char *get_version();
 
 char *lib_path, *inc_path, *conf_path, *critic_path;
+int critic_level;
 
 int print = -1;
 int help = -1;
@@ -34,6 +36,7 @@ static struct option long_options[] = {
 	{"critic",	optional_argument,	0,	'c' },
 	{"config",	required_argument,	NULL,	'C' },
 	{"include",	required_argument,	NULL,	'I' },
+	{"level",	required_argument,	NULL,	'l' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
 	{"upgrade",	no_argument,		NULL,	'u' },
@@ -50,6 +53,8 @@ int print_version(char *name, char *dir) {
 	printf("%s_CRITIC_PATH: %s\n", name, critic_path);
 	printf("%s_INC_PATH: %s\n", name, inc_path);
 	printf("%s_LIB_PATH: %s\n\n", name, lib_path);
+
+	printf("%s_CRITIC_LEVEL: %d\n\n", name, critic_level);
 
 	printf("Found inheritables:\n");
 /* XXX */
@@ -71,6 +76,9 @@ int print_usage(char *name) {
 	printf("include files.\n");
 	printf("\t-L --lib=PATH\n\t\tSpecify a path to search for ");
 	printf("inheritables.\n");
+	printf("\t-L --level=NUM\n\t\tSet the critic level 0-5, 5 being harsh "
+		);
+	printf("inheritables.\n");
 	printf("\t-o --output=FILE\n\t\tSpecify a filename to compile ");
 	printf("the code to.\n");
 	printf("\t-p --print\n\t\tParse the file and then print it in the ");
@@ -87,7 +95,8 @@ int print_usage(char *name) {
 	printf("\t%s_CONF_PATH\n", name);
 	printf("\t%s_CRITIC_PATH\n", name);
 	printf("\t%s_INC_PATH\n", name);
-	printf("\t%s_LIB_PATH\n\n", name);
+	printf("\t%s_LIB_PATH\n", name);
+	printf("\t%s_CRITIC_LEVEL\n\n", name);
 
 	if (strcmp(name,"SWEET") == 0) {
 		printf("Alternately you can create a config file: .sweetrc\n");
@@ -127,12 +136,20 @@ int read_env_configs(char *name) {
 			getenv("LPC_CRITIC_PATH"));
 		inc_path = add_configs(inc_path, getenv("LPC_INC_PATH"));
 		lib_path = add_configs(lib_path, getenv("LPC_LIB_PATH"));
+
+		if (getenv("LPC_CRITIC_LEVEL")) {
+			critic_level = atoi(getenv("LPC_CRITIC_LEVEL"));
+		}
 	} else {
 		conf_path = add_configs(conf_path, getenv("SWEET_CONF_PATH"));
 		critic_path = add_configs(critic_path,
 			getenv("SWEET_CRITIC_PATH"));
 		inc_path = add_configs(inc_path, getenv("SWEET_INC_PATH"));
 		lib_path = add_configs(lib_path, getenv("SWEET_LIB_PATH"));
+
+		if (getenv("SWEET_CRITIC_LEVEL")) {
+			critic_level = atoi(getenv("SWEET_CRITIC_LEVEL"));
+		}
 	}
 	return 1;
 }
@@ -212,12 +229,14 @@ int main(int argc, char ** argv) {
 	Program parse_tree;
 	int outfilelen, ret, long_index = 0;
 
+	critic_level = DEFAULT_CRITIC_LEVEL;
+
 	fullpath = realpath(argv[0],buf);
 	basepath = dirname(fullpath);
 	filename = basename(fullpath);
 
-	while ((opt = getopt_long(argc, argv, "hptuvc::C:L:I:o:", long_options,
-		&long_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "hptuvc::C:L:I:l:o:",
+		long_options, &long_index)) != -1) {
 		switch (opt) {
 			case 'c':
 				if (optarg) {
@@ -237,6 +256,9 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				lib_path = malloc(outfilelen * sizeof(char));
 				strncpy(lib_path,optarg,outfilelen);
+				break;
+			case 'l':
+				critic_level = atoi(optarg);
 				break;
 			case 'I':
 				outfilelen = strlen(optarg) + 1;
