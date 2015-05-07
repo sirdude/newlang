@@ -64,9 +64,9 @@ sub fix_makefile {
 	my $binary;
 
 	if ($dir eq "./lpc") {
-		$binary = "LPC";
+		$binary = "lpc";
 	} else {
-		$binary = "SWEET";
+		$binary = "sweet";
 	}
 	system("perl -pi -e 's/distclean: clean\n/" .
 	        "extraclean:\n\trm -rf Interpreter* $binary " .
@@ -185,4 +185,4 @@ system("cd sweet; make");
 
 # Test our code
 # system(".lpc/testLPC ../examp/ugly.c");
-system("./lpc/LPC -p ../examp/ugly.c");
+system("./lpc/lpc -p ../examp/ugly.c");
