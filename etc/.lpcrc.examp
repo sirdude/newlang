@@ -1,0 +1,11 @@
+# This is an example config file for lpc, rename it to .lpcrc and
+# Place it in LPC_CONF_PATH and modify it to fit your environment.
+
+# Set some paths for our application
+LPC_INC_PATH="./include:/usr/local/include/lpc"
+LPC_LIB_PATH="./lpc/lib:/usr/local/lib/lpc"
+LPC_CRITIC_PATH="./lpc/critic:/usr/local/lib/lpc/critic"
+
+# Valid values 0 - 5:   0 = no checks 5 = I'm a rule freak
+LPC_CRITIC_LEVEL = 3;
+
