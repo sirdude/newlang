@@ -48,13 +48,22 @@ static struct option long_options[] = {
 int print_version(char *name, char *dir) {
 	printf("%s Version: %s\n\n", name, get_version());
 	printf("Working dir: %s\n", dir);
-	printf("%s_CONF_PATH: %s\n", name, conf_path);
-//	printf("%s_config_file: %s\n", name, config_file);
-	printf("%s_CRITIC_PATH: %s\n", name, critic_path);
-	printf("%s_INC_PATH: %s\n", name, inc_path);
-	printf("%s_LIB_PATH: %s\n\n", name, lib_path);
+	if (strcmp(name,"lpc") == 0) {
+		printf("LPC_CONF_PATH: %s\n", conf_path);
+//		printf("LPC_config_file: %s\n", config_file);
+		printf("LPC_CRITIC_PATH: %s\n", critic_path);
+		printf("LPC_INC_PATH: %s\n", inc_path);
+		printf("LPC_LIB_PATH: %s\n\n", lib_path);
 
-	printf("%s_CRITIC_LEVEL: %d\n\n", name, critic_level);
+		printf("LPC_CRITIC_LEVEL: %d\n\n", critic_level);
+	} else {
+		printf("SWEET_CONF_PATH: %s\n", conf_path);
+//		printf("SWEET_config_file: %s\n", config_file);
+		printf("SWEET_CRITIC_PATH: %s\n", critic_path);
+		printf("SWEET_INC_PATH: %s\n", inc_path);
+		printf("SWEET_LIB_PATH: %s\n\n", lib_path);
+
+	}
 
 	printf("Found inheritables:\n");
 /* XXX */
@@ -92,18 +101,27 @@ int print_usage(char *name) {
 
 	printf("You can also use the following environment variables ");
 	printf("to modify configuration:\n");
-	printf("\t%s_CONF_PATH\n", name);
-	printf("\t%s_CRITIC_PATH\n", name);
-	printf("\t%s_INC_PATH\n", name);
-	printf("\t%s_LIB_PATH\n", name);
-	printf("\t%s_CRITIC_LEVEL\n\n", name);
-
-	if (strcmp(name,"SWEET") == 0) {
-		printf("Alternately you can create a config file: .sweetrc\n");
+	if (strcmp(name,"lpc") == 0) {
+		printf("\tLPC_CONF_PATH\n");
+		printf("\tLPC_CRITIC_PATH\n");
+		printf("\tLPC_INC_PATH\n");
+		printf("\tLPC_LIB_PATH\n");
+		printf("\tLPC_CRITIC_LEVEL\n\n");
 	} else {
-		printf("Alternately you can create a config file: .lpcrc\n");
+		printf("\tSWEET_CONF_PATH\n");
+		printf("\tSWEET_CRITIC_PATH\n");
+		printf("\tSWEET_INC_PATH\n");
+		printf("\tSWEET_LIB_PATH\n");
+		printf("\tSWEET_CRITIC_LEVEL\n\n");
 	}
-	printf("and place it in %s_CONF_PATH.\n", name);
+
+	printf("Alternately you can create a config file: .%src\n", name);
+
+	if (strcmp(name,"lpc") == 0) {
+		printf("and place it in LPC_CONF_PATH.\n");
+	} else {
+		printf("and place it in SWEET_CONF_PATH.\n");
+	}
 
 	return 0;
 }
@@ -130,7 +148,7 @@ char *add_configs(char *localpath, char *value) {
 }
 
 int read_env_configs(char *name) {
-	if (strcmp(name,"LPC") == 0) {
+	if (strcmp(name,"lpc") == 0) {
 		conf_path = add_configs(conf_path, getenv("LPC_CONF_PATH"));
 		critic_path = add_configs(critic_path,
 			getenv("LPC_CRITIC_PATH"));
@@ -237,6 +255,8 @@ int main(int argc, char ** argv) {
 	basepath = dirname(fullpath);
 	filename = basename(fullpath);
 
+	outfile = NULL;
+
 	while ((opt = getopt_long(argc, argv, "hptuvc::C:L:I:l:o:",
 		long_options, &long_index)) != -1) {
 		switch (opt) {
@@ -325,12 +345,6 @@ int main(int argc, char ** argv) {
 	}
 
 	if (parse_tree) {
-
-/* Remove this eventually XXX */
-printf("\nParse Successful!\n");
-printf("\n[Abstract Syntax]\n");
-printf("%s\n\n", showProgram(parse_tree));
-
 		if (print == 1) {
 			ret= print_file(outfile, parse_tree);
 		} else if (critic == 1) {
