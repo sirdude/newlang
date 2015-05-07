@@ -79,7 +79,21 @@ int print_usage(char *name) {
 	printf("\t-u --upgrade\n\t");
 	printf("\tUpgrade the specified file to the current syntax.\n");
 	printf("\t-v --version\n\t");
-	printf("\tPrint Version and configuration information.\n");
+	printf("\tPrint Version and configuration information.\n\n");
+
+	printf("You can also use the following environment variables ");
+	printf("to modify configuration:\n");
+	printf("\t%s_CONF_PATH\n", name);
+	printf("\t%s_CRITIC_PATH\n", name);
+	printf("\t%s_INC_PATH\n", name);
+	printf("\t%s_LIB_PATH\n\n", name);
+
+	if (strcmp(name,"SWEET") == 0) {
+		printf("Alternately you can create a config file: .sweetrc\n");
+	} else {
+		printf("Alternately you can create a config file: .lpcrc\n");
+	}
+	printf("and place it in %s_CONF_PATH.\n", name);
 
 	return 0;
 }
