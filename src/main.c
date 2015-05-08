@@ -179,26 +179,30 @@ int read_file_configs(char *name, char *dir) {
 	tmp2 = malloc(MAX_STR * sizeof(char));
 
 	strncpy(tmp, dir, strlen(dir));
+	tmp[strlen(dir) + 1] = '\0';
 	strncat(tmp, "/etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
 /* XXX find config file here and read it... */
 
 	strncpy(tmp, dir, strlen(dir));
-	strncat(tmp, "/include/", MAX_STR);
+	tmp[strlen(dir) + 1] = '\0';
+	strncat(tmp, "include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
 
 	strncpy(tmp, dir, strlen(dir));
-	strncat(tmp, "/lib/", MAX_STR);
+	tmp[strlen(dir) + 1] = '\0';
+	strncat(tmp, "lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 
 	strncpy(tmp2, tmp, strlen(tmp));
+	tmp2[strlen(tmp) + 1] = '\0';
 	strncat(tmp2, "/critic", MAX_STR);
 	critic_path = add_configs(critic_path, tmp2);
 
 	strncpy(tmp2, tmp, strlen(tmp));
-	strncat(tmp2, "/lib", MAX_STR);
+	tmp2[strlen(tmp) + 1] = '\0';
 	lib_path = add_configs(lib_path, tmp2);
 
 	free(tmp);
