@@ -72,7 +72,7 @@ int print_version(char *name, char *dir) {
 }
 
 char *get_conf_name(char *name) {
-	if (strstr(name, "lpc") == 0) {
+	if (strcmp(name, "lpc") == 0) {
 		return ".lpcrc";
 	}
 	return ".sweetrc";
@@ -375,7 +375,7 @@ int main(int argc, char ** argv) {
 	}
 
 	read_env_configs(filename);
-	read_file_configs(filename, basepath);
+//	read_file_configs(filename, basepath);
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
