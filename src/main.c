@@ -16,7 +16,7 @@
 
 extern char *get_version();
 
-char *lib_path, *inc_path, *conf_path, *critic_path;
+char *lib_path, *inc_path, *conf_path, *critic_path, *conf_file;
 int critic_level;
 
 int print = -1;
@@ -50,7 +50,7 @@ int print_version(char *name, char *dir) {
 	printf("Working dir: %s\n", dir);
 	if (strcmp(name,"lpc") == 0) {
 		printf("LPC_CONF_PATH: %s\n", conf_path);
-//		printf("LPC_config_file: %s\n", config_file);
+		printf("LPC_CONF_FILE: %s\n", conf_file);
 		printf("LPC_CRITIC_PATH: %s\n", critic_path);
 		printf("LPC_INC_PATH: %s\n", inc_path);
 		printf("LPC_LIB_PATH: %s\n\n", lib_path);
@@ -58,16 +58,24 @@ int print_version(char *name, char *dir) {
 		printf("LPC_CRITIC_LEVEL: %d\n\n", critic_level);
 	} else {
 		printf("SWEET_CONF_PATH: %s\n", conf_path);
-//		printf("SWEET_config_file: %s\n", config_file);
+		printf("SWEET_CONF_FILE: %s\n", conf_file);
 		printf("SWEET_CRITIC_PATH: %s\n", critic_path);
 		printf("SWEET_INC_PATH: %s\n", inc_path);
 		printf("SWEET_LIB_PATH: %s\n\n", lib_path);
 
+		printf("SWEET_CRITIC_LEVEL: %d\n\n", critic_level);
 	}
 
 	printf("Found inheritables:\n");
 /* XXX */
 	return 1;
+}
+
+char *get_conf_name(char *name) {
+	if (strstr(name, "lpc") == 0) {
+		return ".lpcrc";
+	}
+	return ".sweetrc";
 }
 
 int print_usage(char *name) {
@@ -115,7 +123,8 @@ int print_usage(char *name) {
 		printf("\tSWEET_CRITIC_LEVEL\n\n");
 	}
 
-	printf("Alternately you can create a config file: .%src\n", name);
+	printf("Alternately you can create a config file: %s\n", 
+		get_conf_name(name));
 
 	if (strcmp(name,"lpc") == 0) {
 		printf("and place it in LPC_CONF_PATH.\n");
@@ -172,27 +181,72 @@ int read_env_configs(char *name) {
 	return 1;
 }
 
+int read_conf_file(char *path) {
+	FILE *file;
+
+	printf("Checking conf: %s\n", path);
+
+	if ((file = fopen(path, "r"))) {
+		conf_file = path;
+		fclose(file);
+		return 1;
+	}
+
+	return 0;
+}
+
+int load_conf_file(char *name) {
+	char *buf, tmp[MAX_STR];
+	int size;
+
+	while (buf = strtok(conf_path, ":")) {
+		size = strlen(buf);
+printf("Buf = %s size = %d\n", buf, size);
+		strncpy(tmp, buf, size);
+		tmp[size + 1] = '\0';
+printf("tmp = %s size = %d\n", tmp, strlen(tmp));
+		strncat(tmp, get_conf_name(name), MAX_STR);
+printf("tmp = %s size = %d\n", tmp, strlen(tmp));
+		if (read_conf_file(tmp)) {
+			return 1;
+		}
+
+	}
+	buf = strtok(conf_path, NULL);
+	size = strlen(buf);
+	strncpy(tmp, buf, size);
+	tmp[size + 1] = '\0';
+	strncat(tmp, get_conf_name(name), MAX_STR);
+	if (read_conf_file(tmp)) {
+		return 1;
+	}
+
+	return 0;
+}
+
 int read_file_configs(char *name, char *dir) {
 	char *tmp, *tmp2;
+	int size;
 
 	tmp = malloc(MAX_STR * sizeof(char));
 	tmp2 = malloc(MAX_STR * sizeof(char));
 
-	strncpy(tmp, dir, strlen(dir));
-	tmp[strlen(dir) + 1] = '\0';
+	size = strlen(dir);
+	strncpy(tmp, dir, size);
+	tmp[size + 1] = '\0';
 	strncat(tmp, "/etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
-/* XXX find config file here and read it... */
+	load_conf_file(name);
 
-	strncpy(tmp, dir, strlen(dir));
-	tmp[strlen(dir) + 1] = '\0';
+	strncpy(tmp, dir, size);
+	tmp[size + 1] = '\0';
 	strncat(tmp, "include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
 
-	strncpy(tmp, dir, strlen(dir));
-	tmp[strlen(dir) + 1] = '\0';
+	strncpy(tmp, dir, size);
+	tmp[size + 1] = '\0';
 	strncat(tmp, "lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 
