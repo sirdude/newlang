@@ -196,29 +196,23 @@ int read_conf_file(char *path) {
 }
 
 int load_conf_file(char *name) {
-	char *buf, tmp[MAX_STR];
+	char *buf, path[MAX_STR], tmp[MAX_STR];
 	int size;
 
-	while (buf = strtok(conf_path, ":")) {
+	strncpy(path,conf_path,strlen(conf_path));
+
+	buf = strtok(path, ":");
+
+	while (buf != NULL) {
 		size = strlen(buf);
-printf("Buf = %s size = %d\n", buf, size);
 		strncpy(tmp, buf, size);
-		tmp[size + 1] = '\0';
-printf("tmp = %s size = %d\n", tmp, strlen(tmp));
+		tmp[size] = '\0';
+		strncat(tmp, "/", MAX_STR);
 		strncat(tmp, get_conf_name(name), MAX_STR);
-printf("tmp = %s size = %d\n", tmp, strlen(tmp));
 		if (read_conf_file(tmp)) {
 			return 1;
 		}
-
-	}
-	buf = strtok(conf_path, NULL);
-	size = strlen(buf);
-	strncpy(tmp, buf, size);
-	tmp[size + 1] = '\0';
-	strncat(tmp, get_conf_name(name), MAX_STR);
-	if (read_conf_file(tmp)) {
-		return 1;
+		buf = strtok(NULL, ":");
 	}
 
 	return 0;
@@ -228,35 +222,37 @@ int read_file_configs(char *name, char *dir) {
 	char *tmp, *tmp2;
 	int size;
 
+	conf_path = add_configs(conf_path, getenv("HOME"));
+
 	tmp = malloc(MAX_STR * sizeof(char));
 	tmp2 = malloc(MAX_STR * sizeof(char));
 
 	size = strlen(dir);
 	strncpy(tmp, dir, size);
-	tmp[size + 1] = '\0';
+	tmp[size] = '\0';
 	strncat(tmp, "/etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
 	load_conf_file(name);
 
 	strncpy(tmp, dir, size);
-	tmp[size + 1] = '\0';
+	tmp[size] = '\0';
 	strncat(tmp, "include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
 
 	strncpy(tmp, dir, size);
-	tmp[size + 1] = '\0';
+	tmp[size] = '\0';
 	strncat(tmp, "lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 
 	strncpy(tmp2, tmp, strlen(tmp));
-	tmp2[strlen(tmp) + 1] = '\0';
+	tmp2[strlen(tmp)] = '\0';
 	strncat(tmp2, "/critic", MAX_STR);
 	critic_path = add_configs(critic_path, tmp2);
 
 	strncpy(tmp2, tmp, strlen(tmp));
-	tmp2[strlen(tmp) + 1] = '\0';
+	tmp2[strlen(tmp)] = '\0';
 	lib_path = add_configs(lib_path, tmp2);
 
 	free(tmp);
@@ -375,7 +371,7 @@ int main(int argc, char ** argv) {
 	}
 
 	read_env_configs(filename);
-//	read_file_configs(filename, basepath);
+	read_file_configs(filename, basepath);
 
 	if (optind < argc) {
 		input = fopen(argv[optind], "r");
