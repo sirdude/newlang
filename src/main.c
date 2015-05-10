@@ -36,7 +36,7 @@ static struct option long_options[] = {
 	{"critic",	optional_argument,	0,	'c' },
 	{"config",	required_argument,	NULL,	'C' },
 	{"include",	required_argument,	NULL,	'I' },
-	{"level",	required_argument,	NULL,	'l' },
+	{"critic-level",	required_argument,	NULL,	'r' },
 	{"lib",		required_argument,	NULL,	'L' },
 	{"output",	required_argument,	NULL,	'o' },
 	{"upgrade",	no_argument,		NULL,	'u' },
@@ -93,13 +93,13 @@ int print_usage(char *name) {
 	printf("include files.\n");
 	printf("\t-L --lib=PATH\n\t\tSpecify a path to search for ");
 	printf("inheritables.\n");
-	printf("\t-L --level=NUM\n\t\tSet the critic level 0-5, 5 being harsh "
-		);
 	printf("inheritables.\n");
 	printf("\t-o --output=FILE\n\t\tSpecify a filename to compile ");
 	printf("the code to.\n");
 	printf("\t-p --print\n\t\tParse the file and then print it in the ");
 	printf("standard format.\n");
+	printf("\t-r --critic-level=NUM\n\t\tSet the critic level 0-5, ");
+	printf(" 0 being simple, 5 being harsh.");
 	printf("\t-t --test\n\t\tRun all of the test_* functions ");
 	printf("in the code.\n");
 	printf("\t-u --upgrade\n\t");
