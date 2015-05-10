@@ -135,7 +135,7 @@ int print_usage(char *name) {
 	return 0;
 }
 
-char *add_configs(char *localpath, char *value) {
+char *add_configs(char *localpath, const char *value) {
 	char *tmp;
 	int size;
 
@@ -181,14 +181,58 @@ int read_env_configs(char *name) {
 	return 1;
 }
 
-int read_conf_file(char *path) {
+int read_conf_file(char *name, char *path) {
 	FILE *file;
+	config_t cfg, *cf;
+	const char *tmp;
+	int itmp;
 
 	printf("Checking conf: %s\n", path);
 
 	if ((file = fopen(path, "r"))) {
 		conf_file = path;
+
 		fclose(file);
+
+		cf = &cfg;
+		config_init(cf);
+
+		if (!config_read_file(cf, path)) {
+			fprintf(stderr, "%s:%d - %s\n",
+				config_error_file(cf),
+				config_error_line(cf),
+				config_error_text(cf));
+			config_destroy(cf);
+			return 0;
+		}
+
+		if (strcmp(name,"lpc") == 0) {
+			if (config_lookup_string(cf, "LPC_INC_PATH", &tmp)) {
+				inc_path = add_configs(inc_path, tmp);
+			}
+			if (config_lookup_string(cf, "LPC_LIB_PATH", &tmp)) {
+				lib_path = add_configs(lib_path, tmp);
+			}
+			if (config_lookup_string(cf, "LPC_CRITIC_PATH", 
+				&tmp)) {
+				critic_path = add_configs(critic_path, tmp);
+			}
+			if (config_lookup_int(cf, "LPC_CRITIC_LEVEL", 
+				&itmp)) {
+			}
+		} else {
+			if (config_lookup_string(cf, "SWEET_INC_PATH", &tmp)) {
+			}
+			if (config_lookup_string(cf, "SWEET_LIB_PATH", &tmp)) {
+			}
+			if (config_lookup_string(cf, "SWEET_CRITIC_PATH", 
+				&tmp)) {
+			}
+			if (config_lookup_int(cf, "SWEET_CRITIC_LEVEL", 
+				&itmp)) {
+			}
+		}
+
 		return 1;
 	}
 
@@ -209,7 +253,7 @@ int load_conf_file(char *name) {
 		tmp[size] = '\0';
 		strncat(tmp, "/", MAX_STR);
 		strncat(tmp, get_conf_name(name), MAX_STR);
-		if (read_conf_file(tmp)) {
+		if (read_conf_file(name, tmp)) {
 			return 1;
 		}
 		buf = strtok(NULL, ":");
