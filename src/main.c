@@ -29,12 +29,14 @@ int version = -1;
 int test = -1;
 int upgrade = -1;
 int opt = 0;
+int debug = 0;
 
 static struct option long_options[] = {
 	{"print",	no_argument,		0,	'p' },
 	{"help",	no_argument,		0,	'h' },
 	{"critic",	optional_argument,	0,	'c' },
 	{"config",	required_argument,	NULL,	'C' },
+	{"debug",	no_argument,		0,	'd' },
 	{"include",	required_argument,	NULL,	'I' },
 	{"critic-level",	required_argument,	NULL,	'r' },
 	{"lib",		required_argument,	NULL,	'L' },
@@ -88,6 +90,7 @@ int print_usage(char *name) {
 	printf("path for critic config files.\n");
 	printf("\t-C --config=PATH\n\t\tSpecify a path to search for ");
 	printf("config files.\n");
+	printf("\t-d --debug\n\t\tEnable debugging information.\n");
 	printf("\t-h --help\n\t\tThis usage information.\n");
 	printf("\t-I --include=PATH\n\t\tSpecify a path to search for ");
 	printf("include files.\n");
@@ -371,6 +374,9 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				conf_path = malloc(outfilelen * sizeof(char));
 				strncpy(conf_path,optarg,outfilelen);
+				break;
+			case 'd':
+				debug = 1;
 				break;
 			case 'L':
 				outfilelen = strlen(optarg) + 1;
