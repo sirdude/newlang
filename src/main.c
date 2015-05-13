@@ -6,6 +6,7 @@
 #include <string.h>
 #include <libgen.h>
 #include <libconfig.h>
+#include <dirent.h>
 
 #include "Parser.h"
 #include "Printer.h"
@@ -47,6 +48,33 @@ static struct option long_options[] = {
 	{0,		0,			0,	0 }
 };
 
+int find_inheritables(char *path) {
+	DIR *d;
+	struct dirent *dir;
+	char *buf;
+	int count;
+
+	buf = strtok(path, ":");
+
+	count = 0;
+	while (buf != NULL) {
+		printf("Looking at %d: %s\n",sizeof(buf), buf);
+
+		d = opendir(buf);
+		if (d) {
+			while ((dir = readdir(d)) != NULL) {
+				printf("\t%s\n", dir->d_name);
+				count++;
+			}
+		}
+		closedir(d);
+		
+		buf = strtok(NULL, ":");
+	}
+
+	printf("Found %d modules.\n", count);
+}
+
 int print_version(char *name, char *dir) {
 	printf("%s Version: %s\n\n", name, get_version());
 	printf("Working dir: %s\n", dir);
@@ -69,7 +97,8 @@ int print_version(char *name, char *dir) {
 	}
 
 	printf("Found inheritables:\n");
-/* XXX */
+	find_inheritables(lib_path);
+
 	return 1;
 }
 
