@@ -52,13 +52,15 @@ int find_inheritables(char *path) {
 	DIR *d;
 	struct dirent *dir;
 	char *buf;
-	int count;
+	int count, size;
 
 	buf = strtok(path, ":");
 
 	count = 0;
 	while (buf != NULL) {
-		printf("Looking at %d: %s\n",sizeof(buf), buf);
+		size = sizeof(buf);
+
+printf("Looking at %d: %s\n",size, buf);
 
 		d = opendir(buf);
 		if (d) {
@@ -288,12 +290,14 @@ printf("tmp = %s : size = %d\n", tmp, size);
 		tmp[size] = '\0';
 		strncat(tmp, "/", MAX_STR);
 		strncat(tmp, get_conf_name(name), MAX_STR);
-printf("tmp = %s : size = %d\n", tmp, strlen(tmp));
+		size = strlen(tmp);
+printf("tmp = %s : size = %d\n", tmp, size);
 		if (read_conf_file(name, tmp)) {
 			return 1;
 		}
 		buf = strtok(NULL, ":");
-printf("buf = %s : size = %d\n", buf, strlen(buf));
+		size = strlen(buf);
+printf("buf = %s : size = %d\n", buf, size);
 	}
 
 	return 0;
