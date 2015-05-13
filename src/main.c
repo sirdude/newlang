@@ -73,6 +73,8 @@ int find_inheritables(char *path) {
 	}
 
 	printf("Found %d modules.\n", count);
+
+	return count;
 }
 
 int print_version(char *name, char *dir) {
