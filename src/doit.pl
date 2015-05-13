@@ -103,6 +103,10 @@ sub fix_makefile {
 
 	print $fh "\nversion.o: version.c\n";
 	print $fh "\t\${CC} \${CCFLAGS} -c ../version.c\n";
+	print $fh "\ninstall: $binary\n";
+	print $fh "\tmkdir -p ../../bin\n";
+	print $fh "\tcp $binary ../../bin/$binary\n";
+
 	close($fh);
 }
 
@@ -180,9 +184,9 @@ foreach my $i ("./lpc", "./sweet") {
 	create_newfiles($i);
 }
 
-system("cd lpc; make");
-system("cd sweet; make");
+system("cd lpc; make; make install");
+system("cd sweet; make; make install");
 
 # Test our code
-# system(".lpc/testLPC ../examp/ugly.c");
-system("./lpc/lpc -p ../examp/ugly.c");
+# system("./testLPC ../examp/ugly.c");
+system("../bin/lpc -p ../examp/ugly.c");
