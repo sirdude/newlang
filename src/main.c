@@ -345,7 +345,7 @@ int run_code(char *outfile, Program parse_tree) {
 
 int main(int argc, char ** argv) {
 	FILE *input;
-	char buf[MAX_STR];
+	char buf[PATH_MAX];
 	char *outfile, *basepath, *filename, *fullpath;
 	Program parse_tree;
 	int outfilelen, ret, long_index = 0;
