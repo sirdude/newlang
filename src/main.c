@@ -282,57 +282,57 @@ int load_conf_file(char *name) {
 	while (buf != NULL) {
 		size = strlen(buf);
 		strncpy(tmp, buf, size);
+printf("tmp = %s : size = %d\n", tmp, size);
 		tmp[size] = '\0';
 		strncat(tmp, "/", MAX_STR);
 		strncat(tmp, get_conf_name(name), MAX_STR);
+printf("tmp = %s : size = %d\n", tmp, strlen(tmp));
 		if (read_conf_file(name, tmp)) {
 			return 1;
 		}
 		buf = strtok(NULL, ":");
+printf("buf = %s : size = %d\n", buf, strlen(buf));
 	}
 
 	return 0;
 }
 
 int read_file_configs(char *name, char *dir) {
-	char *tmp, *tmp2;
+	char *tmp;
 	int size;
 
 	conf_path = add_configs(conf_path, getenv("HOME"));
 
 	tmp = malloc(MAX_STR * sizeof(char));
-	tmp2 = malloc(MAX_STR * sizeof(char));
 
 	size = strlen(dir);
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
-	strncat(tmp, "/etc", MAX_STR);
+	strncat(tmp, "/../etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
 	load_conf_file(name);
 
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
-	strncat(tmp, "include/", MAX_STR);
+	strncat(tmp, "/../include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
 
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
-	strncat(tmp, "lib/", MAX_STR);
+	strncat(tmp, "/../lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
+	inc_path = add_configs(lib_path, tmp);
 
-	strncpy(tmp2, tmp, strlen(tmp));
-	tmp2[strlen(tmp)] = '\0';
-	strncat(tmp2, "/critic", MAX_STR);
-	critic_path = add_configs(critic_path, tmp2);
-
-	strncpy(tmp2, tmp, strlen(tmp));
-	tmp2[strlen(tmp)] = '\0';
-	lib_path = add_configs(lib_path, tmp2);
+	strncpy(tmp, dir, size);
+	tmp[size] = '\0';
+	strncat(tmp, "/share", MAX_STR);
+	strncat(tmp, name, MAX_STR);
+	strncat(tmp, "/critic", MAX_STR);
+	critic_path = add_configs(critic_path, tmp);
 
 	free(tmp);
-	free(tmp2);
 	return 0;
 }
 
