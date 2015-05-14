@@ -58,7 +58,7 @@ int find_inheritables(char *path) {
 
 	count = 0;
 	while (buf != NULL) {
-		size = sizeof(buf);
+		size = strlen(buf);
 
 printf("Looking at %d: %s\n",size, buf);
 
@@ -68,8 +68,8 @@ printf("Looking at %d: %s\n",size, buf);
 				printf("\t%s\n", dir->d_name);
 				count++;
 			}
+			closedir(d);
 		}
-		closedir(d);
 		
 		buf = strtok(NULL, ":");
 	}
@@ -223,8 +223,6 @@ int read_conf_file(char *name, char *path) {
 	const char *tmp;
 	int itmp;
 
-	printf("Checking conf: %s\n", path);
-
 	if ((file = fopen(path, "r"))) {
 		conf_file = path;
 
@@ -279,25 +277,26 @@ int load_conf_file(char *name) {
 	char *buf, path[MAX_STR], tmp[MAX_STR];
 	int size;
 
+	size = strlen(conf_path);
 	strncpy(path,conf_path,strlen(conf_path));
+	path[size] = '\0';
 
 	buf = strtok(path, ":");
 
 	while (buf != NULL) {
 		size = strlen(buf);
 		strncpy(tmp, buf, size);
-printf("tmp = %s : size = %d\n", tmp, size);
 		tmp[size] = '\0';
 		strncat(tmp, "/", MAX_STR);
 		strncat(tmp, get_conf_name(name), MAX_STR);
 		size = strlen(tmp);
-printf("tmp = %s : size = %d\n", tmp, size);
 		if (read_conf_file(name, tmp)) {
 			return 1;
 		}
 		buf = strtok(NULL, ":");
-		size = strlen(buf);
-printf("buf = %s : size = %d\n", buf, size);
+		if (buf != NULL) {
+			size = strlen(buf);
+		}
 	}
 
 	return 0;
@@ -321,6 +320,7 @@ int read_file_configs(char *name, char *dir) {
 
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
+
 	strncat(tmp, "/../include/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
 	inc_path = add_configs(inc_path, tmp);
@@ -329,7 +329,7 @@ int read_file_configs(char *name, char *dir) {
 	tmp[size] = '\0';
 	strncat(tmp, "/../lib/", MAX_STR);
 	strncat(tmp, name, MAX_STR);
-	inc_path = add_configs(lib_path, tmp);
+	lib_path = add_configs(lib_path, tmp);
 
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
@@ -402,6 +402,7 @@ int main(int argc, char ** argv) {
 					critic_path = malloc(outfilelen * 
 						sizeof(char));
 					strncpy(critic_path,optarg,outfilelen);
+					critic_path[outfilelen] = '\0';
 				}
 				critic = 1;
 				break;
@@ -409,6 +410,7 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				conf_path = malloc(outfilelen * sizeof(char));
 				strncpy(conf_path,optarg,outfilelen);
+				conf_path[outfilelen] = '\0';
 				break;
 			case 'd':
 				debug = 1;
@@ -417,6 +419,7 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				lib_path = malloc(outfilelen * sizeof(char));
 				strncpy(lib_path,optarg,outfilelen);
+				lib_path[outfilelen] = '\0';
 				break;
 			case 'l':
 				critic_level = atoi(optarg);
@@ -425,12 +428,14 @@ int main(int argc, char ** argv) {
 				outfilelen = strlen(optarg) + 1;
 				inc_path = malloc(outfilelen * sizeof(char));
 				strncpy(inc_path,optarg,outfilelen);
+				inc_path[outfilelen] = '\0';
 				break;
 			case 'o':
 				output = 1;
 				outfilelen = strlen(optarg) + 1;
 				outfile = malloc(outfilelen * sizeof(char));
 				strncpy(outfile,optarg,outfilelen);
+				outfile[outfilelen] = '\0';
 				break;
 			case 'p':
 				print = 1;
