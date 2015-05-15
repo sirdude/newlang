@@ -51,7 +51,7 @@ static struct option long_options[] = {
 int find_inheritables(char *path) {
 	DIR *d;
 	struct dirent *dir;
-	char *buf;
+	char *buf, fullp[MAX_STR];
 	int count, size;
 
 	buf = strtok(path, ":");
@@ -65,8 +65,19 @@ printf("Looking at %d: %s\n",size, buf);
 		d = opendir(buf);
 		if (d) {
 			while ((dir = readdir(d)) != NULL) {
-				printf("\t%s\n", dir->d_name);
-				count++;
+				strncpy(fullp, buf, size);
+				strncat(fullp, "/", MAX_STR);
+				strncat(fullp, dir->d_name, MAX_STR);
+
+				if (dir->d_name[0] == '.') {
+					/* Skip hidden files/dir's */
+				} else if (is_dir(fullp)) { /* XXX is_dir? */
+					count = count + 
+						find_inheritables(fullp);
+				} else {
+					printf("\t%s\n", dir->d_name);
+					count++;
+				}
 			}
 			closedir(d);
 		}
