@@ -1,0 +1,8 @@
+Lib's should have a version #
+
+Determine libs/modules you use, and versions of those libs.
+Each lib should have upgrade function that has transforms for each 
+version step that needs something.
+If new field is added print difference and tell user they need to update it.
+
+
