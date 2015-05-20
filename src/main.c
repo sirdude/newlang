@@ -55,7 +55,7 @@ int valid_lib(char *path, char *file) {
 	size = strlen(path);
 	strncpy(fullp, path, size);
 	strncat(fullp, "/", MAX_STR);
-	strncat(fullp, dir->d_name, MAX_STR);
+	strncat(fullp, file, MAX_STR);
 
 	/* XXX Need more here */
 
@@ -85,7 +85,8 @@ printf("Looking at %d: %s\n",size, buf);
 
 				if (dir->d_name[0] == '.') {
 					/* Skip hidden files/dir's */
-				} else if (is_dir(fullp)) { /* XXX is_dir? */
+				} else if (dir->d_type == DT_DIR) {  
+					/* file is a directory */
 					count = count + 
 						find_inheritables(fullp);
 				} else {
