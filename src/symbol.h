@@ -1,17 +1,23 @@
+#define TYPE_VOID 10
+#define TYPE_INT  11
+#define TYPE_FLOAT  12
+#define TYPE_STRING 13
+#define TYPE_OBJECT 14
+#define TYPE_MAPPING 15
+#define TYPE_MIXED 16
+
 struct dfuncdef {
-    char class;                 /* function class */
-    char inherit;               /* function name inherit index */
-    unsigned short index;       /* function name index */
-    unsigned int offset;                /* offset in program text */
-    struct dfuncdef *next;
+	int type;
+	char *name;
+	int numargs;
+	char **args;  /* need to figure this out :) */
+	struct dfuncdef *next;
 };
 
 struct dvardef {
-    char class;                 /* variable class */
-    char type;                  /* variable type */
-    char inherit;               /* variable name inherit index */
-    unsigned short index;       /* variable name index */
-    struct dvardef *next;
+	int type;
+	char *name;
+	struct dvardef *next;
 };
 
 struct frame {
