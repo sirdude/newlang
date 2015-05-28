@@ -15,6 +15,7 @@ env	emptyenv ()			empty environment
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "symbol.h"
 
@@ -106,6 +107,7 @@ struct dfuncdef *find_func(char *name, struct dfuncdef *list) {
 		if (strcmp(list->name, name) == 0) {
 			return list;
 		}
+		list = list->next;
 	}
 
 	return NULL;
@@ -117,6 +119,7 @@ struct dvardef *find_var(char *name, struct dvardef *list) {
 		if (strcmp(list->name, name) == 0) {
 			return list;
 		}
+		list = list->next;
 	}
 
 	return NULL;
@@ -174,6 +177,35 @@ int get_function_type(char *name, struct frame *env) {
 	return 0;
 }
 
+char *print_type(int x) {
+	switch (x) {
+		case TYPE_VOID:
+			return "void";
+			break;
+		case TYPE_INT:
+			return "int";
+			break;
+		case TYPE_FLOAT:
+			return "float";
+			break;
+		case TYPE_STRING:
+			return "string";
+			break;
+		case TYPE_OBJECT:
+			return "object";
+			break;
+		case TYPE_MAPPING:
+			return "mapping";
+			break;
+		case TYPE_MIXED:
+			return "mixed";
+			break;
+		default:
+			return "unknown";
+			break;
+	}
+}
+
 int main() {
 	int x;
 
@@ -182,4 +214,8 @@ int main() {
 	add_var("y", TYPE_FLOAT, cframe);
 
 	x = get_variable_type("x",cframe);
+	printf("x = %s\n", print_type(x));
+
+	x = get_variable_type("y",cframe);
+	printf("y = %s\n", print_type(x));
 }
