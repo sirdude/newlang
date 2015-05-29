@@ -70,37 +70,6 @@ struct frame *remove_frame() {
 	return cframe;
 }
 
-/* XXX Need to do args */
-int add_fun(char *name, int type, struct frame *env) {
-	struct dfuncdef *tmp;
-	int size;
-
-	tmp = malloc(sizeof(struct dfuncdef));
-	tmp->type = type;
-	size = strlen(name) + 1;
-	tmp->name = malloc(sizeof(char) * size);
-	strncpy(tmp->name, name, size);
-	tmp->next =env->funs;
-	env->funs = tmp;
-
-	return 1;
-}
-
-int add_var(char *name, int type, struct frame *env) {
-	struct dvardef *tmp;
-	int size;
-
-	tmp = malloc(sizeof(struct dvardef));
-	tmp->type = type;
-	size = strlen(name) + 1;
-	tmp->name = malloc(sizeof(char) * size);
-	strncpy(tmp->name, name, size);
-	tmp->next =env->vars;
-	env->vars = tmp;
-
-	return 1;
-}
-
 struct dfuncdef *find_func(char *name, struct dfuncdef *list) {
 
 	while (list) {
@@ -123,6 +92,47 @@ struct dvardef *find_var(char *name, struct dvardef *list) {
 	}
 
 	return NULL;
+}
+
+/* XXX Need to do args */
+int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
+	struct dfuncdef *tmp;
+	int size;
+
+	if (find_func(name,env->funs)) {
+		printf("Function %s already exists at this level.\n", name);
+		return 0;
+	}
+
+	tmp = malloc(sizeof(struct dfuncdef));
+	tmp->type = type;
+	size = strlen(name) + 1;
+	tmp->name = malloc(sizeof(char) * size);
+	strncpy(tmp->name, name, size);
+	tmp->next =env->funs;
+	env->funs = tmp;
+
+	return 1;
+}
+
+int add_var(char *name, int type, struct frame *env) {
+	struct dvardef *tmp;
+	int size;
+
+	if (find_var(name,env->vars)) {
+		printf("Variable %s already exists at this level.\n", name);
+		return 0;
+	}
+
+	tmp = malloc(sizeof(struct dvardef));
+	tmp->type = type;
+	size = strlen(name) + 1;
+	tmp->name = malloc(sizeof(char) * size);
+	strncpy(tmp->name, name, size);
+	tmp->next =env->vars;
+	env->vars = tmp;
+
+	return 1;
 }
 
 struct dfuncdef *get_func(char *name, struct frame *env) {

@@ -6,11 +6,17 @@
 #define TYPE_MAPPING 15
 #define TYPE_MIXED 16
 
+struct fargs {
+	int type;
+	char *name;
+	struct fargs *next;
+};
+
 struct dfuncdef {
 	int type;
 	char *name;
 	int numargs;
-	char **args;  /* need to figure this out :) */
+	int *argtypes;  
 	struct dfuncdef *next;
 };
 
