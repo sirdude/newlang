@@ -29,7 +29,7 @@ void init() {
 	cframe->prev = NULL;
 }
 
-struct frame *addframe() {
+struct frame *add_frame() {
 	struct frame *tmp;
 
 	tmp = malloc(sizeof(struct frame));
@@ -216,16 +216,32 @@ char *print_type(int x) {
 	}
 }
 
-int main() {
+int run_tests() {
 	int x;
 
 	init();
 	add_var("x", TYPE_INT, cframe);
 	add_var("y", TYPE_FLOAT, cframe);
 
-	x = get_variable_type("x",cframe);
+	x = get_variable_type("x", cframe);
 	printf("x = %s\n", print_type(x));
 
-	x = get_variable_type("y",cframe);
+	x = get_variable_type("y", cframe);
 	printf("y = %s\n", print_type(x));
+
+	cframe = add_frame();
+
+	add_var("x", TYPE_MAPPING, cframe);
+	x = get_variable_type("x", cframe);
+	printf("x = %s\n", print_type(x));
+
+	cframe = remove_frame();
+	x = get_variable_type("x", cframe);
+	printf("x = %s\n", print_type(x));
+}
+
+int main() {
+	run_tests();
+
+	return 1;
 }
