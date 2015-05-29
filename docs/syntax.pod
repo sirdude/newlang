@@ -139,8 +139,8 @@ along the lines of: Create a bunch of functions, and or define
 some variables and or structures, then create a main function which is our
 entry point into the language.  In general this structure is defined in a 
 format called ebnf.  You can find the ebnf for our language here:
-src/LPC.cf  We are using this as input to bnfc, if you want to learn more
-about the file format do a google search for bnfc.
+src/SWEET_formal.cf  We are using this as input to bnfc, if you want to learn 
+more about the file format do a google search for bnfc.
 
 The structure for our language is a little more complicated than c, we have
 to deal with objects and inheritance.  Here is a high level summary, as well
@@ -195,7 +195,7 @@ want to convert a source file to compiled code, you use the
 
 When you execute a source file, you can use the standard
 UNIX shell convention #!PATHTOINTERPRETER to execute the file.
-EXAMPLE: #!/usr/local/bin/lpc
+EXAMPLE: #!/usr/local/bin/sweet
 
 When source code is executed it automatically calls the main()
 function if it exists.
@@ -426,6 +426,8 @@ The DESCRIPTION is a string that describes the function.
 INPUT_VARIABLES is a comma separated list of variable definitions.
 Here are 2 example function definitions:
 
+	string name;
+
 	int set_name "Set the players name"
 		(string tmpname "The name we want to set") {
 		name = tmpname;
@@ -490,7 +492,9 @@ If you think of a programming language as a bunch of instructions for a
 computer, basic programs are like a recipe.  Once you start making more
 complicated programs you need to start looking at branching.  Calling
 different sections of code based on results of asking a question.
-There are numerous names for this, branching, conditionals, flow control.
+There are numerous names for this, branching, conditionals, flow control, they
+all mean esentually the same thing.  To keep things simple we are going to
+call this flow control.
 
 Our programming language supports the following flow control statements:
 if, while, foreach, switch
