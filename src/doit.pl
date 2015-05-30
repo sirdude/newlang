@@ -14,7 +14,7 @@ use warnings;
 use File::Copy;
 
 sub usage {
-	print "USAGE: $0 -help [clean|build|conflict]\n";
+	print "USAGE: $0 -help [clean|build|conflict|test]\n";
 	print "\tbuild create our files and compile our languages.\n";
 	print "\tclean clean things up.\n";
 	print "\tconflict look for clonflicts in our grammar.\n";
@@ -197,14 +197,19 @@ sub create {
 	system("cd sweet; make; make install");
 }
 
-sub simple_test {
+sub test {
 	# Test our code
 	# system("./testLPC ../examp/ugly.c");
-	system("../bin/lpc -p ../examp/ugly.c");
+	if (-f "../bin/lpc") {
+		system("../bin/lpc -p ../examp/ugly.c");
+	} else {
+		print "You need to first run: $0 build\n";
+	}
 }
 
 sub clean {
 	system("rm -rf lpc info sweet version.c");
+	system("rm -rf ../bin");
 }
 
 sub conflict {
@@ -222,10 +227,12 @@ if ($line) {
 
 	if ($line eq "conflict") {
 		conflict();
-	} elsif ($line eq "build") {
+	} elsif (($line eq "build") || ($line eq "create")) {
 		create();
 	} elsif ($line eq "clean") {
 		clean();
+	} elsif ($line eq "test") {
+		test();
 	} else {
 		usage();
 	}
