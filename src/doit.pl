@@ -13,6 +13,14 @@ use strict;
 use warnings;
 use File::Copy;
 
+sub usage {
+	print "USAGE: $0 -help [clean|build|conflict]\n";
+	print "\tbuild create our files and compile our languages.\n";
+	print "\tclean clean things up.\n";
+	print "\tconflict look for clonflicts in our grammar.\n";
+	print "\t-help display this usage information.\n";
+}
+
 sub removelines {
 	my ($start, $end, $file) = @_;
 	my $in = "$file.tmp";
@@ -174,19 +182,53 @@ sub fix_printer {
 
 }
 
-# Create our stuff with bnfc
-system("bnfc -m -c -o lpc LPC.cf");
-system("bnfc -m -c -o sweet SWEET_formal.cf");
+sub create {
+	# Create our stuff with bnfc
+	system("bnfc -m -c -o lpc LPC.cf");
+	system("bnfc -m -c -o sweet SWEET_formal.cf");
 
-foreach my $i ("./lpc", "./sweet") {
-	fix_makefile($i);
-	fix_printer($i);
-	create_newfiles($i);
+	foreach my $i ("./lpc", "./sweet") {
+		fix_makefile($i);
+		fix_printer($i);
+		create_newfiles($i);
+	}
+
+	system("cd lpc; make; make install");
+	system("cd sweet; make; make install");
 }
 
-system("cd lpc; make; make install");
-system("cd sweet; make; make install");
+sub simple_test {
+	# Test our code
+	# system("./testLPC ../examp/ugly.c");
+	system("../bin/lpc -p ../examp/ugly.c");
+}
 
-# Test our code
-# system("./testLPC ../examp/ugly.c");
-system("../bin/lpc -p ../examp/ugly.c");
+sub clean {
+	system("rm -rf lpc info sweet version.c");
+}
+
+sub conflict {
+	system("bnfc -m LPC.cf -o info");
+	print "\n\nYou should look at info/ParLPC.info " .
+		"for the following issues\n";
+	system("happy -i info/ParLPC.y");
+	system("grep \"(reduce\" info/ParLPC.info");
+#	system("happy -da info/ParLPC.y");
+}
+
+my ($line) = @ARGV;
+if ($line) {
+	chomp($line);
+
+	if ($line eq "conflict") {
+		conflict();
+	} elsif ($line eq "build") {
+		create();
+	} elsif ($line eq "clean") {
+		clean();
+	} else {
+		usage();
+	}
+} else {
+	usage();
+}
