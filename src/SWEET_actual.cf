@@ -12,8 +12,8 @@ comment "/*" "*/" ;
 comment "#" ;
 
 Prog. Program  ::= [Function] ;
-Fun.  Function ::= [Tm] Type Ident Sexp "(" [Decl] ")" "{" [Stm] "}" ;
-Dec.  Decl     ::= [Tm] Type [Ident] Sexp;
+Fun.  Function ::= [Tm] Type Ident [Sexp] "(" [Decl] ")" "{" [Stm] "}" ;
+Dec.  Decl     ::= [Tm] Type Ident [Sexp];
   
 terminator Function "" ;
 terminator Stm "" ;
