@@ -9,21 +9,23 @@ comment "//" ;
 comment "/*" "*/" ;
 comment "#" ;
 
-Prog.	Program  ::= [Defin];
-Pdefin.	Defin  ::= [Tm] Type Fdef;
-Pdefin.	Defin  ::= [Tm] Type Vdef;
+Prog.		Program  ::= [Defin];
+Pdefinf.	Defin  ::= [Tm] Type Fdef;
+Pdefinv.	Defin  ::= [Tm] Type Vdef;
 
-Fun.	 Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundec.	 Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
 
-VDec.    Vdef	  ::= Ident ;
-VDecp.   Vdef	  ::= "*" Ident ;
-VDecarr. Vdef	  ::= Ident "[" Exp "]" ;
+Pdecl.	Decl	::= [Tm] Type Vdef;
 
-terminator Fdef "" ;
-terminator Vdef "" ;
+Vdec.    Vdef	::= Ident ;
+Vdecp.   Vdef	::= "*" Ident ;
+Vdecarr. Vdef	::= Ident "[" Exp "]" ;
+
+terminator Defin "" ;
 terminator Stm "" ;
 terminator Tm "" ;
-separator  nonempty Ident "," ;
+separator  nonempty Vdef "," ;
+separator  nonempty Decl "," ;
 separator Exp "," ;
 coercions Exp 4 ;
   

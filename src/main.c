@@ -200,24 +200,24 @@ int print_usage(char *name) {
 }
 
 char *add_configs(char *localpath, const char *value) {
-	char *tmp;
+	char *tmp, *tmp2;
 	int size;
 
 	if (value) {
 		if (localpath) {
-			tmp = localpath;
-			size = strlen(value) + strlen(tmp) + 2;
-			localpath = malloc(size * sizeof(char));
-			strncat(localpath, tmp, size);
-			strncat(localpath, ":", size);
+			tmp2 = localpath;
+			size = strlen(value) + strlen(tmp2) + 2;
+			tmp = malloc(size * sizeof(char));
+			strncat(tmp, tmp2, size);
+			strncat(tmp, ":", size);
 		} else {
 			size = strlen(value) + 1;
-			localpath = malloc(size * sizeof(char));
+			tmp = malloc(size * sizeof(char));
 		}
-		strncat(localpath, value, size);
+		strncat(tmp, value, size);
 	}
 
-	return localpath;
+	return tmp;
 }
 
 int read_env_configs(char *name) {
