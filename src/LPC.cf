@@ -13,7 +13,8 @@ Prog.		Program  ::= [Defin];
 Pdefinf.	Defin  ::= [Tm] Type Fdef;
 Pdefinv.	Defin  ::= [Tm] Type Vdef;
 
-Fundec.	 Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundec.	 	Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" "{" [Stm] "}" ;
 
 Pdecl.	Decl	::= [Tm] Type Vdef;
 
@@ -21,16 +22,17 @@ Vdec.    Vdef	::= Ident ;
 Vdecp.   Vdef	::= "*" Ident ;
 Vdecarr. Vdef	::= Ident "[" Exp "]" ;
 
-terminator Defin "" ;
-terminator Stm "" ;
-terminator Tm "" ;
+terminator	Defin "" ;
+terminator	Stm "" ;
+terminator	Tm "" ;
+-- terminator	Conststr "" ;
 separator  nonempty Vdef "," ;
 separator  nonempty Decl "," ;
 separator Exp "," ;
 coercions Exp 4 ;
   
--- SInherit. Stm ::= "inherit" [Ident] Str;
--- SInclude. Stm ::= "include" Str;
+SInherit.	Stm ::= "inherit" Conststr;
+SInclude.	Stm ::= "include" Conststr;
 
 SEmpty.   	Stm ::= ";"  ;
 SExp.    	Stm ::= Exp ";" ;
@@ -84,3 +86,10 @@ TMAtomic.	Tm ::= "atomic";
 TMNomask.	Tm ::= "nomask";
 TMPrivate.	Tm ::= "private";
 TMStatic.	Tm ::= "static";
+
+Cstr.		Conststr ::= Conststr "+" Conststr ;
+Cstridents.	Conststr ::= String ;
+Cstridenti.	Conststr ::= Ident ;
+Cstridentid.	Conststr ::= Integer ;
+Cstridentd.	Conststr ::= Double ;
+Cstridentterm.	Conststr ::= ";" ;
