@@ -208,16 +208,21 @@ char *add_configs(char *localpath, const char *value) {
 			tmp2 = localpath;
 			size = strlen(value) + strlen(tmp2) + 2;
 			tmp = malloc(size * sizeof(char));
-			strncat(tmp, tmp2, size);
+
+			strncpy(tmp, tmp2, size);
+			tmp[size] = '\0';
+
 			strncat(tmp, ":", size);
 		} else {
 			size = strlen(value) + 1;
 			tmp = malloc(size * sizeof(char));
+			tmp[0] = '\0';
 		}
 		strncat(tmp, value, size);
+		return tmp;
 	}
 
-	return tmp;
+	return "";
 }
 
 int read_env_configs(char *name) {
