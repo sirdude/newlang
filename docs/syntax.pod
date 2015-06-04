@@ -1,3 +1,129 @@
+=head1 Why SWEET?
+
+SWEET is a new programming language based off of a number of languages.
+Trying to make a small well defined language that is easy to use/learn
+and something that can grow.  SWEET builds on ideas I have learned through 
+experience and tries to incorperate tools that I think are essential to a
+programming language.  Many of these are supriseingly missing from lots
+of languages.  What kind of tools are we talking about?
+	A pretty printer
+	A Static code Anliser
+	A builtin style guide (that is extendable).
+	A config file to modify various search paths.
+	A test suite
+	Syntax highligher for various editors
+	A compiler and an interpreter.
+	Builtin examples & Documentation.
+
+This is obviously a lot of work and will take some time to accomplish.
+If your reading this document I encourage you to get involved and help
+me accomplish these goals.
+
+=head1 Basic structure
+
+Programming languages have a basic structure.  Our programming language
+follows the basic structure of C, but is a little more complicated.
+It goes something like this:
+The basic building block of our language is an object.
+Each file you write or execute is it's own object.
+A object is a program.
+Objects can talk to each other but have to talk in certain ways.
+A Program is a set of function definitions and variable definitions.
+A function is a set of statements.
+There are a number of different types of statements, which are basically an 
+instruction for the computer to follow.  We will take a closer look at
+statements later, but many times a statement can be broken into bits called
+expressions.  An expression is similar to a mathematical forumula.
+
+Many times this structure of a programming language is defined in a 
+format called ebnf.  You can find the ebnf for our language here:
+src/SWEET_formal.cf  We are using this as input to a tool called "bnfc",
+if you want to learn more about the file format, or bnfc head on over to
+the bnfc website: http://bnfc.digitalgrammars.com/ 
+
+=head1 File Types
+
+In our language there are 5 types of files, none of them have strict
+extension requirements but we recommend you use them as noted here below:
+
+=over 8
+
+=item Include files
+
+Extension: .h 
+These files can be included in other files with a line similar
+to the following:
+	include "myconfig.h";
+They in general are used to contain variables and other
+data structures that you want to share across multiple files.
+In general you want to avoid putting functions in an include
+file and instead use inheritables for that.
+
+Include files will be searched for in the following order:
+	The default include path, which is defined in our 
+	configuration file, you you can use --include=DIR
+	to add a directory to the search path,  you can also
+	use the INCLUDE_DIR_LPC environment variable, 
+	or specify the full path to the include file.
+
+=item Inheritables
+
+Extension: .swl
+These are basically meta objects.  They are not meant to be
+used directly, but are building blocks that other programs can
+use to simplify coding and create a library of reusable
+functions.  You inherit them with a line like this:
+inherit "/std/lib/object.l";
+
+Inheritable files will be searched for in the following order:
+	The default Library path, which is defined in our 
+	configuration file, you you can use --lib=DIR
+	to add a directory to the search path,  you can also
+	use the LIB_DIR_LPC environment variable, 
+	or specify the full path to the inheritable file.
+
+=item source code
+
+Extension: .sw
+Source code builds on includes and inheritables and allows
+you to bind them together to make useful objects.  If you
+want to convert a source file to compiled code, you use the
+--output=FILENAME option to create a machine code executable.
+
+When you execute a source file, you can use the standard
+UNIX shell convention #!PATHTOINTERPRETER to execute the file.
+EXAMPLE: #!/usr/local/bin/sweet
+
+When source code is executed it automatically calls the main()
+function if it exists.
+
+If you want to reference other objects within this object,
+you will need to clone them and keep a reference to them.  When you are 
+done with a clone, you should destroy it to free up memory.
+
+=item Compiled code 
+
+Extension: none or .swo   depending on usage.
+XXX Need to look at how dgd separates this and data files
+This is source code that has been run through are compiler and
+converted to machine code.  If they are stand alone executables
+they have no extension, if they are only part of a program they
+have a .o extension.
+
+=item Data files
+
+Extension: .dat
+Files that contain configuration information for a 
+cloned object, or provide other data for an object.
+
+=back
+
+=head1 The Details
+
+Now that you have the general overview of how things look lets start
+in on the details.  Were going to start small and work our way
+up.
+
 =head1 Comments
 
 Comments in a programming language are use for a number of reasons.
@@ -129,95 +255,6 @@ and it will not be saved when save_object is called.
 
 For functions that are declared as static, the function will only be available
 to the object and it's children.
-
-=back
-
-=head1 Code Structure
-
-Programming languages have a basic structure.  In C this structure is something
-along the lines of: Create a bunch of functions, and or define 
-some variables and or structures, then create a main function which is our
-entry point into the language.  In general this structure is defined in a 
-format called ebnf.  You can find the ebnf for our language here:
-src/SWEET_formal.cf  We are using this as input to bnfc, if you want to learn 
-more about the file format do a google search for bnfc.
-
-The structure for our language is a little more complicated than c, we have
-to deal with objects and inheritance.  Here is a high level summary, as well
-as some basic definitions.
-
-In our language there are 5 types of files, none of them have strict
-extension requirements but we recommend you use them as noted here below:
-
-=over 8
-
-=item Include files
-
-Extension: .h 
-These files can be included in other files with a line similar
-to the following:
-	include "myconfig.h";
-They in general are used to contain variables and other
-data structures that you want to share across multiple files.
-In general you want to avoid putting functions in an include
-file and instead use inheritables for that.
-
-Include files will be searched for in the following order:
-	The default include path, which is defined in our 
-	configuration file, you you can use --include=DIR
-	to add a directory to the search path,  you can also
-	use the INCLUDE_DIR_LPC environment variable, 
-	or specify the full path to the include file.
-
-=item Inheritables
-
-Extension: .swl
-These are basically meta objects.  They are not meant to be
-used directly, but are building blocks that other programs can
-use to simplify coding and create a library of reusable
-functions.  You inherit them with a line like this:
-inherit "/std/lib/object.l";
-
-Inheritable files will be searched for in the following order:
-	The default Library path, which is defined in our 
-	configuration file, you you can use --lib=DIR
-	to add a directory to the search path,  you can also
-	use the LIB_DIR_LPC environment variable, 
-	or specify the full path to the inheritable file.
-
-=item source code
-
-Extension: .sw
-Source code builds on includes and inheritables and allows
-you to bind them together to make useful objects.  If you
-want to convert a source file to compiled code, you use the
---output=FILENAME option to create a machine code executable.
-
-When you execute a source file, you can use the standard
-UNIX shell convention #!PATHTOINTERPRETER to execute the file.
-EXAMPLE: #!/usr/local/bin/sweet
-
-When source code is executed it automatically calls the main()
-function if it exists.
-
-If you want to reference other objects within this object,
-you will need to clone it and then keep a reference to it, when
-you are done with a clone, you should destroy it to free up
-memory.
-
-=item Compiled code XXX Need to look at how dgd separates this and data files
-
-Extension: none or .swo   depending on usage.
-This is source code that has been run through are compiler and
-converted to machine code.  If they are stand alone executables
-they have no extension, if they are only part of a program they
-have a .o extension.
-
-=item Data files
-
-Extension: .dat
-Files that contain configuration information for a 
-cloned object, or provide other data for an object.
 
 =back
 
