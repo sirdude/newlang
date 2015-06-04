@@ -11,34 +11,44 @@
 
 comment "#" ;
 
-Prog. Program  ::= [Function] ;
-Fun.  Function ::= [Tm] Type Ident [Sexp] "(" [Decl] ")" "{" [Stm] "}" ;
-Dec.  Decl     ::= [Tm] Type Ident [Sexp];
-  
-terminator Function "" ;
+Prog.		Program ::= [Defin] ;
+Pdefinf.	Defin ::= [Tm] Type Fdef ;
+Pdefinv.	Defin ::= [Tm] Type Vdef ;
+
+Fundec.		Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" "{" [Stm] "}" ;
+
+Pdecl.		Decl ::= [Tm] Type Vdef ;
+
+Vdec.		Vdef ::= Ident ;
+Vdecp.		Vdef ::= "*" Ident ;
+Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
+
+terminator Defin "" ;
 terminator Stm "" ;
 terminator Tm "" ;
-separator  Decl "," ;
-separator  nonempty Ident "," ;
-separator Exp "," ;
-coercions Exp 4 ;
-coercions Sexp 2 ;
-  
-SInherit.	 Stm ::= "inherit" Sexp;
-SInclude.	 Stm ::= "include" Sexp;
 
-SDecl.   	Stm ::= Decl ";"  ;
-SExp.    	Stm ::= Exp ";" ;
-SBlock.  	Stm ::= "{" [Stm] "}" ;
-SWhile.  	Stm ::= "while" "(" Exp ")" Stm ;
+separator nonempty Vdef "," ;
+separator nonempty Decl "," ;
+separator Exp "," ;
+
+coercions Exp 4 ;
+
+SInherit.	Stm ::= "inherit" Conststr ;
+SInclude.	Stm ::= "include" Conststr ;
+
+SDecl.		Stm ::= Decl ";" ;
+SExp.		Stm ::= Exp ";" ;
+SBlock.		Stm ::= "{" [Stm] "}" ;
+SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
-SReturn. 	Stm ::= "return" Exp  ";" ;
+SReturn.	Stm ::= "return" Exp ";" ;
 Sif.		Stm ::= "if" "(" Exp ")" Stm ;
 SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
-Sfor.    	Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
+Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
 Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
-  
-EAss.		Exp  ::= Ident "=" Exp ;
+
+EAss.		Exp ::= Ident "=" Exp ;
 EOr.		Exp1 ::= Exp2 "||" Exp2 ;
 EAnd.		Exp1 ::= Exp2 "&&" Exp2 ;
 ELt.		Exp1 ::= Exp2 "<" Exp2 ;
@@ -59,9 +69,13 @@ EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
 EDouble.	Exp4 ::= Double ;
 
-Sexpplus.	Sexp ::= Sexp1 "+" Sexp2;
-Sexpstr.	Sexp ::= String;
-  
+Cstr.		Conststr ::= Conststr "+" Conststr ;
+Cstrs.		Conststr ::= String ;
+Cstri.		Conststr ::= Ident ;
+Cstrid.		Conststr ::= Integer ;
+Cstrd.		Conststr ::= Double ;
+Cstrterm.	Conststr ::= ";" ;
+
 TVoid.		Type ::= "void" ;
 TInt.		Type ::= "int" ;
 TDouble.	Type ::= "float" ;
@@ -70,7 +84,7 @@ TObject.	Type ::= "object" ;
 TMapping.	Type ::= "mapping" ;
 TMixed.		Type ::= "mixed" ;
 
-TMAtomic.	Tm ::= "atomic";
-TMNomask.	Tm ::= "nomask";
-TMPrivate.	Tm ::= "private";
-TMStatic.	Tm ::= "static";
+TMAtomic.	Tm ::= "atomic" ;
+TMNomask.	Tm ::= "nomask" ;
+TMPrivate.	Tm ::= "private" ;
+TMStatic.	Tm ::= "static" ;

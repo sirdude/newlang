@@ -9,46 +9,47 @@ comment "//" ;
 comment "/*" "*/" ;
 comment "#" ;
 
-Prog.		Program  ::= [Defin];
-Pdefinf.	Defin  ::= [Tm] Type Fdef;
-Pdefinv.	Defin  ::= [Tm] Type Vdef;
+Prog.		Program ::= [Defin] ;
+Pdefinf.	Defin ::= [Tm] Type Fdef ;
+Pdefinv.	Defin ::= [Tm] Type Vdef ;
 
-Fundec.	 	Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundec.		Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
 Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" "{" [Stm] "}" ;
 
-Pdecl.	Decl	::= [Tm] Type Vdef;
+Pdecl.		Decl ::= [Tm] Type Vdef ;
 
-Vdec.    Vdef	::= Ident ;
-Vdecp.   Vdef	::= "*" Ident ;
-Vdecarr. Vdef	::= Ident "[" Exp "]" ;
+Vdec.		Vdef ::= Ident ;
+Vdecp.		Vdef ::= "*" Ident ;
+Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
-terminator	Defin "" ;
-terminator	Stm "" ;
-terminator	Tm "" ;
--- terminator	Conststr "" ;
-separator  nonempty Vdef "," ;
-separator  nonempty Decl "," ;
+terminator Defin "" ;
+terminator Stm "" ;
+terminator Tm "" ;
+
+separator nonempty Vdef "," ;
+separator nonempty Decl "," ;
 separator Exp "," ;
-coercions Exp 4 ;
-  
-SInherit.	Stm ::= "inherit" Conststr;
-SInclude.	Stm ::= "include" Conststr;
 
-SEmpty.   	Stm ::= ";"  ;
-SExp.    	Stm ::= Exp ";" ;
-SBlock.  	Stm ::= "{" [Stm] "}" ;
-SWhile.  	Stm ::= "while" "(" Exp ")" Stm ;
+coercions Exp 4 ;
+
+SInherit.	Stm ::= "inherit" Conststr ;
+SInclude.	Stm ::= "include" Conststr ;
+
+SEmpty.		Stm ::= ";" ;
+SExp.		Stm ::= Exp ";" ;
+SBlock.		Stm ::= "{" [Stm] "}" ;
+SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
-SReturn. 	Stm ::= "return" Exp  ";" ;
+SReturn.	Stm ::= "return" Exp ";" ;
 Sif.		Stm ::= "if" "(" Exp ")" Stm ;
 SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
-Sfor.    	Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
+Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
 Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
-  
-EAss.		Exp  ::= Ident "=" Exp;
-EArrAss.	Exp  ::= Ident "[" [Exp] "]" "=" Exp;
-EInc.		Exp  ::= Ident "++";
-EDec.		Exp  ::= Ident "--";
+
+EAss.		Exp ::= Ident "=" Exp ;
+EArrAss.	Exp ::= Ident "[" [Exp] "]" "=" Exp ;
+EInc.		Exp ::= Ident "++" ;
+EDec.		Exp ::= Ident "--" ;
 
 EOr.		Exp1 ::= Exp2 "||" Exp2 ;
 EAnd.		Exp1 ::= Exp2 "&&" Exp2 ;
@@ -70,7 +71,7 @@ EVar.		Exp4 ::= Ident ;
 EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
 EDouble.	Exp4 ::= Double ;
-  
+
 TVoid.		Type ::= "void" ;
 TInt.		Type ::= "int" ;
 TDouble.	Type ::= "float" ;
@@ -82,14 +83,14 @@ TMixed.		Type ::= "mixed" ;
 -- XXX remove here to test c code...
 Tchar.		Type ::= "char" ;
 
-TMAtomic.	Tm ::= "atomic";
-TMNomask.	Tm ::= "nomask";
-TMPrivate.	Tm ::= "private";
-TMStatic.	Tm ::= "static";
+TMAtomic.	Tm ::= "atomic" ;
+TMNomask.	Tm ::= "nomask" ;
+TMPrivate.	Tm ::= "private" ;
+TMStatic.	Tm ::= "static" ;
 
 Cstr.		Conststr ::= Conststr "+" Conststr ;
-Cstridents.	Conststr ::= String ;
-Cstridenti.	Conststr ::= Ident ;
-Cstridentid.	Conststr ::= Integer ;
-Cstridentd.	Conststr ::= Double ;
-Cstridentterm.	Conststr ::= ";" ;
+Cstrs.		Conststr ::= String ;
+Cstri.		Conststr ::= Ident ;
+Cstrid.		Conststr ::= Integer ;
+Cstrd.		Conststr ::= Double ;
+Cstrterm.	Conststr ::= ";" ;
