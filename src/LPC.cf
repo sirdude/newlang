@@ -23,19 +23,19 @@ Vdecp.		Vdef ::= "*" Ident ;
 Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
 terminator Defin "" ;
-terminator Stm "" ;
 terminator Tm "" ;
+terminator Stm ";" ;
 
 separator nonempty Vdef "," ;
-separator nonempty Decl "," ;
+separator Decl "," ;
 separator Exp "," ;
 
 coercions Exp 4 ;
 
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
+Snill.		Stm ::= "" ;
 
-SEmpty.		Stm ::= ";" ;
 SExp.		Stm ::= Exp ";" ;
 SBlock.		Stm ::= "{" [Stm] "}" ;
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
@@ -88,9 +88,9 @@ TMNomask.	Tm ::= "nomask" ;
 TMPrivate.	Tm ::= "private" ;
 TMStatic.	Tm ::= "static" ;
 
-Cstr.		Conststr ::= Conststr "+" Conststr ;
-Cstrs.		Conststr ::= String ;
-Cstri.		Conststr ::= Ident ;
-Cstrid.		Conststr ::= Integer ;
-Cstrd.		Conststr ::= Double ;
-Cstrterm.	Conststr ::= ";" ;
+Cstr.		Conststr ::= Constelm;
+Cstradd.	Conststr ::= Constelm "+" Conststr ;
+Cstrs.		Constelm ::= String ;
+Cstri.		Constelm ::= Ident ;
+Cstrid.		Constelm ::= Integer ;
+Cstrd.		Constelm ::= Double ;
