@@ -25,8 +25,8 @@ Vdecp.		Vdef ::= "*" Ident ;
 Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
 terminator Defin "" ;
-terminator Stm "" ;
 terminator Tm "" ;
+terminator Stm "" ;
 
 separator nonempty Vdef "," ;
 separator Decl "," ;
@@ -40,13 +40,13 @@ Snill.		Stm ::= "" ;
 
 SExp.		Stm ::= Exp ";" ;
 SBlock.		Stm ::= "{" [Stm] "}" ;
-SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
-SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
+SWhile.		Stm ::= "while" "(" Exp ")" "{" [Stm] "}" ;
+SdoWhile.	Stm ::= "do" "{" [Stm] "}" "while" "(" Exp ")" ;
 SReturn.	Stm ::= "return" Exp ";" ;
-Sif.		Stm ::= "if" "(" Exp ")" Stm ;
-SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
-Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
-Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
+Sif.		Stm ::= "if" "(" Exp ")" "{" [Stm] "}" ;
+SifElse.	Stm ::= "if" "(" Exp ")" "{" [Stm] "}" "else" "{" [Stm] "}" ;
+Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" "{" [Stm] "}" ;
+Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" "{" [Stm] "}" ;
 
 EAss.		Exp ::= Ident "=" Exp ;
 EOr.		Exp1 ::= Exp2 "||" Exp2 ;
@@ -88,3 +88,4 @@ Cstrs.		Constelm ::= String ;
 Cstri.		Constelm ::= Ident ;
 Cstrid.		Constelm ::= Integer ;
 Cstrd.		Constelm ::= Double ;
+
