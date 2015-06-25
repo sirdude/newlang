@@ -14,7 +14,7 @@ use warnings;
 use File::Copy;
 
 sub usage {
-	print "USAGE: $0 -help [clean|build|conflict|test]\n";
+	print "USAGE: $0 -help [clean|build] [[conflict|test] lang]\n";
 	print "\tbuild create our files and compile our languages.\n";
 	print "\tclean clean things up.\n";
 	print "\tconflict look for clonflicts in our grammar.\n";
@@ -73,6 +73,8 @@ sub fix_makefile {
 
 	if ($dir eq "./lpc") {
 		$binary = "lpc";
+	} elsif ($dir eq "./sweetf") {
+		$binary = "sweetf";
 	} else {
 		$binary = "sweet";
 	}
@@ -177,62 +179,128 @@ sub fix_printer {
 		"    renderS(\" else\");\n";
 	insert_code($code, 781, $file);
 
-	# Delete the newline before {
+	# Delete the newline before \{
 	removelines(20, 21, $file);
-
 }
 
 sub create {
-	# Create our stuff with bnfc
-	system("bnfc -m -c -o lpc LPC.cf");
-	system("bnfc -m -c -o sweet SWEET_formal.cf");
+	my ($type) = @_;
+	my @dirs;
 
-	foreach my $i ("./lpc", "./sweet") {
-		fix_makefile($i);
-		fix_printer($i);
-		create_newfiles($i);
+	if (!$type || $type eq "") {
+		system("bnfc -m -c -o lpc LPC.cf");
+		system("bnfc -m -c -o sweet SWEET_actual.cf");
+		system("bnfc -m -c -o sweetf SWEET_formal.cf");
+		@dirs = ("./lpc", "./sweet", "./sweetf");
+
+	} elsif ($type eq "lpc") {
+		system("bnfc -m -c -o lpc LPC.cf");
+		@dirs = "./lpc";
+	} elsif ($type eq "sweetf") {
+		system("bnfc -m -c -o sweetf SWEET_formal.cf");
+		@dirs = "./sweetf";
+	} else {
+		system("bnfc -m -c -o sweet SWEET_actual.cf");
+		@dirs = "./sweet";
 	}
 
-	system("cd lpc; make; make install");
-	system("cd sweet; make; make install");
+	foreach my $i (@dirs) {
+		fix_makefile($i);
+#		fix_printer($i);
+		create_newfiles($i);
+		system("cd $i; make; make install");
+	}
 }
 
+# Test our code
 sub test {
-	# Test our code
-	# system("./testLPC ../examp/ugly.c");
-	if (-f "../bin/lpc") {
-		system("../bin/lpc -p ../examp/ugly.c");
+	my ($test) = @_;
+	my ($bin, $examp);
+
+	if (!$test || $test eq "") {
+		test("lpc");
+		test("sweetf");
+		test("sweet");
+		return;
+	} elsif ($test eq "lpc") {
+		$bin = "../bin/lpc";
+		$examp = "../examp/ugly.c";
+	} elsif ($test eq "sweetf") {
+		$bin = "../bin/sweetf";
+		$examp = "../examp/ugly.sw";
+	} else {
+		$bin = "../bin/sweet";
+		$examp = "../examp/ugly.sw";
+	}
+
+	if (-f $bin) {
+		print "Calling: $bin -p $examp\n";
+		system("$bin -p $examp");
 	} else {
 		print "You need to first run: $0 build\n";
 	}
 }
 
 sub clean {
-	system("rm -rf lpc info sweet version.c");
-	system("rm -rf ../bin");
+	my ($type) = @_;
+
+	if (!$type || $type eq "") {
+		system("rm -rf lpc lpcinfo sweetinfo sweetfinfo sweet sweetf");
+		system("rm -rf version.c ../bin");
+	} elsif ($type eq "lpc") {
+		system("rm -rf lpc lpcinfo version.c");
+	} elsif ($type eq "sweetf") {
+		system("rm -rf sweetf sweetfinfo version.c");
+	} else {
+		system("rm -rf sweet sweetinfo version.c");
+	}
 }
 
 sub conflict {
-	system("bnfc -m LPC.cf -o info");
-	print "\n\nYou should look at info/ParLPC.info " .
+	my ($type) = @_;
+	my ($source, $dir, $info);
+
+	if (!$type || $type eq "") {
+		conflict("lpc");
+		conflict("sweetf");
+		conflict("sweet");
+		return;
+	} elsif ($type eq "lpc") {
+		$source = "LPC.cf";
+		$dir = "lpcinfo";
+		$info = "ParLPC";
+	} elsif ($type eq "sweetf") {
+		$source = "SWEET_actual.cf";
+		$dir = "sweetinfo";
+		$info = "ParSWEET_actual";
+	} else {
+		$source = "SWEET_formal.cf";
+		$dir = "sweetfinfo";
+		$info = "ParSWEET_formal";
+	}
+	system("bnfc -m $source -o $dir");
+	print "\n\nYou should look at $dir/$info.info " .
 		"for the following issues\n";
-	system("happy -i info/ParLPC.y");
-	system("grep \"(reduce\" info/ParLPC.info");
-#	system("happy -da info/ParLPC.y");
+	system("happy -i $dir/$info.y");
+	system("grep \"(reduce\" $dir/$info.info");
+#	system("happy -da $dir/$info.y");
 }
 
-my ($line) = @ARGV;
-if ($line) {
-	chomp($line);
+my @values = @ARGV;
+if (exists($values[0])) {
 
-	if ($line eq "conflict") {
-		conflict();
-	} elsif (($line eq "build") || ($line eq "create")) {
-		create();
-	} elsif ($line eq "clean") {
-		clean();
-	} elsif ($line eq "test") {
-		test();
+if (!exists($values[1])) {
+	$values[1] = "";
+}
+
+	if ($values[0] eq "conflict") {
+		conflict($values[1]);
+	} elsif (($values[0] eq "build") || ($values[0] eq "create")) {
+		create($values[1]);
+	} elsif ($values[0] eq "clean") {
+		clean($values[1]);
+	} elsif ($values[0] eq "test") {
+		test($values[1]);
 	} else {
 		usage();
 	}
