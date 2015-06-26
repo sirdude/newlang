@@ -18,6 +18,7 @@ struct dfuncdef {
 	int numargs;
 	int *argtypes;  
 	struct dfuncdef *next;
+	struct frame *env;
 };
 
 struct dvardef {

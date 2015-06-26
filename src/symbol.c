@@ -94,9 +94,9 @@ struct dvardef *find_var(char *name, struct dvardef *list) {
 	return NULL;
 }
 
-/* XXX Need to do args */
 int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	struct dfuncdef *tmp;
+	struct frame *tmpf;
 	int size;
 
 	if (find_func(name,env->funs)) {
@@ -111,6 +111,11 @@ int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	strncpy(tmp->name, name, size);
 	tmp->next =env->funs;
 	env->funs = tmp;
+
+	tmpf = new_frame();
+	tmp->env = tmpf;
+
+	/* XXX Need to add args to tmpf */
 
 	return 1;
 }
@@ -238,6 +243,8 @@ int run_tests() {
 	cframe = remove_frame();
 	x = get_variable_type("x", cframe);
 	printf("x = %s\n", print_type(x));
+
+	return 1;
 }
 
 int main() {
