@@ -426,7 +426,7 @@ int main(int argc, char ** argv) {
 
 	outfile = NULL;
 
-	while ((opt = getopt_long(argc, argv, "hptuvc::C:L:I:l:o:",
+	while ((opt = getopt_long(argc, argv, "hptuvdc::C:L:I:l:o:",
 		long_options, &long_index)) != -1) {
 		switch (opt) {
 			case 'c':
