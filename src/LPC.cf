@@ -9,22 +9,24 @@ comment "//" ;
 comment "/*" "*/" ;
 comment "#" ;
 
+entrypoints Program ;
+
 Prog.		Program ::= [Defin] ;
-Pdefinf.	Defin ::= [Tm] Type Fdef ;
-Pdefinv.	Defin ::= [Tm] Type Vdef ";" ;
-Pstm.		Program ::= Stm ;
+Pdefinf.	Defin ::= Type Fdef ;
+Pdefinv.	Defin ::= Type Vdef ;
+
+ModifedBasicType.	Type ::= [Tm] Basetype ;
+ModifedBasicTypeArr.	Type ::= [Tm] Basetype "*" ;
 
 Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
-Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" Cmp_stm ;
-
-Pdecl.		Decl ::= [Tm] Type Vdef ;
 
 Vdec.		Vdef ::= Ident ;
-Vdecp.		Vdef ::= "*" Ident ;
 Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
-terminator Tm "" ;
+Pdecl.		Decl ::= Type Vdef;
+
 terminator Defin "" ;
+terminator Tm "" ;
 terminator Stm ";" ;
 
 separator nonempty Vdef "," ;
@@ -33,18 +35,15 @@ separator Exp "," ;
 
 coercions Exp 4 ;
 
-Stmempblock.	Cmp_stm ::= "{" "}" ;
+Stmemptyblock.	Cmp_stm ::= "{" "}" ;
 Stmblock.	Cmp_stm ::= "{" [Stm] "}" ;
-
-(:[]).   [Stm] ::= Stm ;
-(:).     [Stm] ::= Stm [Stm];
 
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
 -- Snill.		Stm ::= "" ;
 
+SExp.		Stm ::= Exp ;
 SBlock.		Stm ::= Cmp_stm ;
-SExp.		Stm ::= Exp ";" ;
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
 SReturn.	Stm ::= "return" Exp ";" ;
@@ -75,29 +74,29 @@ EDiv.		Exp3 ::= Exp3 "/" Exp4 ;
 Call.		Exp4 ::= Ident "(" [Exp] ")" ;
 Earr.		Exp4 ::= Ident "[" [Exp] "]" ;
 Esel.		Exp4 ::= Exp4 "." Ident ;
-Epoint.		Exp4 ::= Exp4 "->" Ident  ;
+Epoint.		Exp4 ::= Exp4 "->" Ident ;
 EVar.		Exp4 ::= Ident ;
 EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
 EDouble.	Exp4 ::= Double ;
 
-TVoid.		Type ::= "void" ;
-TInt.		Type ::= "int" ;
-TDouble.	Type ::= "float" ;
-TString.	Type ::= "string" ;
-TObject.	Type ::= "object" ;
-TMapping.	Type ::= "mapping" ;
-TMixed.		Type ::= "mixed" ;
+TVoid.		Basetype ::= "void" ;
+TInt.		Basetype ::= "int" ;
+TDouble.	Basetype ::= "float" ;
+TString.	Basetype ::= "string" ;
+TObject.	Basetype ::= "object" ;
+TMapping.	Basetype ::= "mapping" ;
+TMixed.		Basetype ::= "mixed" ;
 
 -- XXX remove here to test c code...
-Tchar.		Type ::= "char" ;
+Tchar.		Basetype ::= "char" ;
 
 TMAtomic.	Tm ::= "atomic" ;
 TMNomask.	Tm ::= "nomask" ;
 TMPrivate.	Tm ::= "private" ;
 TMStatic.	Tm ::= "static" ;
 
-Cstr.		Conststr ::= Constelm;
+Cstr.		Conststr ::= Constelm ;
 Cstradd.	Conststr ::= Constelm "+" Conststr ;
 Cstrs.		Constelm ::= String ;
 Cstri.		Constelm ::= Ident ;

@@ -11,6 +11,8 @@ comment "//" ;
 comment "/*" "*/" ;
 comment "#" ;
 
+entrypoints Program ;
+
 Prog.		Program ::= [Defin] ;
 Pdefinf.	Defin ::= [Tm] Type Fdef ;
 Pdefinv.	Defin ::= [Tm] Type Vdef ;
@@ -36,7 +38,6 @@ coercions Exp 4 ;
 
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
-Snill.		Stm ::= "";
 
 SExp.		Stm ::= Exp ";" ;
 SBlock.		Stm ::= "{" [Stm] "}" ;
@@ -82,7 +83,7 @@ TMNomask.	Tm ::= "nomask" ;
 TMPrivate.	Tm ::= "private" ;
 TMStatic.	Tm ::= "static" ;
 
-Cstr.		Conststr ::= Constelm;
+Cstr.		Conststr ::= Constelm ;
 Cstradd.	Conststr ::= Constelm "+" Conststr ;
 Cstrs.		Constelm ::= String ;
 Cstri.		Constelm ::= Ident ;
