@@ -11,10 +11,11 @@ comment "#" ;
 
 Prog.		Program ::= [Defin] ;
 Pdefinf.	Defin ::= [Tm] Type Fdef ;
-Pdefinv.	Defin ::= [Tm] Type Vdef ;
+Pdefinv.	Defin ::= [Tm] Type Vdef ";" ;
+Pstm.		Program ::= Stm ;
 
-Fundec.		Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
-Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
+Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" Cmp_stm ;
 
 Pdecl.		Decl ::= [Tm] Type Vdef ;
 
@@ -22,8 +23,8 @@ Vdec.		Vdef ::= Ident ;
 Vdecp.		Vdef ::= "*" Ident ;
 Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
-terminator Defin "" ;
 terminator Tm "" ;
+terminator Defin "" ;
 terminator Stm ";" ;
 
 separator nonempty Vdef "," ;
@@ -32,12 +33,18 @@ separator Exp "," ;
 
 coercions Exp 4 ;
 
+Stmempblock.	Cmp_stm ::= "{" "}" ;
+Stmblock.	Cmp_stm ::= "{" [Stm] "}" ;
+
+(:[]).   [Stm] ::= Stm ;
+(:).     [Stm] ::= Stm [Stm];
+
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
-Snill.		Stm ::= "" ;
+-- Snill.		Stm ::= "" ;
 
+SBlock.		Stm ::= Cmp_stm ;
 SExp.		Stm ::= Exp ";" ;
-SBlock.		Stm ::= "{" [Stm] "}" ;
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
 SReturn.	Stm ::= "return" Exp ";" ;
@@ -67,6 +74,8 @@ EMul.		Exp3 ::= Exp3 "*" Exp4 ;
 EDiv.		Exp3 ::= Exp3 "/" Exp4 ;
 Call.		Exp4 ::= Ident "(" [Exp] ")" ;
 Earr.		Exp4 ::= Ident "[" [Exp] "]" ;
+Esel.		Exp4 ::= Exp4 "." Ident ;
+Epoint.		Exp4 ::= Exp4 "->" Ident  ;
 EVar.		Exp4 ::= Ident ;
 EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
