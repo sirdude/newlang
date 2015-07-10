@@ -12,8 +12,10 @@ comment "#" ;
 entrypoints Program ;
 
 Prog.		Program ::= [Defin] ;
+Progstm.	Program ::= [Stm] ;
+
 Pdefinf.	Defin ::= Type Fdef ;
-Pdefinv.	Defin ::= Type Vdef ;
+Pdefinv.	Defin ::= Type [Vdef] ;
 
 ModifedBasicType.	Type ::= [Tm] Basetype ;
 ModifedBasicTypeArr.	Type ::= [Tm] Basetype "*" ;
@@ -27,11 +29,11 @@ Pdecl.		Decl ::= Type Vdef;
 
 terminator Defin "" ;
 terminator Tm "" ;
-terminator Stm ";" ;
 
 separator nonempty Vdef "," ;
 separator Decl "," ;
 separator Exp "," ;
+separator Stm ";" ;
 
 coercions Exp 4 ;
 
