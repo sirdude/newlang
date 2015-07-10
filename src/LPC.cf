@@ -11,41 +11,30 @@ comment "#" ;
 
 entrypoints Program ;
 
-Prog.		Program ::= [Defin] ;
-Progstm.	Program ::= [Stm] ;
+Prog.		Program ::= [Stm] ;
+Pfunc.		Program ::= [Fdef] ;
 
-Pdefinf.	Defin ::= Type Fdef ;
-Pdefinv.	Defin ::= Type [Vdef] ;
-
-ModifedBasicType.	Type ::= [Tm] Basetype ;
-ModifedBasicTypeArr.	Type ::= [Tm] Basetype "*" ;
+Pdefinf.	Fdef ::= Type Fdef ;
 
 Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
 
-Vdec.		Vdef ::= Ident ;
-Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
-
 Pdecl.		Decl ::= Type Vdef;
 
-terminator Defin "" ;
-terminator Tm "" ;
-
-separator nonempty Vdef "," ;
-separator Decl "," ;
-separator Exp "," ;
-separator Stm ";" ;
-
-coercions Exp 4 ;
+-- XXX Not sure if this is needed allows void usage(void) {
+Pvoid.		Decl ::= "void";
 
 Stmemptyblock.	Cmp_stm ::= "{" "}" ;
 Stmblock.	Cmp_stm ::= "{" [Stm] "}" ;
 
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
--- Snill.		Stm ::= "" ;
-
+Sdefinvar.	Stm ::= Type [Vdef] ;
 SExp.		Stm ::= Exp ;
+
+-- XXX This is a problem can't reference Cmp_stm creates a loop
+--  Also want to make while () {} not require ;
 SBlock.		Stm ::= Cmp_stm ;
+
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
 SReturn.	Stm ::= "return" Exp ";" ;
@@ -53,6 +42,9 @@ Sif.		Stm ::= "if" "(" Exp ")" Stm ;
 SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
 Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
 Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
+
+Vdec.		Vdef ::= Ident ;
+Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
 
 EAss.		Exp ::= Ident "=" Exp ;
 EArrAss.	Exp ::= Ident "[" [Exp] "]" "=" Exp ;
@@ -82,6 +74,9 @@ EStr.		Exp4 ::= String ;
 EInt.		Exp4 ::= Integer ;
 EDouble.	Exp4 ::= Double ;
 
+ModifedBasicType.	Type ::= [Tm] Basetype ;
+ModifedBasicTypeArr.	Type ::= [Tm] Basetype "*" ;
+
 TVoid.		Basetype ::= "void" ;
 TInt.		Basetype ::= "int" ;
 TDouble.	Basetype ::= "float" ;
@@ -104,3 +99,13 @@ Cstrs.		Constelm ::= String ;
 Cstri.		Constelm ::= Ident ;
 Cstrid.		Constelm ::= Integer ;
 Cstrd.		Constelm ::= Double ;
+
+terminator Tm "" ;
+
+separator nonempty Vdef "," ;
+separator Decl "," ;
+separator Exp "," ;
+separator Stm ";" ;
+separator Fdef "" ;
+
+coercions Exp 4 ;
