@@ -1,3 +1,6 @@
+-- This is a bnf of the pre processor for C
+-- using it more as a sample than anything else.
+
 preprocessing_directive ::= control_line newline | if_section |
 	pp_token newline
 

@@ -1,0 +1,12 @@
+-- Simple grammar to deomonstrate optional elements in a statement
+-- bnfc doesn't support optional elements (yet). 
+-- So you need to expand your rule, something like:
+-- 
+-- LIST_COMMAND =:: "LIST"  [COMMODITY [DELEAR_ID]]
+-- becomes this
+
+LIST_COMMAND ::= "LIST" Foo ;
+Foo ::= ;
+Foo ::= COMMODITY Bar ;
+Bar ::= ;
+Bar ::= DELEAR_ID ;

@@ -21,7 +21,7 @@ I read an interesting article on the web about adding visual feedback
 to programming, which got me to thinking hey it would be really cool
 to create a new language that builds on languages of the past.
 
-I've formed some strong opinions on things I don't like about languages
+I've formed some strong opinions on things I do not like about languages
 and I want to try and see what I can do with them.  Here are some
 of my motivations:
 
@@ -57,7 +57,10 @@ like hide them in the editor unless you are actually looking at
 that code.
 
 =item 10. Worry less about whitespace, at the same time code must be 
-readable in a standard terminal.
+readable in a standard terminal.  I think you can all agree with me that
+it is the job of the editor to display syntax coloring, not the code.
+Likewise spacing in a program should be in the domain of the editor not
+a detail of the code.
 
 =back
 
@@ -71,15 +74,28 @@ closest to what I envision the final language looking like at this point.
 
 =over 8
 
-=item syntax.pod  	A Document covering the syntax of our new language
+=item docs/syntax.pod  	A Document covering the syntax of our new language
 
-=item notes.txt		Things I've been thinking about
+=item docs/notes.txt	Things I've been thinking about
 
-=item src			Current source code for BNFC starting with
+=item docs/getting_started.txt	A quick summary of some of the things you can
+			do with what's here.
+
+=item src		Current source code for BNFC starting with
 			trying to build an lpc grammar and then will modify
 			that so for now this doesn't line up with the docs.
 
-=item examples		Example code
+=item examp		Example code in a couple of formats:
+			*.c	C version of a file.
+			*.lpc	LPC version of a file.
+			*.sw	SWEET(our new language) version of a file.
+
+=item lib		 Some basic SWEET objects that you can inherit.
+
+=item tests		The start of a test-suite for SWEET.
+
+=item critic		Ideas and or simple tests that the code critic will
+			look at.
 
 =back
 
@@ -91,8 +107,11 @@ closest to what I envision the final language looking like at this point.
 
 =item 2. Creating a BNF of the language.
 
-=item 3. using BNFC to create an interpreter/pretty printer/critic for the
-language.
+=item 3. using BNFC to create in the following order:
+	pretty printer
+	interpreter
+	compiler
+	critic
 
 =back
 
