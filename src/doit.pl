@@ -78,6 +78,7 @@ sub fix_makefile {
 	} else {
 		$binary = "sweet";
 	}
+
 	system("perl -pi -e 's/distclean: clean\n/" .
 	        "extraclean:\n\trm -rf Interpreter* $binary " .
 		"*.bak testlpc\n\ndistclean: clean extraclean\n/g' " .
@@ -86,7 +87,8 @@ sub fix_makefile {
 		".PHONY: clean distclean extraclean version.c\n/g' " .
 		"$dir/Makefile");
 
-	system("perl -pi -e 's/Wall/Wall -I./g' $dir/Makefile");
+	system("perl -pi -e 's/Wall/Wall -I. -I\\/usr\\/local\\/include/g' " .
+		"$dir/Makefile");
 
 	if ($dir eq "./lpc") {
 		system("perl -pi -e 's/all:/all: $binary/g'" .
@@ -106,7 +108,8 @@ sub fix_makefile {
 	print $fh "\n$binary: \${OBJS} Interpreter.o main.o version.o\n";
 	print $fh "\t\@echo \"Linking $binary...\"\n";
 	print $fh "\t\${CC} \${CCFLAGS} \${OBJS} main.o version.o " .
-		"-o$binary -lconfig\n";
+		"-o$binary -L/usr/local/lib -Wl,-rpath,/usr/local/lib " .
+		"-lconfig\n";
 
 	print $fh "\nversion.c:\n";
 	print $fh "\t\../get_version.pl ../version.c\n";
