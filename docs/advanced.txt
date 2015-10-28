@@ -1,0 +1,15 @@
+List of advanced topics that should be addressed
+
+Templating		Generating code via templates
+regex			Regular expressions
+meta programming	Compiler compiler
+eval, call_other	executing strings calling functions in other objects.
+attaching to running processes/ extending SWIG etc...
+expect			Automating interactive applications
+networking		
+tk			GUI interface like tcl/tk perl/tk
+AST			Build parse trees
+modules 		What do packages look like?
+cpan interface		Dependancies, archive repositorys and getting updates
+persistance		concurrency, atomic actions, etc...
+security?		maybe part of persistance mabye it's own thing...
