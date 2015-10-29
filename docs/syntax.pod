@@ -3,17 +3,17 @@
 SWEET is a new programming language based off of a number of languages.
 Trying to make a small well defined language that is easy to use/learn
 and something that can grow.  SWEET builds on ideas I have learned through 
-experience and tries to incorperate tools that I think are essential to a
-programming language.  Many of these are supriseingly missing from lots
+experience and tries to incorporate tools that I think are essential to a
+programming language.  Many of these are surprisingly missing from lots
 of languages.  What kind of tools are we talking about?
 	A pretty printer
-	A Static code Anliser
-	A builtin style guide (that is extendable).
+	A Static code analyzer
+	A built in style guide (that is extendible).
 	A config file to modify various search paths.
 	A test suite
-	Syntax highligher for various editors
+	Syntax highlighter for various editors
 	A compiler and an interpreter.
-	Builtin examples & Documentation.
+	Built in examples & Documentation.
 
 This is obviously a lot of work and will take some time to accomplish.
 If your reading this document I encourage you to get involved and help
@@ -33,7 +33,7 @@ A function is a set of statements.
 There are a number of different types of statements, which are basically an 
 instruction for the computer to follow.  We will take a closer look at
 statements later, but many times a statement can be broken into bits called
-expressions.  An expression is similar to a mathematical forumula.
+expressions.  An expression is similar to a mathematical formula.
 
 Many times this structure of a programming language is defined in a 
 format called ebnf.  You can find the ebnf for our language here:
@@ -118,7 +118,7 @@ cloned object, or provide other data for an object.
 
 =back
 
-=head1 The Details
+=head1 The details
 
 Now that you have the general overview of how things look lets start
 in on the details.  Were going to start small and work our way
@@ -161,7 +161,7 @@ For functions types are used to define what the return value(s) of a
 function will look like, as well as what types of things we will pass
 into that function.
 
-=head2 Basic Types
+=head2 Basic types
 
 Our programming language supports the following basic types:
 
@@ -206,7 +206,7 @@ Becomes:
 
 It's Okay to mix regular types and arrays in declarations:
 
-	int x, *y, z;	# Declares two int''s x,z and an array of ints y
+	int x, *y, z;	# Declares two int's x,z and an array of ints y
 
 Once we have defined an array, we can lookup values with an index number.
 Index numbers start with 0 and go up.
@@ -215,7 +215,7 @@ Index numbers must be >= 0.  If a value has not been set, it will return
 the default value for the specified types.  If the specified type has no
 default value it will return nil;
 
-=head2 Type Modifiers
+=head2 Type modifiers
 
 Type modifiers are used to alter the behavior of our program functions
 and or data structures.  Our programming language supports the following 
@@ -308,6 +308,7 @@ own they would not do anything.  Here are some examples of expressions:
 	x < 3
 
 =head3 Operators
+
 There are a number of operators in our language, you have seen quite a few
 of them in this document already.  Here is a summary of the operators and
 what they do/mean.
@@ -409,7 +410,7 @@ they can be implemented later via functions:
 We are choosing not to implement them to reduce confusion and improve code
 readability.
 
-=head3 Operator Precedence
+=head3 Operator precedence
 
 Expressions use the following Priority levels, Higher levels are given higher
 precedence and symbols at the same level are evaluated left to right.
@@ -530,7 +531,7 @@ computer, basic programs are like a recipe.  Once you start making more
 complicated programs you need to start looking at branching.  Calling
 different sections of code based on results of asking a question.
 There are numerous names for this, branching, conditionals, flow control, they
-all mean esentually the same thing.  To keep things simple we are going to
+all mean essentially the same thing.  To keep things simple we are going to
 call this flow control.
 
 Our programming language supports the following flow control statements:
@@ -669,6 +670,7 @@ It also has a lot of other functionality built into it, we encourage you to
 take a look at it.
 
 =head2 Working with objects
+
 Once you have a number of objects defined, you need to know how
 our language combines objects.  There are a number of functions that
 operate on objects: 
@@ -734,7 +736,6 @@ Example:
 	write("str = " + str + "\n");
 
 =back
-
 
 
 XXX Add more stuff here...  This last section should be at the very end.
