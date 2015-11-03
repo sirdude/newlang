@@ -97,6 +97,7 @@ struct dvardef *find_var(char *name, struct dvardef *list) {
 int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	struct dfuncdef *tmp;
 	struct frame *tmpf;
+        struct fargs *targs;
 	int size;
 
 	if (find_func(name,env->funs)) {
@@ -112,10 +113,17 @@ int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	tmp->next =env->funs;
 	env->funs = tmp;
 
-	tmpf = new_frame();
+	tmpf = add_frame();
 	tmp->env = tmpf;
 
-	/* XXX Need to add args to tmpf */
+	targs = args;
+	while (targs != NULL) {
+
+		/* XXX Need to add args to tmpf */
+
+		targs = targs->next;
+	}
+	
 
 	return 1;
 }
