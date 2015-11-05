@@ -54,6 +54,7 @@ int valid_lib(char *path, char *file) {
 
 	size = strlen(path);
 	strncpy(fullp, path, size);
+        fullp[MAX_STR - 1] = '\0';
 	strncat(fullp, "/", MAX_STR);
 	strncat(fullp, file, MAX_STR);
 
