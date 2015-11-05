@@ -208,7 +208,7 @@ char *add_configs(char *localpath, const char *value) {
 		if (localpath) {
 			tmp2 = localpath;
 			size = strlen(value) + strlen(tmp2) + 2;
-			tmp = malloc(size * sizeof(char));
+			tmp = malloc(size * sizeof(char) + 1);
 
 			strncpy(tmp, tmp2, size);
 			tmp[size] = '\0';
@@ -216,7 +216,7 @@ char *add_configs(char *localpath, const char *value) {
 			strncat(tmp, ":", size);
 		} else {
 			size = strlen(value) + 1;
-			tmp = malloc(size * sizeof(char));
+			tmp = malloc(size * sizeof(char) + 1);
 			tmp[0] = '\0';
 		}
 		strncat(tmp, value, size);
@@ -312,7 +312,12 @@ int load_conf_file(char *name) {
 	int size;
 
 	size = strlen(conf_path);
-	strncpy(path,conf_path,strlen(conf_path));
+
+        if (size >= MAX_STR) {
+		size = MAX_STR - 1;
+	}
+
+	strncpy(path, conf_path, strlen(conf_path));
 	path[size] = '\0';
 
 	buf = strtok(path, ":");
@@ -345,8 +350,14 @@ int read_file_configs(char *name, char *dir) {
 	tmp = malloc(MAX_STR * sizeof(char));
 
 	size = strlen(dir);
+
+        if (size >= MAX_STR) {
+		size = MAX_STR - 1;
+	}
+
 	strncpy(tmp, dir, size);
 	tmp[size] = '\0';
+
 	strncat(tmp, "/../etc", MAX_STR);
 	conf_path = add_configs(conf_path, tmp);
 
@@ -421,7 +432,7 @@ int main(int argc, char ** argv) {
 
 	critic_level = DEFAULT_CRITIC_LEVEL;
 
-	fullpath = realpath(argv[0],buf);
+	fullpath = realpath(argv[0], buf);
 	basepath = dirname(fullpath);
 	filename = basename(fullpath);
 
@@ -433,17 +444,28 @@ int main(int argc, char ** argv) {
 			case 'c':
 				if (optarg) {
 					outfilelen = strlen(optarg) + 1;
+
+					if (outfilelen >= MAX_STR) {
+						outfilelen = MAX_STR -1;
+					}
+
 					critic_path = malloc(outfilelen * 
 						sizeof(char));
-					strncpy(critic_path,optarg,outfilelen);
+					strncpy(critic_path, optarg,
+						outfilelen);
 					critic_path[outfilelen] = '\0';
 				}
 				critic = 1;
 				break;
 			case 'C':
 				outfilelen = strlen(optarg) + 1;
+
+				if (outfilelen >= MAX_STR) {
+					outfilelen = MAX_STR -1;
+				}
+
 				conf_path = malloc(outfilelen * sizeof(char));
-				strncpy(conf_path,optarg,outfilelen);
+				strncpy(conf_path, optarg, outfilelen);
 				conf_path[outfilelen] = '\0';
 				break;
 			case 'd':
@@ -451,8 +473,13 @@ int main(int argc, char ** argv) {
 				break;
 			case 'L':
 				outfilelen = strlen(optarg) + 1;
+
+				if (outfilelen >= MAX_STR) {
+					outfilelen = MAX_STR -1;
+				}
+
 				lib_path = malloc(outfilelen * sizeof(char));
-				strncpy(lib_path,optarg,outfilelen);
+				strncpy(lib_path, optarg, outfilelen);
 				lib_path[outfilelen] = '\0';
 				break;
 			case 'l':
@@ -460,15 +487,25 @@ int main(int argc, char ** argv) {
 				break;
 			case 'I':
 				outfilelen = strlen(optarg) + 1;
+
+				if (outfilelen >= MAX_STR) {
+					outfilelen = MAX_STR -1;
+				}
+
 				inc_path = malloc(outfilelen * sizeof(char));
-				strncpy(inc_path,optarg,outfilelen);
+				strncpy(inc_path, optarg, outfilelen);
 				inc_path[outfilelen] = '\0';
 				break;
 			case 'o':
 				output = 1;
 				outfilelen = strlen(optarg) + 1;
+
+				if (outfilelen >= MAX_STR) {
+					outfilelen = MAX_STR -1;
+				}
+
 				outfile = malloc(outfilelen * sizeof(char));
-				strncpy(outfile,optarg,outfilelen);
+				strncpy(outfile, optarg, outfilelen);
 				outfile[outfilelen] = '\0';
 				break;
 			case 'p':
