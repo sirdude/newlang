@@ -54,7 +54,7 @@ int valid_lib(char *path, char *file) {
 
 	size = strlen(path);
 	strncpy(fullp, path, size);
-        fullp[MAX_STR - 1] = '\0';
+	fullp[MAX_STR - 1] = '\0';
 	strncat(fullp, "/", MAX_STR);
 	strncat(fullp, file, MAX_STR);
 
@@ -75,7 +75,7 @@ int find_inheritables(char *path) {
 	while (buf != NULL) {
 		size = strlen(buf);
 
-printf("Looking at %d: %s\n",size, buf);
+printf("Looking at %d: %s\n", size, buf);
 
 		d = opendir(buf);
 		if (d) {
@@ -86,12 +86,12 @@ printf("Looking at %d: %s\n",size, buf);
 
 				if (dir->d_name[0] == '.') {
 					/* Skip hidden files/dir's */
-				} else if (dir->d_type == DT_DIR) {  
+				} else if (dir->d_type == DT_DIR) {
 					/* file is a directory */
 					count = count + 
 						find_inheritables(fullp);
 				} else {
-					if (valid_lib(fullp,dir->d_name)) {
+					if (valid_lib(fullp, dir->d_name)) {
 						printf("\t%s\n", dir->d_name);
 						count++;
 					}
@@ -111,7 +111,7 @@ printf("Looking at %d: %s\n",size, buf);
 int print_version(char *name, char *dir) {
 	printf("%s Version: %s\n\n", name, get_version());
 	printf("Working dir: %s\n", dir);
-	if (strcmp(name,"lpc") == 0) {
+	if (strcmp(name, "lpc") == 0) {
 		printf("LPC_CONF_PATH: %s\n", conf_path);
 		printf("LPC_CONF_FILE: %s\n", conf_file);
 		printf("LPC_CRITIC_PATH: %s\n", critic_path);
@@ -174,7 +174,7 @@ int print_usage(char *name) {
 
 	printf("You can also use the following environment variables ");
 	printf("to modify configuration:\n");
-	if (strcmp(name,"lpc") == 0) {
+	if (strcmp(name, "lpc") == 0) {
 		printf("\tLPC_CONF_PATH\n");
 		printf("\tLPC_CRITIC_PATH\n");
 		printf("\tLPC_INC_PATH\n");
@@ -191,7 +191,7 @@ int print_usage(char *name) {
 	printf("Alternately you can create a config file: %s\n", 
 		get_conf_name(name));
 
-	if (strcmp(name,"lpc") == 0) {
+	if (strcmp(name, "lpc") == 0) {
 		printf("and place it in LPC_CONF_PATH.\n");
 	} else {
 		printf("and place it in SWEET_CONF_PATH.\n");
@@ -227,7 +227,7 @@ char *add_configs(char *localpath, const char *value) {
 }
 
 int read_env_configs(char *name) {
-	if (strcmp(name,"lpc") == 0) {
+	if (strcmp(name, "lpc") == 0) {
 		conf_path = add_configs(conf_path, getenv("LPC_CONF_PATH"));
 		critic_path = add_configs(critic_path,
 			getenv("LPC_CRITIC_PATH"));
@@ -274,7 +274,7 @@ int read_conf_file(char *name, char *path) {
 			return 0;
 		}
 
-		if (strcmp(name,"lpc") == 0) {
+		if (strcmp(name, "lpc") == 0) {
 			if (config_lookup_string(cf, "LPC_INC_PATH", &tmp)) {
 				inc_path = add_configs(inc_path, tmp);
 			}
@@ -313,7 +313,7 @@ int load_conf_file(char *name) {
 
 	size = strlen(conf_path);
 
-        if (size >= MAX_STR) {
+	if (size >= MAX_STR) {
 		size = MAX_STR - 1;
 	}
 
@@ -351,7 +351,7 @@ int read_file_configs(char *name, char *dir) {
 
 	size = strlen(dir);
 
-        if (size >= MAX_STR) {
+	if (size >= MAX_STR) {
 		size = MAX_STR - 1;
 	}
 
@@ -401,14 +401,14 @@ int print_file(char *outfile, Program parse_tree) {
 	FILE *ofile;
 
 	if (output == 1) {
-		ofile = fopen(outfile,"w");
+		ofile = fopen(outfile, "w");
 		if (!ofile) {
-			fprintf(stderr,"Unable to write to file: %s\n",
+			fprintf(stderr, "Unable to write to file: %s\n",
 				outfile);
 			return 0;
 		}
 
-		fprintf(ofile,"%s\n", printProgram(parse_tree));
+		fprintf(ofile, "%s\n", printProgram(parse_tree));
 
 		fclose(ofile);
 	} else {
@@ -512,10 +512,10 @@ int main(int argc, char ** argv) {
 				print = 1;
 				break;
 			case 'u':
-				upgrade =1;
+				upgrade = 1;
 				break;
 			case 'v':
-				version =1;
+				version = 1;
 				break;
 			case 't':
 				test = 1;
@@ -561,7 +561,7 @@ int main(int argc, char ** argv) {
 
 	if (parse_tree) {
 		if (print == 1) {
-			ret= print_file(outfile, parse_tree);
+			ret = print_file(outfile, parse_tree);
 		} else if (critic == 1) {
 			ret = do_critic(outfile, parse_tree);
 		} else if (test == 1) {

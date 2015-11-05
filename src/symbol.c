@@ -97,10 +97,10 @@ struct dvardef *find_var(char *name, struct dvardef *list) {
 int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	struct dfuncdef *tmp;
 	struct frame *tmpf;
-        struct fargs *targs;
+	struct fargs *targs;
 	int size;
 
-	if (find_func(name,env->funs)) {
+	if (find_func(name, env->funs)) {
 		printf("Function %s already exists at this level.\n", name);
 		return 0;
 	}
@@ -110,7 +110,7 @@ int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	size = strlen(name) + 1;
 	tmp->name = malloc(sizeof(char) * size);
 	strncpy(tmp->name, name, size);
-	tmp->next =env->funs;
+	tmp->next = env->funs;
 	env->funs = tmp;
 
 	tmpf = add_frame();
@@ -132,7 +132,7 @@ int add_var(char *name, int type, struct frame *env) {
 	struct dvardef *tmp;
 	int size;
 
-	if (find_var(name,env->vars)) {
+	if (find_var(name, env->vars)) {
 		printf("Variable %s already exists at this level.\n", name);
 		return 0;
 	}
@@ -142,7 +142,7 @@ int add_var(char *name, int type, struct frame *env) {
 	size = strlen(name) + 1;
 	tmp->name = malloc(sizeof(char) * size);
 	strncpy(tmp->name, name, size);
-	tmp->next =env->vars;
+	tmp->next = env->vars;
 	env->vars = tmp;
 
 	return 1;
