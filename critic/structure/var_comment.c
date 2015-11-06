@@ -6,7 +6,9 @@ int init() {
 	critmod.name = "var_comment";
 	critmod.criticality = 3;
 	critmod.package = "structure";
-	critmod.info = "Variables should have a comment: Examples:\n\tGood: int x "Our counter";\n\tBad: int x;";
+	critmod.info = "Variables should have a comment.";
+	critmod.good = "int x \"Our counter\";";
+	critmod.bad = "int x;";
 }
 
 int has_comment(struct *node) {

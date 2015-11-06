@@ -6,7 +6,9 @@ int init() {
 	critmod.name = "ignore_function";
 	critmod.criticality = 3;
 	critmod.package = "structure";
-	critmod.info = "Function return values should not be ignored.\nExamples:\n\tGood: if(do_stuff()) { do_more_stuff() } \n\tBad: do_stuff(); do_more_stuff();";
+	critmod.info = "Function return values should not be ignored.";
+	critmod.good = "if(do_stuff()) { do_more_stuff() }";
+	critmod.bad = "do_stuff(); do_more_stuff();";
 }
 
 int violates (struct *node, struct *wholefile) {

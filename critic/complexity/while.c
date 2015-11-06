@@ -6,7 +6,10 @@ int init() {
 	critmod.name = "while";
 	critmod.criticality = 4;
 	critmod.package = "complexity";
-	critmod.info = "While statements should not contain complex code in their, conditional check.  Example:\n\tGood: while( x < 10) {\n\tBad: while ( x++ / 5 < somevalue * factor / 20) {";
+	critmod.info = "While statements should not contain complex code " +
+		"in their, conditional check.";
+	critmod.good = "while( x < 10) {";
+	critmod.bad = "while ( x++ / 5 < somevalue * factor / 20) {";
 }
 
 int violates (struct *node, struct *wholefile) {

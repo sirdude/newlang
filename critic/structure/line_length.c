@@ -8,6 +8,9 @@ int init() {
 	critmod.criticality = 3;
 	critmod.package = "structure";
 	critmod.info = "Lines should be < 80 chars so they are readable.";
+	critmod.good = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n";
+	critmod.bad = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +
+		"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n";
 }
 
 int violates (struct *node, struct *wholefile) {

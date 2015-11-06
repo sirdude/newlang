@@ -6,7 +6,9 @@ int init() {
 	critmod.name = "empty_codeblock";
 	critmod.criticality = 3;
 	critmod.package = "structure";
-	critmod.info = "Code blocks should do something useful. Examples:\n\tGood: { x = 5; } ";\n\tBad: {}";
+	critmod.info = "Code blocks should do something useful.";
+	critmod.good = "{ x = 5; }";
+	critmod.bad = "{}";
 }
 
 int is_empty_node(struct *node) {
