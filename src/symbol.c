@@ -70,8 +70,10 @@ struct frame *remove_frame() {
 	return cframe;
 }
 
-struct dfuncdef *find_func(char *name, struct dfuncdef *list) {
+struct dfuncdef *find_func(char *name, struct frame *env) {
+	struct dfuncdef *list;
 
+	list = env->funs;
 	while (list) {
 		if (strcmp(list->name, name) == 0) {
 			return list;
@@ -82,7 +84,10 @@ struct dfuncdef *find_func(char *name, struct dfuncdef *list) {
 	return NULL;
 }
 
-struct dvardef *find_var(char *name, struct dvardef *list) {
+struct dvardef *find_var(char *name, struct frame *env) {
+	struct dvardef *list;
+
+	list = env->vars;
 
 	while (list) {
 		if (strcmp(list->name, name) == 0) {
@@ -100,7 +105,7 @@ int add_fun(char *name, int type, struct fargs *args, struct frame *env) {
 	struct fargs *targs;
 	int size;
 
-	if (find_func(name, env->funs)) {
+	if (find_func(name, env)) {
 		printf("Function %s already exists at this level.\n", name);
 		return 0;
 	}
@@ -132,7 +137,7 @@ int add_var(char *name, int type, struct frame *env) {
 	struct dvardef *tmp;
 	int size;
 
-	if (find_var(name, env->vars)) {
+	if (find_var(name, env)) {
 		printf("Variable %s already exists at this level.\n", name);
 		return 0;
 	}
@@ -154,7 +159,7 @@ struct dfuncdef *get_func(char *name, struct frame *env) {
 	if (!env) {
 		return 0;
 	}
-	tmp = find_func(name, env->funs);
+	tmp = find_func(name, env);
 
 	if (!tmp) {
 		return get_func(name, env->prev);
@@ -169,7 +174,7 @@ struct dvardef *get_var(char *name, struct frame *env) {
 	if (!env) {
 		return 0;
 	}
-	tmp = find_var(name, env->vars);
+	tmp = find_var(name, env);
 
 	if (!tmp) {
 		return get_var(name, env->prev);
@@ -231,9 +236,23 @@ char *print_type(int x) {
 
 int run_tests() {
 	int x;
+	struct dvardef *tmp;
 
 	init();
+
+	tmp = find_var("x", cframe);
+	if (tmp != NULL) {
+		printf("Error found var: x\n");
+		return 1;
+	}
+
 	add_var("x", TYPE_INT, cframe);
+	tmp = find_var("x", cframe);
+	if (tmp == NULL) {
+		printf("Error unable to find var: x\n");
+		return 1;
+	}
+
 	add_var("y", TYPE_FLOAT, cframe);
 
 	x = get_variable_type("x", cframe);
