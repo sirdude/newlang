@@ -37,11 +37,14 @@ SBlock.		Stm ::= Cmp_stm ;
 
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
-SReturn.	Stm ::= "return" Exp ";" ;
+SReturn.	Stm ::= "return" Exp ";" ;   -- these two should allow return;
+SBreak.		Stm ::= "break" Exp ";" ;
+SCont.		Stm ::= "continue" Exp ";" ;
 Sif.		Stm ::= "if" "(" Exp ")" Stm ;
 SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
 Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
 Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
+Scatch.		Stm ::= "catch" Stm ":" Stm ; -- I think there are more options
 
 Vdec.		Vdef ::= Ident ;
 Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
