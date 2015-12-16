@@ -20,6 +20,9 @@ Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
 
 Pdecl.		Decl ::= Type Vdef;
 
+-- Need to add these keywords somewhere
+-- varags, nil, goto, function, 
+
 -- XXX Not sure if this is needed allows void usage(void) {
 Pvoid.		Decl ::= "void";
 
@@ -37,9 +40,12 @@ SBlock.		Stm ::= Cmp_stm ;
 
 SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
 SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
-SReturn.	Stm ::= "return" Exp ";" ;   -- these two should allow return;
-SBreak.		Stm ::= "break" Exp ";" ;
-SCont.		Stm ::= "continue" Exp ";" ;
+-- SReturn.	Stm ::= "return" Exp ";" ;   -- these two should allow return;
+-- SBreak.		Stm ::= "break" Exp ";" ;
+-- Switch.		Stm ::= "switch" "(" Ident ")" Exp ;
+-- SCase.		Stm ::= "case" ":" Exp ";" ;
+-- Sdefault.		Stm ::= "default" ":" Exp ";" ;
+-- SCont.		Stm ::= "continue" Exp ";" ;
 Sif.		Stm ::= "if" "(" Exp ")" Stm ;
 SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
 Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
