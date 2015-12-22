@@ -13,3 +13,13 @@ modules 		What do packages look like?
 cpan interface		Dependancies, archive repositorys and getting updates
 persistance		concurrency, atomic actions, etc...
 security?		maybe part of persistance mabye it's own thing...
+
+Datastructures:
+	arrays
+	hashes
+	linked lists
+	queues, stacks, heaps, sets, trees, graphs 
+	search: depth first, breadth first, a*, quicksort, bubblesort, etc..
+	statemachines, fuzzy logic, message passing, agents
+
+
