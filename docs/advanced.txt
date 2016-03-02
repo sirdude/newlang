@@ -3,6 +3,7 @@ List of advanced topics that should be addressed
 Templating		Generating code via templates
 regex			Regular expressions
 meta programming	Compiler compiler
+State machines		Library for state machines.
 eval, call_other	executing strings calling functions in other objects.
 attaching to running processes/ extending SWIG etc...
 expect			Automating interactive applications
@@ -21,5 +22,4 @@ Datastructures:
 	queues, stacks, heaps, sets, trees, graphs 
 	search: depth first, breadth first, a*, quicksort, bubblesort, etc..
 	statemachines, fuzzy logic, message passing, agents
-
 

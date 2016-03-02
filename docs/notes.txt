@@ -1,3 +1,14 @@
+Basic components:
+	Syntax for the Language
+	AST for the language (maybe try to use llvm here)
+	bootstrapper (basic c interpreter to build initally)
+	Interpreter
+	Compiler
+	pretty-printer/translator (produce AST, non formatted code,
+		formatted code with specific options,
+		upgrade old versions of code to new)
+	static-code-analysis
+
 Check out tcl, pike, lua, c, lpc, perl6, ruby, python
 
 tcl is like scheme...  Need to figure out other common commands even
