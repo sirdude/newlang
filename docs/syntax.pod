@@ -352,7 +352,7 @@ become clear.  We have examples of :: usage when we talk about scope.
 
 Logical negation (Not). !X  if X is 0 evaluate to 1, otherwise evaluate to 0.
 
-=item *
+=item E<052>
 
 Multiplication. 5 * 4; Evaluates to 20.
 
