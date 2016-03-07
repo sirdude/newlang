@@ -17,8 +17,8 @@ Prog.		Program ::= [Defin] ;
 Pdefinf.	Defin ::= [Tm] Type Fdef ;
 Pdefinv.	Defin ::= [Tm] Type Vdef ;
 
-Fundec.		Fdef ::= Ident "(" [Decl] ")" "{" [Stm] "}" ;
-Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
+Fundecarr.	Fdef ::= "*" Ident "(" [Decl] ")" Cmp_stm ;
 
 Pdecl.		Decl ::= [Tm] Type Vdef ;
 
@@ -39,15 +39,17 @@ coercions Exp 4 ;
 SInherit.	Stm ::= "inherit" Conststr ;
 SInclude.	Stm ::= "include" Conststr ;
 
+Stmemptyblock.  Cmp_stm ::= "{" "}" ;
+Stmblock.       Cmp_stm ::= "{" [Stm] "}" ;
+
 SExp.		Stm ::= Exp ";" ;
-SBlock.		Stm ::= "{" [Stm] "}" ;
-SWhile.		Stm ::= "while" "(" Exp ")" "{" [Stm] "}" ;
-SdoWhile.	Stm ::= "do" "{" [Stm] "}" "while" "(" Exp ")" ;
+SWhile.		Stm ::= "while" "(" Exp ")" Cmp_stm ;
+SdoWhile.	Stm ::= "do" Cmp_stm "while" "(" Exp ")" ;
 SReturn.	Stm ::= "return" Exp ";" ;
-Sif.		Stm ::= "if" "(" Exp ")" "{" [Stm] "}" ;
-SifElse.	Stm ::= "if" "(" Exp ")" "{" [Stm] "}" "else" "{" [Stm] "}" ;
-Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" "{" [Stm] "}" ;
-Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" "{" [Stm] "}" ;
+Sif.		Stm ::= "if" "(" Exp ")" Cmp_stm ;
+SifElse.	Stm ::= "if" "(" Exp ")" Cmp_stm "else" Cmp_stm ;
+Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Cmp_stm ;
+Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Cmp_stm ;
 
 EAss.		Exp ::= Ident "=" Exp ;
 EOr.		Exp1 ::= Exp2 "||" Exp2 ;
