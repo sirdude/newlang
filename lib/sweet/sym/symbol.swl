@@ -1,0 +1,124 @@
+object topframe, *cframe;
+
+object add_frame(object *lastframe) {
+	object tmp;
+
+	tmp = clone_object("frame.swl");
+	if (!tmp) {
+		write("Error loading fame.sw\n");
+		return nil;
+	}
+	if (lastframe) {
+		tmp->prev = lastframe;
+	}
+
+	return tmp;
+}
+
+void init() {
+	topframe = add_frame(nil);
+	cframe = &topframe;
+}
+
+int remove_funs(object *frame) {
+}
+
+int remove_vars(object *frame) {
+}
+
+object remove_frame(object *frame) {
+	object *tframe;
+
+	if (frame != NULL) {
+		tframe = frame->prev;
+		remove_funs(frame);
+		remove_vars(frame);
+		destroy(frame);
+
+		return tframe;
+	}
+	return NULL;
+}
+
+object get_fun(string name, object frame) {
+	object var;
+
+	if (!frame) {
+		return nil;
+	}
+
+	var = frame->funs;
+	while (var) {
+		if (var->name == name) {
+			return var;
+		}
+		var = var->next;
+	}
+	return get_fun(name, frame->prev);
+}
+
+object get_var(string name, object frame) {
+	object var;
+
+	if (!frame) {
+		return nil;
+	}
+
+	var = frame->vars;
+	while (var) {
+		if (var->name == name) {
+			return var;
+		}
+		var = var->next;
+	}
+	return get_var(name, frame->prev);
+}
+
+int add_fun(string name, string type, mixed *args, object frame) {
+	object fun, *funp;
+
+	fun = clone_object("symtable_fun.swl");
+	if (!fun) {
+		return 0;
+	}
+
+	fun.name = name;
+	fun.type = type;
+	fun.args = args;
+
+	funp = frame.funs;
+	if (!funp) {
+		frame.funs = fun;
+		return 1;
+	}
+	while (funp->next) {
+		funp = funp->next;
+	}
+
+	funp->next = fun;
+	return 1;
+}
+
+int add_var(string name, string type, object frame) {
+	object var, *varp;
+
+	var = clone_object("symtable_var.swl");
+	if (!var) {
+		return 0;
+	}
+
+	var.name = name;
+	var.type = type;
+
+	varp = frame.vars;
+	if (!varp) {
+		frame.vars = var;
+		return 1;
+	}
+	while (varp->next) {
+		varp = varp->next;
+	}
+
+	varp->next = var;
+	return 1;
+}

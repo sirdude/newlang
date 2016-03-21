@@ -1,0 +1,84 @@
+object rootnode, *curr;
+string tab;
+
+void init() {
+	tab = "";
+}
+
+int add_node(string token, string type, int line, int column, string file) {
+	object tnode;
+
+	if (!curr) {
+		tnode = clone_object("node.swl");
+		if (!tnode) {
+			write("Error loading node.swl\n");
+			return 0;
+		}
+		rootnode = tnode;
+	}
+	curr = &tnode;
+
+	tnode->token = token;
+	tnode->type = type;
+	tnode->line = line;
+	tnode->column = column;
+	tnode->file = file;
+
+	return 1;
+}
+
+int add_child(object parent, object child) {
+	object *loc;
+
+	if (!parent->child) {
+		parent->child = child;
+		return 1;
+	}
+	loc = parent->child;
+	while (loc->next) {
+		loc = loc->next;
+	}
+	loc->next = child;
+	return 1;
+}
+
+void print_tree(object *node) {
+	string ptab, ttab;
+	if (node == rootnode) {
+		write("[\n");
+	if (!node) {
+		write("]\n");
+	}
+	write(tab + "{\n");
+	ptab = tab;
+	tab = tab + "   ";
+	write(tab + "\"token\" : \"" +  node->token + "\n");
+	write(tab + "\"type\" : \"" +  node->type + "\n");
+	write(tab + "\"line\" : \"" +  node->line + "\n");
+	write(tab + "\"column\" : \"" +  node->column + "\n");
+	write(tab + "\"file\" : \"" +  node->file + "\n");
+
+	children = node->children;
+	if (children) {	
+		write(tab + "\"children" : [\n");
+
+		ttab = tab;
+		tab = ttab + "   ";
+		print_tree(children);
+		tab = ttab;
+
+		write(tab + "\"]\n");
+	}
+
+	tab = ptab;
+
+	if (node->next) {
+		write(tab + "},\n");
+		print_tree(node->next);
+	} else {
+		write(tab + "}\n");
+	}
+}
+
+int remove_node(object *node) {
+}

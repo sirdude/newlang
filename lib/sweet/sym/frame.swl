@@ -1,0 +1,3 @@
+object *prev;
+object *vars;
+object *funs;

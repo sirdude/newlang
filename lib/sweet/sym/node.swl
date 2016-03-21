@@ -1,0 +1,7 @@
+string token;
+string type;
+int line;
+int column;
+string file;
+object children;
+
