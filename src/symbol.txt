@@ -1,0 +1,19 @@
+Functions:
+Lookup (symbol, env)
+add	(symbol, env)
+remove	(symbol, env)
+dump (symbol, env) # debugging print out this info...
+
+add_env (env)
+remove_env (env)
+
+Info to store in table:
+	Name,		# foo, x
+	Kind,		# function, var, paramater
+	Type,		# int, string
+	Typemod,	# extern, const
+	Scope(env),	# Maybe done via a tree of env's
+	Data pointer,
+	Definition location # filename, line#, column#
+
+
