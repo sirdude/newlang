@@ -71,8 +71,8 @@ sub is_start {
 #	parse input
 #	check for unreachable states
 #	check for unlinked states
-#	no outputs and not end
-#	no inputs
+#	check state for no outputs and not end state
+#	check state for no inputs and not start state
 #	Same condition going to multiple places
 #	debugging (graph, dump of tree)
 #	optimize states
