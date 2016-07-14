@@ -90,7 +90,10 @@ closest to what I envision the final language looking like at this point.
 			*.lpc	LPC version of a file.
 			*.sw	SWEET(our new language) version of a file.
 
-=item lib		 Some basic SWEET objects that you can inherit.
+=item lib		Some basic library objects that we need
+			These are going to be written in perl, SWEET and c
+			These will also be used to implement our compiler in
+			Multiple languages.
 
 =item tests		The start of a test-suite for SWEET.
 
