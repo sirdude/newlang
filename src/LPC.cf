@@ -11,103 +11,94 @@ comment "#" ;
 
 entrypoints Program ;
 
-Prog.		Program ::= [Stm] ;
-Pfunc.		Program ::= [Fdef] ;
+Prog.           Program ::= Header [Stm] ;
 
-Pdefinf.	Fdef ::= Type Fdef ;
+Hinher.		Header ::= "inherit" Conststr ;
+Hinc.		Header ::= "include" Conststr ;
 
-Fundec.		Fdef ::= Ident "(" [Decl] ")" Cmp_stm ;
+Cstr.           Conststr ::= Constelm ;
+Cstradd.        Conststr ::= Constelm "+" Conststr ;
+Cstrs.          Constelm ::= String ;
+Cstri.          Constelm ::= Ident ;
+Cstrid.         Constelm ::= Integer ;
+Cstrd.          Constelm ::= Double ;
 
-Pdecl.		Decl ::= Type Vdef;
+-- Need to define Caseblock
+SWhile.         Stm ::= "while" "(" Exp ")" Stmblock ;
+SdoWhile.       Stm ::= "do" Stmblock "while" "(" Exp ")" ;
+SReturn.        Stm ::= "return" Exp ";" ;
+Sif.            Stm ::= "if" "(" Exp ")" Stmblock ;
+SifElse.        Stm ::= "if" "(" Exp ")" Stmblock "else" Stmblock ;
+Sfor.           Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stmblock ;
+Srlimits.       Stm ::= "rlimits" "(" Exp ";" Exp ")" Stmblock ;
+Switch.		Stm ::= "switch" "(" Ident ")" Caseblock ;
 
--- Need to add these keywords somewhere
--- varags, nil, goto, function, 
+-- Need to define Stmblock
+-- Need to define Caseblock and work in these into Caseblock and Stmblock
+SCase.		Stm ::= "case" ":" Exp ";"
+SBreak.		Stm ::= "break" Exp ";" ;
+SReturn.        Stm ::= "return" Exp ";" ;
+Sdefault.       Stm ::= "default" Exp ";" ;
+Scontinue.      Stm ::= "continue" ";" ;
 
--- XXX Not sure if this is needed allows void usage(void) {
-Pvoid.		Decl ::= "void";
+-- I think there are more options than this
+Scatch.		Stm ::= "catch" Stm ":" Stm ;
 
-Stmemptyblock.	Cmp_stm ::= "{" "}" ;
-Stmblock.	Cmp_stm ::= "{" [Stm] "}" ;
+Sdefinvar.      Stm ::= Type [Vdef] ;
+Sdefinfun.	Stm ::= Fdef;
 
-SInherit.	Stm ::= "inherit" Conststr ;
-SInclude.	Stm ::= "include" Conststr ;
-Sdefinvar.	Stm ::= Type [Vdef] ;
-SExp.		Stm ::= Exp ;
+Vdec.           Vdef ::= Ident ;
+Vdecarr.        Vdef ::= Ident "[" Exp "]" ;
 
--- XXX This is a problem can't reference Cmp_stm creates a loop
---  Also want to make while () {} not require ;
-SBlock.		Stm ::= Cmp_stm ;
+Fundec.         Fdef ::= Type Ident "(" [Decl] ")" "{" [Stm] "}" ;
+Pdecl.          Decl ::= Type Vdef;
+Pvoid.		Decl ::= "void"; -- XXX Not sure if this is needed...
 
-SWhile.		Stm ::= "while" "(" Exp ")" Stm ;
-SdoWhile.	Stm ::= "do" Stm "while" "(" Exp ")" ;
--- SReturn.	Stm ::= "return" Exp ";" ;   -- these two should allow return;
--- SBreak.		Stm ::= "break" Exp ";" ;
--- Switch.		Stm ::= "switch" "(" Ident ")" Exp ;
--- SCase.		Stm ::= "case" ":" Exp ";" ;
--- Sdefault.		Stm ::= "default" ":" Exp ";" ;
--- SCont.		Stm ::= "continue" Exp ";" ;
-Sif.		Stm ::= "if" "(" Exp ")" Stm ;
-SifElse.	Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
-Sfor.		Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stm ;
-Srlimits.	Stm ::= "rlimits" "(" Exp ";" Exp ")" Stm ;
-Scatch.		Stm ::= "catch" Stm ":" Stm ; -- I think there are more options
+EAss.           Exp ::= Ident "=" Exp ;
+EArrAss.        Exp ::= Ident "[" [Exp] "]" "=" Exp ;
+EInc.           Exp ::= Ident "++" ;
+EDec.           Exp ::= Ident "--" ;
 
-Vdec.		Vdef ::= Ident ;
-Vdecarr.	Vdef ::= Ident "[" Exp "]" ;
+EOr.            Exp1 ::= Exp2 "||" Exp2 ;
+EAnd.           Exp1 ::= Exp2 "&&" Exp2 ;
+ELt.            Exp1 ::= Exp2 "<" Exp2 ;
+EGt.            Exp1 ::= Exp2 ">" Exp2 ;
+ELtEq.          Exp1 ::= Exp2 "<=" Exp2 ;
+EGtEq.          Exp1 ::= Exp2 ">=" Exp2 ;
+EEq.            Exp1 ::= Exp2 "==" Exp2 ;
+ENEq.           Exp1 ::= Exp2 "!=" Exp2 ;
+EPlusEq.        Exp1 ::= Exp2 "+=" Exp2 ;
+EMinusEq.       Exp1 ::= Exp2 "-=" Exp2 ;
+EAdd.           Exp2 ::= Exp2 "+" Exp3 ;
+ESub.           Exp2 ::= Exp2 "-" Exp3 ;
+EMul.           Exp3 ::= Exp3 "*" Exp4 ;
+EDiv.           Exp3 ::= Exp3 "/" Exp4 ;
+Call.           Exp4 ::= Ident "(" [Exp] ")" ;
+Earr.           Exp4 ::= Ident "[" [Exp] "]" ;
+Esel.           Exp4 ::= Exp4 "." Ident ;
+Epoint.         Exp4 ::= Exp4 "->" Ident ;
+EVar.           Exp4 ::= Ident ;
+EStr.           Exp4 ::= String ;
+EInt.           Exp4 ::= Integer ;
 
-EAss.		Exp ::= Ident "=" Exp ;
-EArrAss.	Exp ::= Ident "[" [Exp] "]" "=" Exp ;
-EInc.		Exp ::= Ident "++" ;
-EDec.		Exp ::= Ident "--" ;
+ModifedBasicType.       Type ::= [Tm] Basetype ;
+ModifedBasicTypeArr.    Type ::= [Tm] Basetype "*" ;
 
-EOr.		Exp1 ::= Exp2 "||" Exp2 ;
-EAnd.		Exp1 ::= Exp2 "&&" Exp2 ;
-ELt.		Exp1 ::= Exp2 "<" Exp2 ;
-EGt.		Exp1 ::= Exp2 ">" Exp2 ;
-ELtEq.		Exp1 ::= Exp2 "<=" Exp2 ;
-EGtEq.		Exp1 ::= Exp2 ">=" Exp2 ;
-EEq.		Exp1 ::= Exp2 "==" Exp2 ;
-ENEq.		Exp1 ::= Exp2 "!=" Exp2 ;
-EPlusEq.	Exp1 ::= Exp2 "+=" Exp2 ;
-EMinusEq.	Exp1 ::= Exp2 "-=" Exp2 ;
-EAdd.		Exp2 ::= Exp2 "+" Exp3 ;
-ESub.		Exp2 ::= Exp2 "-" Exp3 ;
-EMul.		Exp3 ::= Exp3 "*" Exp4 ;
-EDiv.		Exp3 ::= Exp3 "/" Exp4 ;
-Call.		Exp4 ::= Ident "(" [Exp] ")" ;
-Earr.		Exp4 ::= Ident "[" [Exp] "]" ;
-Esel.		Exp4 ::= Exp4 "." Ident ;
-Epoint.		Exp4 ::= Exp4 "->" Ident ;
-EVar.		Exp4 ::= Ident ;
-EStr.		Exp4 ::= String ;
-EInt.		Exp4 ::= Integer ;
-EDouble.	Exp4 ::= Double ;
-
-ModifedBasicType.	Type ::= [Tm] Basetype ;
-ModifedBasicTypeArr.	Type ::= [Tm] Basetype "*" ;
-
-TVoid.		Basetype ::= "void" ;
-TInt.		Basetype ::= "int" ;
-TDouble.	Basetype ::= "float" ;
-TString.	Basetype ::= "string" ;
-TObject.	Basetype ::= "object" ;
-TMapping.	Basetype ::= "mapping" ;
-TMixed.		Basetype ::= "mixed" ;
+TVoid.          Basetype ::= "void" ;
+TInt.           Basetype ::= "int" ;
+TDouble.        Basetype ::= "float" ;
+TString.        Basetype ::= "string" ;
+TObject.        Basetype ::= "object" ;
+TMapping.       Basetype ::= "mapping" ;
+TMixed.         Basetype ::= "mixed" ;
 
 -- XXX remove, here to test c code...
-Tchar.		Basetype ::= "char" ;
+Tchar.          Basetype ::= "char" ;
 
-TMAtomic.	Tm ::= "atomic" ;
-TMNomask.	Tm ::= "nomask" ;
-TMPrivate.	Tm ::= "private" ;
-TMStatic.	Tm ::= "static" ;
-
-Cstr.		Conststr ::= Constelm ;
-Cstradd.	Conststr ::= Constelm "+" Conststr ;
-Cstrs.		Constelm ::= String ;
-Cstri.		Constelm ::= Ident ;
-Cstrid.		Constelm ::= Integer ;
-Cstrd.		Constelm ::= Double ;
+TMAtomic.       Tm ::= "atomic" ;
+TMNomask.       Tm ::= "nomask" ;
+TMPrivate.      Tm ::= "private" ;
+TMStatic.       Tm ::= "static" ;
 
 terminator Tm "" ;
 
@@ -118,3 +109,4 @@ separator Stm ";" ;
 separator Fdef "" ;
 
 coercions Exp 4 ;
+
