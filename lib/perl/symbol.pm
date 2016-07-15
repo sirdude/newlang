@@ -29,7 +29,7 @@ sub del_fun {
 	my ($state, $funname) = @_;
 }
 
-sub get_info { # Get the symboltable entry for entryname
+sub get_info { # Get the symbol table entry for entryname
 	my ($state, $entryname) = @_;
 }
 

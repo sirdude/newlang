@@ -9,7 +9,7 @@ remove_env (env)
 
 Info to store in table:
 	Name,		# foo, x
-	Kind,		# function, var, paramater
+	Kind,		# function, var, parameter
 	Type,		# int, string
 	Typemod,	# extern, const
 	Scope(env),	# Maybe done via a tree of env's
