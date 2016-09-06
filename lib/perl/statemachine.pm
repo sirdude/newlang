@@ -3,7 +3,7 @@ package statemachine;
 use strict;
 use warnings;
 
-our $VERSION = '1.0';
+our $VERSION = '0.01';
 
 my numsates = 0;
 

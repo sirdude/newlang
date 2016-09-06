@@ -1,0 +1,90 @@
+#!/usr/bin/perl
+# Similar to h2xs -X -n name in perl....
+
+use strict;
+use warnings;
+
+our $VERSION = '0.01';
+
+sub usage {
+	print "Usage: $0 (name)\n";
+	print "Creates a template for a new module.\n";
+
+	return 1;
+}
+
+sub valid_modulename {
+	my ($mname) = @_;
+
+	chomp $mname;
+
+	if (!$mname || $mname eq "") {
+		return 0;
+	}
+
+	return 1;
+}
+
+sub write_readme {
+	my ($mname) = @_;
+	my $fname = "$mname/README";
+	my ($fh);
+
+	open($fh, ">", $fname) or die "Unable to open $fname\n";
+
+	print $fh "";
+
+	close($fh);
+
+	return 1;
+}
+
+sub write_test {
+	my ($mname) = @_;
+	my $fname = "$mname/t/$mname.t";
+	my ($fh);
+
+	open($fh, ">", $fname) or die "Unable to open $fname\n";
+
+	print $fh "";
+
+	close($fh);
+
+	return 1;
+}
+
+sub write_module {
+	my ($mname) = @_;
+	my $fname = "$mname/lib/$mname.pm";
+	my ($fh);
+
+	open($fh, ">", $fname) or die "Unable to open $fname\n";
+
+	print $fh "";
+
+	close($fh);
+
+	return 1;
+}
+
+my ($modulename) = @ARGV;
+
+if (!valid_modulename($modulename)) {
+	print "Invalid modulename: $modulename\n";
+	exit 1;
+}
+
+# Make our directory structure
+if (-d $modulename) {
+	print "subdirectory $modulename already exists.\n";
+	exit 1;
+} else {
+	mkdir($modulename);
+	mkdir("$modulename/lib");
+	mkdir("$modulename/t");
+}
+
+write_readme($modulename);
+write_module($modulename);
+write_test($modulename);
+
