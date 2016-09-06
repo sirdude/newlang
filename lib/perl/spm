@@ -31,3 +31,27 @@ if (exists($Options{"verbose"})) {
 # Need to handle versions
 # Need to create/maintain an archive
 
+=head1 EXAMPLES
+
+Basic usage:
+
+=over 8
+
+=item
+spm install getopt            Install the getopt module.
+
+=item
+spm remove getopt             Uninstall the getopt module.
+
+=item
+spm info getopt               Display information about a module.
+
+=item
+spm list                      List Available modules.
+
+=item
+spm list get                  List Available modules that contain get.
+
+=back
+
+=cut

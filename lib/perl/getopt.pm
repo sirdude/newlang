@@ -89,9 +89,9 @@ print "$i\n";
 		}
 
 		if ($simple) {
-			$Options{$regex} = 1;
+			$Options->{$regex} = 1;
 		} else {
-			$Options{$var} = $tmp;
+			$Options->{$var} = $tmp;
 		}
 
 		# XXX need to remove from env here...
