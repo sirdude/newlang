@@ -4,6 +4,42 @@ use strict;
 use warnings;
 use base 'Exporter';
 
+=head1 NAME
+
+getopt - A module for creating a command line interface
+
+=head1 SYNOPSIS
+
+This module allows a user to create a command line interface for an application.
+
+=head1 DESCRIPTION
+
+The getopt module is maybe a bit too ambituous, the general idea 
+behind this, is to provide a tool to create a command line interface
+for an application, and at the same time make it self documenting.
+It is based off of GNU C getopt/getopt_long ideas.
+
+Goals:
+	Simple clean interface builder for commandline option parsing.
+	Documenting the interface is built in.
+	This documentation includes: --help as well as manual docs.
+
+=head1 OPTIONS
+
+=head1 EXAMPLES
+
+=head1 SEE ALSO
+
+=head1 COPYRIGHT
+
+Copyright (c) 2016 Kent Mein
+
+=head1 AUTHOR
+
+Kent Mein <mein@umn.edu>
+
+=cut
+
 my ($XXSUMMARY, $XXARGS);
 
 our @EXPORT = qw(
