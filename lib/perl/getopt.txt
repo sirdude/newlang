@@ -1,0 +1,9 @@
+The getopt library is maybe a bit too ambituous, the general idea behind
+this library is to provide a tool to create a command line interface
+for an application, and at the same time make it self documenting.
+It's based off of GNU C's getopt/getopt_long ideas.
+
+Goals:
+	Simple clean interface builder for commandline option parsing.
+	Documenting the interface is built in.
+	This documentation includes: --help as well as manual docs.

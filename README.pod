@@ -116,6 +116,7 @@ closest to what I envision the final language looking like at this point.
 	compiler
 	critic/static checker
 	package manager
+	Documentation(perldoc)
 	IDE?
 
 =back
