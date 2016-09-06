@@ -3,6 +3,8 @@ package symbol;
 use strict;
 use warnings;
 
+our $VERSION = '1.0';
+
 our @EXPORT = wq(
 	add_frame
 	);

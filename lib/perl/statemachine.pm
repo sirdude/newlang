@@ -1,4 +1,10 @@
 package statemachine;
+
+use strict;
+use warnings;
+
+our $VERSION = '1.0';
+
 my numsates = 0;
 
 our EXPORT = qw(

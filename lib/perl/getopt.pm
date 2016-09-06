@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use base 'Exporter';
 
+our $VERSION = '1.0';
+
 =head1 NAME
 
 getopt - A module for creating a command line interface
