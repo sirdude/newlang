@@ -80,7 +80,7 @@ print "$i\n";
 
 		if ($command =~ /^(.*)\s+$regex\s+(.*)/) {
 			$tmp = $2; # Note this is in $regex
-		} elsif ($comamnd =~ /^$regex\s+(.*)/) {
+		} elsif ($command =~ /^$regex\s+(.*)/) {
 			$tmp = $1; # again in $regex
 		} elsif ($command =~ /(.*)\s+$regex/) {
 			$tmp = $2; # again in $regex
