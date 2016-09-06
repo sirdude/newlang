@@ -112,9 +112,11 @@ closest to what I envision the final language looking like at this point.
 
 =item 3. using BNFC to create in the following order:
 	pretty printer
-	interpreter
+	interpreter/debugger
 	compiler
-	critic
+	critic/static checker
+	package manager
+	IDE?
 
 =back
 

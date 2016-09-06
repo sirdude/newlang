@@ -4,9 +4,16 @@ use strict;
 use warnings;
 use base 'Exporter';
 
+my ($XXSUMMARY, $XXARGS);
+
 our @EXPORT = qw(
 	GetOptions
 	usage
+	set_args
+	set_summary
+	print_args
+	print_summary
+	print_options
 );
 
 sub GetOptions {
@@ -57,7 +64,37 @@ print "$i\n";
 	return 1;
 }
 
+sub print_args {
+	if ($XXARGS) {
+		print $XXARGS;
+		return 1;
+	}
+
+	return 0;
+}
+
+sub set_args {
+}
+
+sub print_summary {
+	if ($XXSUMMARY) {
+		print $XXSUMMARY;
+		return 1;
+	}
+
+	return 0;
+}
+
+sub set_summary {
+}
+
+sub print_options {
+}
+
 sub usage {
+	print "Usage: $0 " . print_args() . "\n";
+	print print_summary() . "\n";
+	print print_options() . "\n";
 
 	return 1;
 }
