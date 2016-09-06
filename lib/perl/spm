@@ -16,3 +16,18 @@ if (exists($Options{"verbose"})) {
         print "Woo\n";
 }
 
+# Options baseing it off aptitude, pip, and cpanm
+# install (package) 
+# remove (package)
+# 	Need to check dependencies
+# search/list  (local and remote)
+# info/show (package)
+#	dependencies, info about package, details of install/uninstall
+# update (package) (all)
+# Show whats out of date???
+# Need to be able to set remote site
+# Need to be able to set destination dir 
+#	keep in mind may have (user vs system)
+# Need to handle versions
+# Need to create/maintain an archive
+
