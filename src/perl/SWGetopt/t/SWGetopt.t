@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use Test::More tests=> 1;;
 
-BEGIN { use_ok{'SWGetopt'} };
+BEGIN { use_ok('SWGetopt') };
 
 ####################
 

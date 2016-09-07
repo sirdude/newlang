@@ -138,7 +138,7 @@ sub write_test {
 	print $fh "use strict;\n";
 	print $fh "use warnings;\n";
 	print $fh "use Test::More tests=> 1;;\n\n";
-	print $fh "BEGIN { use_ok{'$mname'} };\n\n";
+	print $fh "BEGIN { use_ok('$mname') };\n\n";
 	print $fh "####################\n\n";
 	print $fh "# Insert your test code below, the Test::More module " .
 		"is us()ed here so read\n";
