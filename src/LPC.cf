@@ -33,11 +33,11 @@ Sfor.           Stm ::= "for" "(" Exp ";" Exp ";" Exp ")" Stmblock ;
 Srlimits.       Stm ::= "rlimits" "(" Exp ";" Exp ")" Stmblock ;
 Switch.		Stm ::= "switch" "(" Ident ")" Caseblock ;
 
--- Need to define Stmblock
--- Need to define Caseblock and work in these into Caseblock and Stmblock
-SCase.		Stm ::= "case" ":" Exp ";"
+SB.		Stmblock ::= "{" Stm "}" ;
+CB.		Caseblock ::= "{" Stm "}" ;
+
+SCase.		Stm ::= "case" ":" Exp ";" ;
 SBreak.		Stm ::= "break" Exp ";" ;
-SReturn.        Stm ::= "return" Exp ";" ;
 Sdefault.       Stm ::= "default" Exp ";" ;
 Scontinue.      Stm ::= "continue" ";" ;
 

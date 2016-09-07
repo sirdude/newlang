@@ -117,8 +117,8 @@ sub fix_makefile {
 	print $fh "\nversion.o: version.c\n";
 	print $fh "\t\${CC} \${CCFLAGS} -c ../version.c\n";
 	print $fh "\ninstall: $binary\n";
-	print $fh "\tmkdir -p ../../bin\n";
-	print $fh "\tcp $binary ../../bin/$binary\n";
+	print $fh "\tmkdir -p ../../../bin\n";
+	print $fh "\tcp $binary ../../../bin/$binary\n";
 
 	close($fh);
 }
@@ -191,19 +191,25 @@ sub create {
 	my @dirs;
 
 	if (!$type || $type eq "") {
-		system("bnfc -m -c -o lpc LPC.cf");
-		system("bnfc -m -c -o sweet SWEET_actual.cf");
-		system("bnfc -m -c -o sweetf SWEET_formal.cf");
+		print "Calling: bnfc -m -c -o lpc ../LPC.cf\n";
+		system("bnfc -m -c -o lpc ../LPC.cf");
+		print "Calling: bnfc -m -c -o sweet ../SWEET_actual.cf\n";
+		system("bnfc -m -c -o sweet ../SWEET_actual.cf");
+		print "Calling: bnfc -m -c -o sweetf ../SWEET_formal.cf\n";
+		system("bnfc -m -c -o sweetf ../SWEET_formal.cf");
 		@dirs = ("./lpc", "./sweet", "./sweetf");
 
 	} elsif ($type eq "lpc") {
-		system("bnfc -m -c -o lpc LPC.cf");
+		print "Calling: bnfc -m -c -o lpc ../LPC.cf\n";
+		system("bnfc -m -c -o lpc ../LPC.cf");
 		@dirs = "./lpc";
 	} elsif ($type eq "sweetf") {
-		system("bnfc -m -c -o sweetf SWEET_formal.cf");
+		print "Calling: bnfc -m -c -o sweet ../SWEET_formal.cf\n";
+		system("bnfc -m -c -o sweetf ../SWEET_formal.cf");
 		@dirs = "./sweetf";
 	} else {
-		system("bnfc -m -c -o sweet SWEET_actual.cf");
+		print "Calling: bnfc -m -c -o sweet ../SWEET_actual.cf\n";
+		system("bnfc -m -c -o sweet ../SWEET_actual.cf");
 		@dirs = "./sweet";
 	}
 
@@ -226,13 +232,13 @@ sub test {
 		test("sweet");
 		return;
 	} elsif ($test eq "lpc") {
-		$bin = "../bin/lpc";
+		$bin = "../../bin/lpc";
 		$examp = "../examp/ugly.c";
 	} elsif ($test eq "sweetf") {
-		$bin = "../bin/sweetf";
+		$bin = "../../bin/sweetf";
 		$examp = "../examp/ugly.sw";
 	} else {
-		$bin = "../bin/sweet";
+		$bin = "../../bin/sweet";
 		$examp = "../examp/ugly.sw";
 	}
 
@@ -249,7 +255,7 @@ sub clean {
 
 	if (!$type || $type eq "") {
 		system("rm -rf lpc lpcinfo sweetinfo sweetfinfo sweet sweetf");
-		system("rm -rf version.c ../bin");
+		system("rm -rf version.c");
 	} elsif ($type eq "lpc") {
 		system("rm -rf lpc lpcinfo version.c");
 	} elsif ($type eq "sweetf") {
