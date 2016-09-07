@@ -6,9 +6,10 @@ well in developing sweet.  This is still pretty early stages so each
 sub directory has different things in it currently.  Eventually this will
 standardize and be fully fleshed out.
 
-Our compiler needs the following libraries:
+Our compiler needs the following libraries/modules:
 
-Getopt
-statemachine
+Getopt		(commandline interface)
+A Statemachine
+A Symbol table
 AST handler (reader/writer)
 
