@@ -1,9 +1,39 @@
-package statemachine;
+package SWStateM;
 
 use strict;
 use warnings;
+use base 'Exporter';
 
 our $VERSION = '0.01';
+
+# Documentation
+=head1 NAME
+
+SWStateM - A module to create a simple state machine
+
+=head1 SYNOPSIS
+
+use SWStateM;
+XXX
+=head1 DESCRIPTION
+
+XXX
+
+=head1 SEE ALSO
+
+=head1 AUTHOR
+
+Kent Mein <mein@umn.edu>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2016 by Kent Mein
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.18.2 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
 
 my numsates = 0;
 
