@@ -67,13 +67,12 @@ sub write_manifest {
 		return 0;
 	}
 
-	print $fh "IFEST\n";
 	print $fh "Changes\n";
 	print $fh "Makefile.PL\n";
 	print $fh "MANIFEST\n";
 	print $fh "README\n";
 	print $fh "t/$mname.t\n";
-	print $fh "lib/mname.pm\n";
+	print $fh "lib/$mname.pm\n";
 
 	close($fh);
 

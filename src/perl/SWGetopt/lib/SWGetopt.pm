@@ -1,4 +1,4 @@
-package getopt;
+package SWGetopt;
 
 use strict;
 use warnings;
@@ -8,15 +8,16 @@ our $VERSION = '0.01';
 
 =head1 NAME
 
-getopt - A module for creating a command line interface
+SWGetopt - A module for creating a command line interface
 
 =head1 SYNOPSIS
 
-This module allows a user to create a command line interface for an application.
+This module allows a user to create a command line interface for an 
+application.
 
 =head1 DESCRIPTION
 
-The getopt module is maybe a bit too ambituous, the general idea 
+The SWGetopt module is maybe a bit too ambituous, the general idea 
 behind this, is to provide a tool to create a command line interface
 for an application, and at the same time make it self documenting.
 It is based off of GNU C getopt/getopt_long ideas.
@@ -32,13 +33,17 @@ Goals:
 
 =head1 SEE ALSO
 
-=head1 COPYRIGHT
+=head1 AUTOR
+
+Kent Mein <mein@umn.edu>
+
+=head1 COPYRIGHT AND LICENSE
 
 Copyright (c) 2016 Kent Mein
 
-=head1 AUTHOR
-
-Kent Mein <mein@umn.edu>
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.18.2 or,
+at your option, any later version of Perl 5 you may have available.
 
 =cut
 
