@@ -36,7 +36,7 @@ sub valid_modulename {
 }
 
 sub get_user {
-	my @values = getpwnam(getlogin());
+	my @values = getpwuid($>);
 	if ($#values > 6) {
 		my $name = $values[6];
 		if ($name) {
@@ -63,6 +63,10 @@ sub write_manifest {
 	my ($fh);
 	open($fh, ">", $fname) or die "Unable to open $fname\n";
 
+	if (!$fh) {
+		return 0;
+	}
+
 	print $fh "IFEST\n";
 	print $fh "Changes\n";
 	print $fh "Makefile.PL\n";
@@ -72,6 +76,8 @@ sub write_manifest {
 	print $fh "lib/mname.pm\n";
 
 	close($fh);
+
+	return 1;
 }
 
 sub write_readme {
@@ -80,6 +86,10 @@ sub write_readme {
 	my ($fh);
 
 	open($fh, ">", $fname) or die "Unable to open $fname\n";
+
+	if (!$fh) {
+		return 0;
+	}
 
 	print $fh "$AUTHOR_NAME version $TEMPLATEVERSION\n";
 	print $fh "====================================\n\n";
@@ -116,6 +126,10 @@ sub write_test {
 
 	open($fh, ">", $fname) or die "Unable to open $fname\n";
 
+	if (!$fh) {
+		return 0;
+	}
+
 	print $fh "# Before 'make install' is preformed this script shoud " .
 		"be runnable with\n";
 	print $fh "# 'make test'.  After 'make install' it should work as " .
@@ -143,6 +157,9 @@ sub write_module {
 	my ($fh);
 
 	open($fh, ">", $fname) or die "Unable to open $fname\n";
+	if (!$fh) {
+		return 0;
+	}
 
 	print $fh "package $mname;\n\n";
 	print $fh "use strict;\n";
@@ -189,6 +206,25 @@ sub write_module {
 	return 1;
 }
 
+sub write_changes {
+	my ($mname) = @_;
+	my $fname = "$mname/Changes";
+	my ($fh);
+
+	open($fh, ">", $fname) or die "Unable to open $fname\n";
+	if (!$fh) {
+		return 0;
+	}
+
+	print $fh "Revision history for Perl extension $mname.\n\n";
+	print $fh "$TEMPLATEVERSION " . localtime(time()) . "\n";
+	print $fh "\t- original version; created by $AUTHOR_NAME with $0\n";
+
+	close($fh);
+
+	return 1;
+}
+
 sub write_makefile {
 	my ($mname) = @_;
 	my $fname = "$mname/Makefile.PL";
@@ -196,6 +232,9 @@ sub write_makefile {
 
 # XXX Need to work on this, need to install it where we want not on the system.
 	open($fh, ">", $fname) or die "Unable to open $fname\n";
+	if (!$fh) {
+		return 0;
+	}
 
 	print $fh "use ExtUtils::MakeMaker;\n";
 	print $fh "# See lib/ExtUtils/MakeMaker.pm for details of how " .
@@ -242,5 +281,6 @@ write_readme($modulename);
 write_module($modulename);
 write_manifest($modulename);
 write_makefile($modulename);
+write_changes($modulename);
 write_test($modulename);
 
