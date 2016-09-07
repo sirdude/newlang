@@ -43,11 +43,11 @@ sub get_user {
 			return $name;
 		}
 	}
-	return "YOURNAMEHERE";
+	return "XXXYOURNAMEHERE";
 }
 
 sub get_email {
-	return "YOUREMAILHERE";	
+	return "XXXYOUREMAILHERE";	
 }
 
 sub get_year {
@@ -93,7 +93,7 @@ sub write_readme {
 	print $fh "$AUTHOR_NAME version $TEMPLATEVERSION\n";
 	print $fh "====================================\n\n";
 	print $fh "OVERVIEW\n\n";
-	print $fh "Put something here....\n\n";
+	print $fh "XXX Put something here....\n\n";
 	print $fh "INSTALLATION\n\n";
 	print $fh "To install this module type the following:\n\n";
 	print $fh "perl Makefile.PL\n";
@@ -102,9 +102,11 @@ sub write_readme {
 	print $fh "make install\n\n";
 	print $fh "DEPENDENCIES\n\n";
 	print $fh "This module requires these other modules and libraries:\n\n";
-	print $fh "   blah blah blah\n\n";
+	print $fh "   XXX\n\n";
 	print $fh "COPYRIGHT AND LICENSE\n\n";
-	print $fh "Put the correct copyright and license information here.\n\n";
+	print $fh "XXX we have thrown in a boilerplate statement,\n";
+	print $fh "review this and change it if you want something else " .
+		"here.\n\n";
 	print $fh "Copyright (C) $YEAR by $AUTHOR_NAME\n\n";
 	print $fh "This library is free software; you can redistribute it " .
 		"and/or modify\n";
@@ -141,7 +143,7 @@ sub write_test {
 	print $fh "BEGIN { use_ok('$mname') };\n\n";
 	print $fh "####################\n\n";
 	print $fh "# Insert your test code below, the Test::More module " .
-		"is us()ed here so read\n";
+		"is used here so read\n";
 	print $fh "# its man page ( perldoc Test::More ) for help writing " .
 		"this test script.\n";
 
@@ -168,19 +170,19 @@ sub write_module {
 	print $fh "# Below is the template documenation for your module you " .
 		"need to edit this.\n\n";
 	print $fh "=head1 NAME\n\n";
-	print $fh "$mname - A module for ...\n\n";
+	print $fh "$mname - A module for XXX\n\n";
 	print $fh "=head1 SYNOPSIS\n\n";
 	print $fh "use $mname;\n";
-	print $fh "blah blah blah;\n\n";
+	print $fh "XXX;\n\n";
 	print $fh "=head1 DESCRIPTION\n\n";
 
 	print $fh "Stub documentation for $mname.  It looks like the author\n";
 	print $fh "of the textension was negligent enough to leave the stub\n";
 	print $fh "uneditied.\n\n";
-	print $fh "blah blah blah\n\n";
+	print $fh "XXX\n\n";
 
 	print $fh "=head1 SEE ALSO\n\n";
-	print $fh "Mention other useful documentation, related modules, " .
+	print $fh "XXX Mention other useful documentation, related modules, " .
 		"man pages,\n";
 	print $fh "RFCs or standards.\n\n";
 	print $fh "If you have a mailing list set up for your module, " .

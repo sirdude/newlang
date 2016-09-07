@@ -1,5 +1,5 @@
 # Before 'make install' is preformed this script shoud be runnable with
-# 'make test'.  After 'make install' it should work as 'perl SWStateM.t'
+# 'make test'.  After 'make install' it should work as 'perl SWSymbol.t'
 
 ####################
 
@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use Test::More tests=> 1;;
 
-BEGIN { use_ok('SWStateM') };
+BEGIN { use_ok('SWSymbol') };
 
 ####################
 

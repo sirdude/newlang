@@ -13,5 +13,5 @@ BEGIN { use_ok('SWGetopt') };
 
 ####################
 
-# Insert your test code below, the Test::More module is us()ed here so read
+# Insert your test code below, the Test::More module is used here so read
 # its man page ( perldoc Test::More ) for help writing this test script.

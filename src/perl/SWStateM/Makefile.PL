@@ -7,5 +7,5 @@ WriteMakefile(
     PREREQ_PM         => {}, # e.g., Module::Name => 1.1
     (5.022001 >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/SWStateM.pm', # retrieve abstract from module
-       AUTHOR         => 'Kent Mein <YOUREMAILHERE>') : ()),
+       AUTHOR         => 'Kent Mein <mein@umn.edu>') : ()),
 );
