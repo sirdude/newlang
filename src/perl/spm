@@ -1,7 +1,11 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use getopt;
+
+use lib "./SWGetopt/lib";
+use lib "../lib/perl";
+
+use SWGetopt;
 
 my (%Options);
 
