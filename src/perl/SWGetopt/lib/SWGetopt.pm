@@ -47,7 +47,7 @@ at your option, any later version of Perl 5 you may have available.
 
 =cut
 
-my ($XXSUMMARY, $XXARGS);
+my ($XXSUMMARY, $XXARGS, $XXCMDS);
 
 our @EXPORT = qw(
 	GetOptions
@@ -55,6 +55,7 @@ our @EXPORT = qw(
 	set_args
 	set_summary
 	print_args
+	print_cmds
 	print_summary
 	print_options
 );
@@ -117,6 +118,14 @@ sub print_args {
 }
 
 sub set_args {
+	my ($stuff) = @_;
+
+	if ($stuff) {
+		$XXARGS = $stuff;
+	} else {
+		$XXARGS = "";
+	}
+	return 1;
 }
 
 sub print_summary {
@@ -129,13 +138,39 @@ sub print_summary {
 }
 
 sub set_summary {
+	my ($stuff) = @_;
+
+	if ($stuff) {
+		$XXSUMMARY = $stuff;
+	} else {
+		$XXSUMMARY = "";
+	}
+	return 1;
 }
 
+# XXX Need to add something like add option and add command
+# basically so it's some sort of array of things.
+
 sub print_options {
+	if ($XXSUMMARY) {
+		print $XXSUMMARY;
+		return 1;
+	}
+
+	return 0;
+}
+
+sub print_cmds {
+	if ($XXCMDS) {
+		print $XXCMDS;
+		return 1;
+	}
+
+	return 0;
 }
 
 sub usage {
-	print "Usage: $0 " . print_args() . "\n";
+	print "Usage: $0 " . print_args() . print_cmds() "\n";
 	print print_summary() . "\n";
 	print print_options() . "\n";
 
