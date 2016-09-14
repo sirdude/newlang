@@ -47,7 +47,7 @@ sub get_user {
 }
 
 sub get_email {
-	return "XXXYOUREMAILHERE";	
+	return "XXXYOUREMAILHERE";
 }
 
 sub get_year {
@@ -262,6 +262,11 @@ sub write_makefile {
 
 
 my ($modulename) = @ARGV;
+
+if (!$modulename || ($modulename eq "")) {
+	usage();
+	exit 1;
+}
 
 if (!valid_modulename($modulename)) {
 	print "Invalid modulename: $modulename\n";
