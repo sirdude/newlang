@@ -47,7 +47,7 @@ at your option, any later version of Perl 5 you may have available.
 
 =cut
 
-my ($XXSUMMARY, $XXARGS, $XXCMDS);
+my ($XXSUMMARY, $XXARGS, @XXCMDS);
 
 our @EXPORT = qw(
 	GetOptions
@@ -62,10 +62,11 @@ our @EXPORT = qw(
 
 sub GetOptions {
 	my ($Options, @values) = @_;
-	my ($regex, $simple, $command, $var, $tmp);
+	my ($regex, $simple, $command, $var, $tmp, $c);
 
 	foreach my $i (@values) {
 		$simple = 0;
+		$tmp = "";
 print "$i\n";
 		if ($i =~ /(.*)=i/) {
 			$var = $1;
@@ -83,17 +84,22 @@ print "$i\n";
 			$simple = 1;
 		}
 
-		# XXX Need to fix this...
-		$command = $argv;
-
-		if ($command =~ /^(.*)\s+$regex\s+(.*)/) {
-			$tmp = $2; # Note this is in $regex
-		} elsif ($command =~ /^$regex\s+(.*)/) {
-			$tmp = $1; # again in $regex
-		} elsif ($command =~ /(.*)\s+$regex/) {
-			$tmp = $2; # again in $regex
-		} elsif ($command =~ $regex) {
-			$tmp = $1;
+		$c = 0;
+		foreach $command (@ARGV) {
+			if ($command =~ /^(.*)\s+$regex\s+(.*)/) {
+				splice(@ARGV,$c,1);
+				$tmp = $2; # Note this is in $regex
+			} elsif ($command =~ /^$regex\s+(.*)/) {
+				$tmp = $1; # again in $regex
+				splice(@ARGV,$c,1);
+			} elsif ($command =~ /(.*)\s+$regex/) {
+				$tmp = $2; # again in $regex
+				splice(@ARGV,$c,1);
+			} elsif ($command =~ $regex) {
+				$tmp = $1;
+				splice(@ARGV,$c,1);
+			}
+			$c = $c + 1;
 		}
 
 		if ($simple) {
@@ -161,16 +167,19 @@ sub print_options {
 }
 
 sub print_cmds {
-	if ($XXCMDS) {
-		print $XXCMDS;
-		return 1;
-	}
 
-	return 0;
+	foreach my $i (@XXCMDS) {
+		print "\t$i\n";
+	}
+	return 1;
 }
 
 sub usage {
-	print "Usage: $0 " . print_args() . print_cmds() "\n";
+        if ($#XXCMDS > 0) {
+		print "Usage: $0 [ARGS] [CMDS]\n";
+	} else {
+		print "Usage: $0 [ARGS]\n";
+	}
 	print print_summary() . "\n";
 	print print_options() . "\n";
 
