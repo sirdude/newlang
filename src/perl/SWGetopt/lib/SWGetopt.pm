@@ -67,14 +67,14 @@ sub GetOptions {
 	foreach my $i (@values) {
 		$simple = 0;
 		$tmp = "";
-print "$i\n";
+
 		if ($i =~ /(.*)=i/) {
 			$var = $1;
 			$regex = "(.*)=%d";
 		
 		} elsif ($i =~ /(.*)=s/) {
 			$var = $1;
-			$regex = "((\"[^\"\]]*";
+			$regex = "(.*)=(\"[^\"\]]*\")";
 
 		} elsif ($i =~ /(.*)=(.*)/) {
 			print "Error in format $i should be VAR=i or VAR=s\n";
