@@ -24,10 +24,11 @@ sub db_connect {
 
 	$dbh = DBI->connect("dbi:CSV:f_dir=$root/db") or 
 		die "Cannot connect: " . $DBI::errstr;
+	return 1;
 }
 
 sub db_leave {
-	$dbh->disconnect();
+	return $dbh->disconnect();
 }
 
 sub add_package {
@@ -46,10 +47,13 @@ sub make_tables {
 	$dbh->do("drop table if exists entries");
 	$dbh->do("create table entries(package char(255), " .
 		"version char(255), description char(255), " .
-		"admin char(255), date char(255))");
+		"admin char(255), date char(255))") or return 0;
 	$dbh->do("drop table if exists dependencies");
+
 	$dbh->do("create table dependencies(package char(255), " .
-		"version char(255), deppackage char(255))");
+		"version char(255), deppackage char(255))") or return 0;
+
+	return 1;
 }
 
 sub init_repository {
@@ -85,7 +89,9 @@ sub init_repository {
 
 my ($command, $args) = @ARGV;
 
-if ($command eq "add") {
+if (!$command) {
+	usage();
+} elsif ($command eq "add") {
 	add_package($args);
 } elsif ($command eq "remove") {
 	remove_package($args);
