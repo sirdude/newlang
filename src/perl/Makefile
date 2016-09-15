@@ -26,7 +26,8 @@ distclean:
 
 install: build
 	mkdir -p ../../bin
-	cp spm ../../bin/perlspm
+	cp spm ../../bin/spm-perl
+	cp spmadmin ../../bin/spmadmin-perl
 	mkdir -p ../../lib
 	cd SWGetopt; make install; cd ..;
 	cd SWSymbol; make install; cd ..;
