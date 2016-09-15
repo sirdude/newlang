@@ -42,9 +42,52 @@ sub get_user {
 	return "unknown";
 }
 
+sub valid_packagename { 
+	my ($name) = @_;
+
+	if ($name
+}
+
+sub valid_prepackage {
+	my ($filename) = @_;
+	my $packagename =
+
+	if (!valid_packagename($packagename)) {
+		return 0;
+	}
+
+	my $tmpfile = "$SRC/tmp/$packagename";
+
+	if (!-f $filename) {
+		print "Package does not exist: $filename\n";
+		return 0;
+	}
+	if (copy($filename, $tmpfile)) {
+		print "Error trying to copy $filename to $tmpfile\n';
+		return 0;
+	}
+
+	eval {
+		"cd $SRC/tmp; tar xfz $packagename";
+	};
+
+	if ($@) {
+		return 0;
+	}
+}
+
 sub add_package {
 	my ($package) = @_;
+	my ($tmpfile);
 	my ($version, $description, $user, $date, $tmp);
+
+	if (!valid_prepackage($package)) {
+		return 0;
+	}
+
+	my $tmpfile = get_temp($package);
+	copy $package
+	
 
 	$ans = "";
 
@@ -80,9 +123,15 @@ sub add_package {
 	}
 }
 
+sub get_package {
+	my ($pack) = @_;
+
+	return "$SRC/packages/$package";
+}
+
 sub remove_package {
 	my ($package) = @_;
-	my $packagefile = "$SRC/packages/$package";
+	my $packagefile = get_package($package);
 
 	my @versions = get_versions($packagefile);
 }
