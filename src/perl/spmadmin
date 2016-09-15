@@ -9,6 +9,7 @@ use lib "../lib/perl";
 use SWGetopt;
 use DBI;
 use File::Copy;
+use IO::Prompter;
 
 my $SRC = "/export/scratch/mein/compliers/newlang/swrepository";
 my $VERSION = "0.01";
@@ -31,16 +32,64 @@ sub db_leave {
 	return $dbh->disconnect();
 }
 
+sub get_user {
+	my @values = getpwuid($>);
+
+	if ($values[6]) {
+		return $values[6];
+	}
+
+	return "unknown";
+}
+
 sub add_package {
 	my ($package) = @_;
+	my ($version, $description, $user, $date, $tmp);
+
+	$ans = "";
+
+	$user = get_user();
+	$date = localtime(time());
+
+	while ($ans eq "") {
+
+		$version = prompt "Version: [0.01]", -stdio;
+		if (!$version || $version eq "") {
+			$version = "0.01";
+		}
+
+		$tmp = prompt "Description [$descripiton]: ", -stdio;
+		if ($tmp ne "") {
+			$description = $tmp;
+		}
+	
+		print "Package: $package\n";
+		print "Description: $description\n";
+		print "Version: $version\n";
+		print "User: $user\n";
+		print "Date: $date\n";
+
+# XXX need to add dependencies.
+
+		$ans = prompt "Add it? [Y/N]";
+	}
+	if (($ans eq "y") || ($ans eq "Y")) {
+		db_connect($dir);
+		$dbh->do("insert into 
+		db_leave();
+	}
 }
 
 sub remove_package {
 	my ($package) = @_;
+	my $packagefile = "$SRC/packages/$package";
+
+	my @versions = get_versions($packagefile);
 }
 
 sub update_package {
 	my ($package) = @_;
+
 }
 
 sub make_tables {
@@ -69,6 +118,7 @@ sub init_repository {
 	mkdir("$dir/db");
 	mkdir("$dir/bin");
 	mkdir("$dir/packages");
+	mkdir("$dir/archive");
 	mkdir("$dir/tmp");
 
 	db_connect($dir);
