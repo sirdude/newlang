@@ -21,14 +21,8 @@ if (exists($Options{"verbose"})) {
 }
 
 # Options baseing it off aptitude, pip, and cpanm
-# install (package) 
-# remove (package)
-# 	Need to check dependencies
-# search/list  (local and remote)
-# info/show (package)
-#	dependencies, info about package, details of install/uninstall
-# update (package) (all)
-# Show whats out of date???
+# update (package)
+# Show what is out of date???
 # Need to be able to set remote site
 # Need to be able to set destination dir 
 #	keep in mind may have (user vs system)
@@ -59,3 +53,78 @@ spm list get                  List Available modules that contain get.
 =back
 
 =cut
+
+sub do_install {
+	my ($package) = @_;
+
+	if (!$package || $package eq "") {
+		print "You must supply a package name.\n";
+		print "To list available packages try $0 list\n";
+		return 0;
+	}
+
+}
+
+sub do_remove {
+	my ($package) = @_;
+
+	if (!$package || $package eq "") {
+		print "You must supply a package name.\n";
+		print "To list available packages try $0 list\n";
+		return 0;
+	}
+
+	return 1;
+}
+
+sub do_show {
+	my ($package) = @_;
+
+	if (!$package || $package eq "") {
+		print "You must supply a package name.\n";
+		print "To list available packages try $0 list\n";
+		return 0;
+	}
+
+	return 1;
+}
+
+sub do_search {
+	my ($package) = @_;
+
+	return 1;
+}
+
+sub do_list {
+	my ($package) = @_;
+
+	return 1;
+}
+
+sub do_update {
+	my ($package) = @_;
+
+	return 1;
+}
+
+my ($command, $package) = @_;
+
+if (!$command || ($command eq "")) {
+	usage();
+	exit 0;
+} elsif ($command eq "install") {
+	do_install($package);
+} elsif ($command eq "remove") {
+	do_remove($package);
+} elsif ($command eq "search") {
+	do_search($package);
+} elsif ($command eq "list") {
+	do_list($package);
+} elsif (($command eq "info") || ($command eq "show")) {
+	do_show($package);
+} elsif ($command eq "update") {
+	do_update($package);
+} else {
+	print "Invalid command \"" . $command . "\"\n";
+	exit 0;
+}
