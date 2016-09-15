@@ -1,0 +1,98 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use lib "./SWGetopt/lib";
+use lib "../lib/perl";
+
+use SWGetopt;
+use DBI;
+use File::Copy;
+
+my $SRC = "/export/scratch/mein/compliers/newlang/swrepository";
+my $VERSION = "0.01";
+
+my (%Options, $dbh);
+
+# Need to work on this but this will be a crude
+# implementation of a package manager admin for our program.
+# Right now it's just a test of the getopt module.
+
+sub db_connect {
+	my ($root) = @_;
+
+	$dbh = DBI->connect("dbi:CSV:f_dir=$root/db") or 
+		die "Cannot connect: " . $DBI::errstr;
+}
+
+sub db_leave {
+	$dbh->disconnect();
+}
+
+sub add_package {
+	my ($package) = @_;
+}
+
+sub remove_package {
+	my ($package) = @_;
+}
+
+sub update_package {
+	my ($package) = @_;
+}
+
+sub make_tables {
+	$dbh->do("drop table if exists entries");
+	$dbh->do("create table entries(package char(255), " .
+		"version char(255), description char(255), " .
+		"admin char(255), date char(255))");
+	$dbh->do("drop table if exists dependencies");
+	$dbh->do("create table dependencies(package char(255), " .
+		"version char(255), deppackage char(255))");
+}
+
+sub init_repository {
+	my ($dir) = @_;
+	my ($fh);
+
+	if (-d $dir) {
+		print "$dir already exists.\n";
+		return 0;
+	}
+
+	mkdir($dir);
+	mkdir("$dir/db");
+	mkdir("$dir/bin");
+	mkdir("$dir/packages");
+	mkdir("$dir/tmp");
+
+	db_connect($dir);
+	make_tables();
+	db_leave();
+
+	open($fh, ">", "$dir/README") or die "Unable to open $dir/README " .
+		"for writing.\n";
+	print $fh "SWEET Package repository created with swpadmin $VERSION\n";
+	print $fh "XXX More info to come later.\n";
+	close($fh);
+
+	copy("./$0", "$dir/bin/") or return 0;
+	copy("./spm", "$dir/bin/") or return 0;
+
+	return 1;
+}
+
+my ($command, $args) = @ARGV;
+
+if ($command eq "add") {
+	add_package($args);
+} elsif ($command eq "remove") {
+	remove_package($args);
+} elsif ($command eq "update") {
+	update_package($args);
+} elsif ($command eq "init") {
+	init_repository($args);
+} else {
+	usage();
+}
