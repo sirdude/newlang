@@ -45,12 +45,17 @@ sub get_user {
 sub valid_packagename { 
 	my ($name) = @_;
 
-	if ($name
+	return 1;
+}
+
+sub get_packagename {
+	my ($filename) = @_;
+
 }
 
 sub valid_prepackage {
 	my ($filename) = @_;
-	my $packagename =
+	my $packagename = get_packagename($filename);
 
 	if (!valid_packagename($packagename)) {
 		return 0;
@@ -63,13 +68,11 @@ sub valid_prepackage {
 		return 0;
 	}
 	if (copy($filename, $tmpfile)) {
-		print "Error trying to copy $filename to $tmpfile\n';
+		print "Error trying to copy $filename to $tmpfile\n";
 		return 0;
 	}
 
-	eval {
-		"cd $SRC/tmp; tar xfz $packagename";
-	};
+	eval("cd $SRC/tmp; tar xfz $packagename");
 
 	if ($@) {
 		return 0;
@@ -79,15 +82,14 @@ sub valid_prepackage {
 sub add_package {
 	my ($package) = @_;
 	my ($tmpfile);
-	my ($version, $description, $user, $date, $tmp);
+	my ($version, $description, $user, $date, $tmp, $ans);
 
 	if (!valid_prepackage($package)) {
 		return 0;
 	}
 
-	my $tmpfile = get_temp($package);
-	copy $package
-	
+	$tmpfile = get_temp($package);
+	copy($package, $tmpfile);
 
 	$ans = "";
 
@@ -101,7 +103,7 @@ sub add_package {
 			$version = "0.01";
 		}
 
-		$tmp = prompt "Description [$descripiton]: ", -stdio;
+		$tmp = prompt "Description [$description]: ", -stdio;
 		if ($tmp ne "") {
 			$description = $tmp;
 		}
@@ -117,8 +119,8 @@ sub add_package {
 		$ans = prompt "Add it? [Y/N]";
 	}
 	if (($ans eq "y") || ($ans eq "Y")) {
-		db_connect($dir);
-		$dbh->do("insert into 
+		db_connect("$SRC/db");
+#		$dbh->do("insert into 
 		db_leave();
 	}
 }
@@ -126,7 +128,7 @@ sub add_package {
 sub get_package {
 	my ($pack) = @_;
 
-	return "$SRC/packages/$package";
+	return "$SRC/packages/$pack";
 }
 
 sub remove_package {
