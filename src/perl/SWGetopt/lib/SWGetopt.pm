@@ -62,7 +62,7 @@ our @EXPORT = qw(
 
 sub GetOptions {
 	my ($Options, @values) = @_;
-	my ($regex, $simple, $command, $var, $tmp, $c);
+	my ($regex, $simple, $var, $tmp, $c);
 
 	foreach my $i (@values) {
 		$simple = 0;
@@ -85,7 +85,7 @@ sub GetOptions {
 		}
 
 		$c = 0;
-		foreach $command (@ARGV) {
+		foreach my $command (@ARGV) {
 			if ($command =~ /^(.*)\s+$regex\s+(.*)/) {
 				splice(@ARGV,$c,1);
 				$tmp = $2; # Note this is in $regex
@@ -112,6 +112,11 @@ sub GetOptions {
 	}
 
 	return 1;
+}
+
+sub add_command {
+	my ($short, $long, $type) = @_;
+
 }
 
 sub print_args {
@@ -175,11 +180,18 @@ sub print_cmds {
 }
 
 sub usage {
-        if ($#XXCMDS > 0) {
-		print "Usage: $0 [ARGS] [CMDS]\n";
-	} else {
-		print "Usage: $0 [ARGS]\n";
+	my $line = "Usage: $0";
+
+
+        if ($#XXARGS > 0) {
+		$line = $line . " [ARGS]";
 	}
+
+        if ($#XXCMDS > 0) {
+		$line = $line . " [CMDS]";
+	}
+
+	print "$line\n";
 	print print_summary() . "\n";
 	print print_options() . "\n";
 
