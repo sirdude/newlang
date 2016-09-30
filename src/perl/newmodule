@@ -28,7 +28,7 @@ sub valid_modulename {
 		return 0;
 	}
 
-	if ( $mname =~ m{^ [A-Z] \w* $}x ) {
+	if ( $mname =~ m{^ [A-Z] (\w|\-)* $}x ) {
 		return 1;
 	}
 
