@@ -183,7 +183,7 @@ sub usage {
 	my $line = "Usage: $0";
 
 
-        if ($#XXARGS > 0) {
+        if ($XXARGS) {
 		$line = $line . " [ARGS]";
 	}
 
