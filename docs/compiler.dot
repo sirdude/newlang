@@ -1,0 +1,43 @@
+# Use neato -Tpng compiler.dot -o compiler.png
+digraph Compiler {
+	overlap = scale;
+	"Infile1.sw" -> "Frontend";
+	"Infile2.sw" -> "Frontend";
+	"Options" -> "Frontend";
+# The frontend just determines the path to take through the compiler and
+# 	assigns certain objects, debugging flags, optimization level, where to
+#	stop, etc...
+	"Frontend" -> "Lexical_analyzer";
+# Output of Lexical_analyzer is tokens;
+	"Lexical_analyzer" -> "Syntax_analyzer";
+# Output of Syntax_analyzer is AST of tokens
+	"Syntax_analyzer" -> "Semantic_analyzer";
+# Output of Semantic_analyzer is AST of Language
+	"Semantic_analyzer" -> "Optimzer";
+# Output of Optimzer is AST of Language
+	"Optimzer" -> "Code_generator";
+# Output of Code_generator is new code
+	"Code_generator" -> "Infile1.obj";
+	"Code_generator" -> "Infile2.obj";
+# Optional step here to convert new code to relocatable object code
+	"Infile1.obj" -> "Linker";
+	"Infile2.obj" -> "Linker";
+	"Library1" -> "Linker";
+	Linker -> "Executable";
+# Output of Linker is executable
+}
+
+# Compiler has a front end, some sort of interface to tell it what you want
+# Translator does same as compiler down to cod_generation 
+#	has a different output but otherwise the same, maybe also has
+#	a different interface, but similar to compiler
+# Interpreter is like a translator.... 
+# critic is like a translator again with different output
+# Pretty printer again like translator different output
+# syntax highlighter like translator could skip optimizer phase
+# Could make one interface for all....
+# Interface needs to do the following:
+# 	define what inputs to read in (files, libraries, includes)
+#	define what you are doing (what path to take and what 
+#			final result looks like)
+#	provide usage, simple and documentation...
