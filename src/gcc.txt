@@ -1,0 +1,47 @@
+       gcc [-c|-S|-E] [-std=standard]
+           [-g] [-pg] [-Olevel]
+           [-Wwarn...] [-Wpedantic]
+           [-Idir...] [-Ldir...]
+           [-Dmacro[=defn]...] [-Umacro]
+           [-foption...] [-mmachine-option...]
+           [-o outfile] [@file] infile...
+
+	-c	skip linking
+	-S 	dot not assemble
+	-E 	stop after preprocessing
+	-g 	Enable debugging
+	-pg	add profling info for gprof.
+	-O(level)	Optimization level
+	-v print the commands executed to run the stages of compliation.
+		also print the version # of the compiler and friends.
+	-I(dir)	 Include dir
+	-L(dir)	Library Dir
+	-R(dir) Runtime path...
+	-D(string=val)  Define string to val   or set it to 1 if no val
+	-U(string)	Undefine a string
+	-W(string)	Enable warnings
+	-f(string)	Extra flags...		
+	-B(path)	Binary search path for tools.
+
+Pike:
+	-D
+	-d# (debugging #)
+	-d(letter) lots of options to debugging flagging
+	-p#	(profiling level)
+	-e(string) --execute=(string)    execute string
+	-I(dir)   include paths
+	-M(dir)		Module paths
+	-P(dir)		Program path dir...
+
+
+
+#/usr/bin/perl
+# Getopt long example:
+use Getopt::Long;
+GetOptions (\%Options, "length=i", "file=s", "verbose") 
+	or die("Error in command line arguments\n");
+
+if (exists($Options{"verbose"})) {
+	print "Woo\n";
+}
+
