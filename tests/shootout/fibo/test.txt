@@ -1,0 +1,5 @@
+./fibo.sweet
+1
+
+./fibo.sweet 20
+10946
