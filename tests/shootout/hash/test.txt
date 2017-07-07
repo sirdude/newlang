@@ -1,5 +1,0 @@
-./hash.sweet
-1
-
-./hash.sweet 20
-14

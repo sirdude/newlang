@@ -1,5 +1,0 @@
-./lists.sweet
-10000
-
-./lists.sweet 20
-10000

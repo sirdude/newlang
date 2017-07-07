@@ -1,5 +1,0 @@
-./strcat.sweet
-6
-
-./strcat.sweet 33
-198

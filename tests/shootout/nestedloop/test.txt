@@ -1,5 +1,0 @@
-./nestedloop.sweet
-1
-
-./nestedloop.sweet 20
-64000000
