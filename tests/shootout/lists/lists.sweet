@@ -8,8 +8,8 @@
 #define TB(X) werror( "%s: %.2f\n", X, gauge {
 #define TE()  })
 
-int test_lists()
-{
+int test_lists() {
+
     mixed Li1, Li2, Li3;
     // create a list of integers from 1 to SIZE.
     Li1 = indices(allocate(SIZE+1))[1..];

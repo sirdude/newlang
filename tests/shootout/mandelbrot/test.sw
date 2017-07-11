@@ -4,10 +4,10 @@ int main() {
 	string command, res;
 
 	command = "./mandelbrot.sw";
-	res = "";
+	res = "file:test1.ppm";
 	do_test(command, res);
 
 	command = "./mandelbrot.sw 5";
-	res = "";
+	res = "file:test2.ppm";
 	do_test(command, res);
 }
