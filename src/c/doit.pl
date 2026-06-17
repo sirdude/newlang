@@ -87,6 +87,8 @@ sub fix_makefile {
 		".PHONY: clean distclean extraclean version.c\n/g' " .
 		"$dir/Makefile");
 
+	system("perl -pi -e 's/-ansi/-std=c99 -D_DEFAULT_SOURCE/g' " .
+		"$dir/Makefile");
 	system("perl -pi -e 's/Wall/Wall -I. -I\\/usr\\/local\\/include/g' " .
 		"$dir/Makefile");
 

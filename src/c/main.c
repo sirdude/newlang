@@ -13,6 +13,7 @@
 #include "Absyn.h"
 
 #define MAX_STR 2048
+#define PATH_MAX 2048
 #define DEFAULT_CRITIC_LEVEL 3
 
 extern char *get_version();
@@ -50,7 +51,7 @@ static struct option long_options[] = {
 
 int valid_lib(char *path, char *file) {
 	char fullp[MAX_STR];
-	int size;
+	size_t size;
 
 	size = strlen(path);
 	strncpy(fullp, path, size);
@@ -67,7 +68,8 @@ int find_inheritables(char *path) {
 	DIR *d;
 	struct dirent *dir;
 	char *buf, fullp[MAX_STR];
-	int count, size;
+	int count;
+	size_t size;
 
 	buf = strtok(path, ":");
 
@@ -75,7 +77,7 @@ int find_inheritables(char *path) {
 	while (buf != NULL) {
 		size = strlen(buf);
 
-printf("Looking at %d: %s\n", size, buf);
+printf("Looking at %lu: %s\n", size, buf);
 
 		d = opendir(buf);
 		if (d) {
